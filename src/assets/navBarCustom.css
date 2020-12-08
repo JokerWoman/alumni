@@ -1,0 +1,21 @@
+.navbar-nav .active {
+    /* Elemento navbar activo de momento */
+    position: relative;
+    font-weight: bold;
+}
+
+.navbar-nav .active::after {
+    /* Elemento navbar activo de momento e colocar um underline */
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0;
+    left: 0;
+    bottom: 0px;
+    border-bottom: 2px solid #106BEF;
+}
+
+.navbar-nav .active a {
+    /* Elemento navbar activo de momento e colocar a cor do texto */
+    color: #2B4C8C !important;
+}
