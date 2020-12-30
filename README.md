@@ -22,3 +22,12 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## Modules installed (npm install)
+```
+vuex
+bootstrap-vue
+vue-router
+vue
+```
