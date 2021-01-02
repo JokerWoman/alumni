@@ -22,6 +22,16 @@
           :class="{ active: $route.name === 'Bolsas' }"
           >Bolsas de Emprego</b-nav-item
         >
+        <b-nav-item
+          :to="{ name: 'Register' }"
+          :class="{ active: $route.name === 'Register' }"
+          >Registro</b-nav-item
+        >
+        <b-nav-item
+          :to="{ name: 'Login' }"
+          :class="{ active: $route.name === 'Login' }"
+          >Entrar</b-nav-item
+        >
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto">
