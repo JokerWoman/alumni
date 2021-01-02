@@ -22,35 +22,50 @@
           :class="{ active: $route.name === 'Bolsas' }"
           >Bolsas de Emprego</b-nav-item
         >
-        <b-nav-item
-          :to="{ name: 'Register' }"
-          :class="{ active: $route.name === 'Register' }"
-          >Registro</b-nav-item
-        >
-        <b-nav-item
-          :to="{ name: 'Login' }"
-          :class="{ active: $route.name === 'Login' }"
-          >Entrar</b-nav-item
-        >
       </b-navbar-nav>
-
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown
-          text="Utilizador"
-          right
-          :class="{ active: $route.name === 'Perfil' }"
-        >
-          <b-dropdown-item :to="{ name: 'Perfil' }">Perfil</b-dropdown-item>
-          <b-dropdown-item href="#">Sair</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
+      <template v-if="this.$store.getters.isLoggedUser">
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown
+            :text="this.$store.getters.getLoggedUser.nome"
+            right
+            :class="{ active: $route.name === 'Perfil' }"
+          >
+            <b-dropdown-item :to="{ name: 'Perfil' }">Perfil</b-dropdown-item>
+            <b-dropdown-item @click="logout()">Sair</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </template>
+      <template v-else>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item
+            :to="{ name: 'Register' }"
+            :class="{ active: $route.name === 'Register' }"
+            >Registro</b-nav-item
+          >
+          <b-nav-item
+            :to="{ name: 'Login' }"
+            :class="{ active: $route.name === 'Login' }"
+            >Entrar</b-nav-item
+          >
+        </b-navbar-nav>
+      </template>
     </b-collapse>
   </b-navbar>
 </template>
 
 <script>
 export default {
-  name: "NavBar"
+  name: "NavBar",
+  methods: {
+    logout() {
+      /* Chamar a ação disponivel no store */
+      this.$store.dispatch("logout", this.$data);
+
+      /* O logout foi feito redirecionamos 
+            para o home*/
+      this.$router.push({ name: "Home" });
+    }
+  }
 };
 </script>
 
