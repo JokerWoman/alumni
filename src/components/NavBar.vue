@@ -28,7 +28,9 @@
           <b-nav-item-dropdown
             :text="this.$store.getters.getLoggedUser.nome"
             right
-            :class="{ active: $route.name === 'Perfil' }"
+            :class="{
+              active: $route.name === 'Perfil' || $route.name === 'EditarPerfil'
+            }"
           >
             <b-dropdown-item :to="{ name: 'Perfil' }">Perfil</b-dropdown-item>
             <b-dropdown-item @click="logout()">Sair</b-dropdown-item>

@@ -1,11 +1,10 @@
-
 .card0 {
     box-shadow: 0px 4px 8px 0px #757575;
     border-radius: 0px
 }
 
 .card2 {
-    margin: 0px 40px
+    margin: 30px 10px
 }
 
 .border-line {
@@ -16,8 +15,6 @@
     font-size: 14px !important
 }
 
-
-
 .btn-blue {
     background-color: #1A237E;
     width: 150px;
@@ -27,7 +24,7 @@
 
 .btn-blue:hover {
     background-color: #000;
-     color: #fff;
+    color: #fff;
     cursor: pointer
 }
 
@@ -40,7 +37,6 @@
     .border-line {
         border-right: none
     }
-
     .card2 {
         border-top: 1px solid #EEEEEE !important;
         margin: 0px 15px

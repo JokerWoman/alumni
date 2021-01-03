@@ -19,7 +19,7 @@
                 <input
                   class="mb-4"
                   type="text"
-                  v-model="loginData.nroEstudante"
+                  v-model="loginData.numeroEstudante"
                 />
               </div>
               <div class="row px-3">
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       loginData: {
-        nroEstudante: "",
+        numeroEstudante: "",
         password: ""
       },
       formErros: ""

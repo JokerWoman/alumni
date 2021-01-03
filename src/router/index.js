@@ -6,6 +6,7 @@ import Bolsas from "../views/Bolsas.vue";
 import Perfil from "../views/Perfil.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
+import EditarPerfil from "../views/EditarPerfil.vue";
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login
+  },
+  {
+    path: "/editarPerfil",
+    name: "EditarPerfil",
+    component: EditarPerfil
   },
   {
     path: "/register",

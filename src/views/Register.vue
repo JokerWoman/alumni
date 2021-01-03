@@ -20,7 +20,7 @@
                   <input
                     class="mb-4"
                     type="text"
-                    v-model="registo.nroEstudante"
+                    v-model="registo.numeroEstudante"
                   />
                 </div>
 
@@ -100,9 +100,9 @@
 
                 <div class="col-lg-6">
                   <label class="mb-1">
-                    <h6 class="mb-0 text-sm">Numero de Telefone</h6>
+                    <h6 class="mb-0 text-sm">Numero de Telemovel</h6>
                   </label>
-                  <input class="mb-4" type="text" v-model="registo.telefone" />
+                  <input class="mb-4" type="text" v-model="registo.telemovel" />
                 </div>
               </div>
 
@@ -160,7 +160,7 @@ export default {
   data() {
     return {
       registo: {
-        nroEstudante: "",
+        numeroEstudante: "",
         nome: "",
         password: "",
         genero: "",
@@ -169,7 +169,8 @@ export default {
         email: "",
         telemovel: "",
         CC: "",
-        nacionalidade: "Portuguese"
+        nacionalidade: "Portuguese",
+        descricao: ""
       },
       passwordVerification: "",
       formErros: ""

@@ -18,14 +18,12 @@
                   <p class="text-muted font-size-sm">
                     "TODO"
                   </p>
-                  <button class="btn btn-primary">Seguir</button>
-
-                  <router-link
-                    class="btn btn-outline-primary"
-                    style="margin-left:10px;"
-                    :to="{ name: 'EditarPerfil' }"
-                    >Editar Perfil</router-link
+                  <button
+                    v-on:click="editar"
+                    class="btn btn-outline-primary pull-rigth"
                   >
+                    Guardar
+                  </button>
                 </div>
               </div>
             </div>
@@ -162,7 +160,11 @@
                   <h6 class="mb-0">Telemóvel</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.telemovel }}
+                  <input
+                    class="mb-4"
+                    type="text"
+                    v-model="editarData.telemovel"
+                  />
                 </div>
               </div>
               <hr />
@@ -180,7 +182,7 @@
                   <h6 class="mb-0">Morada</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.morada }}
+                  <input type="text" v-model="editarData.morada" />
                 </div>
               </div>
             </div>
@@ -193,7 +195,11 @@
                   <h6 class="mb-0">Sobre Mim</h6>
                 </div>
                 <div class="col-sm-9 text-secondary text-justify">
-                  {{ this.$store.getters.getLoggedUser.descricao }}
+                  <textarea
+                    class="form-control"
+                    v-model="editarData.descricao"
+                    rows="3"
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -274,7 +280,27 @@
 export default {
   name: "Perfil",
   data() {
-    return {};
+    return {
+      editarData: {
+        morada: this.$store.getters.getLoggedUser.morada,
+        telemovel: this.$store.getters.getLoggedUser.telemovel,
+        descricao: this.$store.getters.getLoggedUser.descricao
+      }
+    };
+  },
+  methods: {
+    editar() {
+      try {
+        /* Chamar a ação disponivel no store */
+        this.$store.dispatch("editar", this.$data.editarData);
+
+        /* Se o editar falhar por alguma razão um trow vai ser lançado e o redirect
+           da route para o perfil não vai ser executado */
+        this.$router.push({ name: "Perfil" });
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 };
 </script>
