@@ -216,24 +216,16 @@
                   </h6>
 
                   <div
-                    v-for="(skill,
-                    index) in this.$store.getters.getSkillsStudent(
-                      this.$store.getters.getLoggedUser.numeroEstudante
-                    )"
+                    v-for="(skill, index) in editarData.editUsersSkills[0]
+                      .skills"
                     :key="index"
                   >
-                    <small>{{ skill.title }}</small>
-
-                    <div class="progress mb-3" style="height: 5px">
-                      <div
-                        class="progress-bar bg-primary"
-                        role="progressbar"
-                        :style="{ width: skill.percentagem + '%' }"
-                        :aria-valuenow="skill.percentagem"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+                    <Competence
+                      :title="skill.title"
+                      :originalPercentagem="skill.percentagem"
+                      type="skill"
+                      v-bind:edit="true"
+                    ></Competence>
                   </div>
                 </div>
               </div>
@@ -248,23 +240,15 @@
                   </h6>
 
                   <div
-                    v-for="(tool, index) in this.$store.getters.getToolsStudent(
-                      this.$store.getters.getLoggedUser.numeroEstudante
-                    )"
+                    v-for="(tool, index) in editarData.editUsersSkills[0].tools"
                     :key="index"
                   >
-                    <small>{{ tool.title }}</small>
-
-                    <div class="progress mb-3" style="height: 5px">
-                      <div
-                        class="progress-bar bg-primary"
-                        role="progressbar"
-                        :style="{ width: tool.percentagem + '%' }"
-                        :aria-valuenow="tool.percentagem"
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                      ></div>
-                    </div>
+                    <Competence
+                      :title="tool.title"
+                      :originalPercentagem="tool.percentagem"
+                      type="tool"
+                      v-bind:edit="true"
+                    ></Competence>
                   </div>
                 </div>
               </div>
@@ -277,18 +261,46 @@
 </template>
 
 <script>
+import Competence from "../components/Competence";
 export default {
-  name: "Perfil",
+  name: "EditarPerfil",
+  components: {
+    Competence
+  },
   data() {
     return {
       editarData: {
         morada: this.$store.getters.getLoggedUser.morada,
         telemovel: this.$store.getters.getLoggedUser.telemovel,
-        descricao: this.$store.getters.getLoggedUser.descricao
+        descricao: this.$store.getters.getLoggedUser.descricao,
+        editUsersSkills: []
       }
     };
   },
+  created: function() {
+    this.editarData.editUsersSkills = this.$store.getters.getLoggedUserSkills;
+  },
   methods: {
+    competenceChanged(title, type, percentagem) {
+      if (type === "tool") {
+        this.editarData.editUsersSkills[0].tools.map(function(tool) {
+          if (tool.title === title) {
+            tool.percentagem = percentagem;
+          }
+          return tool;
+        });
+      } else if (type === "skill") {
+        this.editarData.editUsersSkills[0].skills.map(function(skill) {
+          if (skill.title === title) {
+            skill.percentagem = percentagem;
+          }
+          return skill;
+        });
+      } else {
+        console.log("Tipo não está bem. Não fazer nada.");
+      }
+      console.log(title + "  " + type + "  " + percentagem);
+    },
     editar() {
       try {
         /* Chamar a ação disponivel no store */

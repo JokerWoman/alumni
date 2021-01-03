@@ -36,27 +36,12 @@ export default new Vuex.Store({
   getters: {
     getLoggedUser: state => state.loggedUser,
     isLoggedUser: state => (state.loggedUser == "" ? false : true),
-    getSkillsStudent: state => numeroEstudante => {
+    getLoggedUserSkills: state => {
       let userSkills = state.usersSkills.filter(
-        userSkill => userSkill.numeroEstudante === numeroEstudante
+        userSkill =>
+          userSkill.numeroEstudante === state.loggedUser.numeroEstudante
       );
-
-      if (userSkills.length > 0) {
-        return userSkills[0].skills;
-      } else {
-        return [];
-      }
-    },
-    getToolsStudent: state => numeroEstudante => {
-      let userSkills = state.usersSkills.filter(
-        userSkill => userSkill.numeroEstudante === numeroEstudante
-      );
-
-      if (userSkills.length > 0) {
-        return userSkills[0].tools;
-      } else {
-        return [];
-      }
+      return userSkills;
     }
   },
   actions: {
@@ -124,6 +109,12 @@ export default new Vuex.Store({
       context.commit("EDITAR", payload);
       localStorage.setItem("users", JSON.stringify(context.state.users));
 
+      /* Actualizar as skills e as tools */
+      localStorage.setItem(
+        "usersSkills",
+        JSON.stringify(context.state.usersSkills)
+      );
+
       /* Atualizar o logged user com os novos dados no loggedUser*/
       const user = context.state.users.find(
         user =>
@@ -157,6 +148,19 @@ export default new Vuex.Store({
           user.telemovel = editarPayload.telemovel;
         } else {
           return user;
+        }
+      });
+
+      /* Actualizar tools e skills do utilizador */
+      state.usersSkills.map(function(userSkill) {
+        if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
+          return {
+            numeroEstudante: state.loggedUser.numeroEstudante,
+            skills: editarPayload.editUsersSkills[0].skills,
+            tools: editarPayload.editUsersSkills[0].tools
+          };
+        } else {
+          return userSkill;
         }
       });
     }

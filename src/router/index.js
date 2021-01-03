@@ -77,7 +77,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-   /* Sempre que uma das routes seja pedida e o utilizador não estiver logged in
+  /* Sempre que uma das routes seja pedida e o utilizador não estiver logged in
       enviamos a route para o home caso contrário deixamos ir para a route */
   if (to.meta.requiresAuth === true && !store.getters.isLoggedUser) {
     next("/");
