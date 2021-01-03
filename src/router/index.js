@@ -7,6 +7,7 @@ import Perfil from "../views/Perfil.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import EditarPerfil from "../views/EditarPerfil.vue";
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -14,37 +15,58 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/login",
     name: "Login",
-    component: Login
+    component: Login,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/editarPerfil",
     name: "EditarPerfil",
-    component: EditarPerfil
+    component: EditarPerfil,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/register",
     name: "Register",
-    component: Register
+    component: Register,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/eventos",
     name: "Eventos",
-    component: Eventos
+    component: Eventos,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/bolsas",
     name: "Bolsas",
-    component: Bolsas
+    component: Bolsas,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/perfil",
     name: "Perfil",
-    component: Perfil
+    component: Perfil,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 
@@ -52,6 +74,16 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+   /* Sempre que uma das routes seja pedida e o utilizador não estiver logged in
+      enviamos a route para o home caso contrário deixamos ir para a route */
+  if (to.meta.requiresAuth === true && !store.getters.isLoggedUser) {
+    next("/");
+  } else {
+    next();
+  }
 });
 
 export default router;
