@@ -15,9 +15,7 @@
                 <div class="mt-3">
                   <h4>{{ this.$store.getters.getLoggedUser.nome }}</h4>
                   <p class="text-secondary mb-1">Licensiado em Multimédia</p>
-                  <p class="text-muted font-size-sm">
-                    "TODO"
-                  </p>
+                  <p class="text-muted font-size-sm"></p>
                   <button
                     v-on:click="editar"
                     class="btn btn-outline-primary pull-rigth"
@@ -209,11 +207,32 @@
             <div class="col-sm-6 mb-3">
               <div class="card h-100">
                 <div class="card-body">
-                  <h6 class="d-flex align-items-center mb-3">
-                    <i class="material-icons text-info mr-2"
-                      >Experiência / Skills</i
-                    >
-                  </h6>
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h6 class="d-flex align-items-center mb-3">
+                        <i class="material-icons text-info mr-2"
+                          >Experiência / Skills</i
+                        >
+                      </h6>
+                    </div>
+                    <div>
+                      <button
+                        v-if="getSkillsAvailableForUser.length > 0"
+                        class="btn btn-dark"
+                        @click="modal.userSkillsModal = true"
+                      >
+                        Add +
+                      </button>
+                    </div>
+                  </div>
+
+                  <CompetenceModal
+                    @close="modal.userSkillsModal = false"
+                    :showModal="modal.userSkillsModal"
+                    modalTitle="Adicionar Skills"
+                    type="skill"
+                    :competences="getSkillsAvailableForUser"
+                  ></CompetenceModal>
 
                   <div
                     v-for="(skill, index) in editarData.editUsersSkills[0]
@@ -233,11 +252,32 @@
             <div class="col-sm-6 mb-3">
               <div class="card h-100">
                 <div class="card-body">
-                  <h6 class="d-flex align-items-center mb-3">
-                    <i class="material-icons text-info mr-2"
-                      >Dominio de Ferramentas</i
-                    >
-                  </h6>
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h6 class="d-flex align-items-center mb-3">
+                        <i class="material-icons text-info mr-2"
+                          >Dominio de Ferramentas</i
+                        >
+                      </h6>
+                    </div>
+                    <div>
+                      <button
+                        v-if="getToolsAvailableForUser.length > 0"
+                        class="btn btn-dark"
+                        @click="modal.userToolsModal = true"
+                      >
+                        Add +
+                      </button>
+                    </div>
+                  </div>
+
+                  <CompetenceModal
+                    @close="modal.userToolsModal = false"
+                    :showModal="modal.userToolsModal"
+                    modalTitle="Adicionar Tools"
+                    type="tool"
+                    :competences="getToolsAvailableForUser"
+                  ></CompetenceModal>
 
                   <div
                     v-for="(tool, index) in editarData.editUsersSkills[0].tools"
@@ -262,10 +302,13 @@
 
 <script>
 import Competence from "../components/Competence";
+import CompetenceModal from "../components/CompetenceModal";
+
 export default {
   name: "EditarPerfil",
   components: {
-    Competence
+    Competence,
+    CompetenceModal
   },
   data() {
     return {
@@ -274,13 +317,51 @@ export default {
         telemovel: this.$store.getters.getLoggedUser.telemovel,
         descricao: this.$store.getters.getLoggedUser.descricao,
         editUsersSkills: []
+      },
+      modal: {
+        userToolsModal: false,
+        userSkillsModal: false
       }
     };
   },
   created: function() {
     this.editarData.editUsersSkills = this.$store.getters.getLoggedUserSkills;
   },
+  computed: {
+    getSkillsAvailableForUser() {
+      let allSkillsAvailable = this.$store.getters.getSkillsAvailable;
+      let skillsUserHas = this.editarData.editUsersSkills[0].skills;
+      return allSkillsAvailable.filter(function(skill) {
+        return !skillsUserHas.some(
+          skillUser => skillUser.title === skill.title
+        );
+      });
+    },
+    getToolsAvailableForUser() {
+      let allToolsAvailable = this.$store.getters.getToolsAvailable;
+      let toolsUserHas = this.editarData.editUsersSkills[0].tools;
+      return allToolsAvailable.filter(function(tool) {
+        return !toolsUserHas.some(toolUser => toolUser.title === tool.title);
+      });
+    }
+  },
   methods: {
+    competenceNew(title, type, percentagem) {
+      if (type === "tool") {
+        this.editarData.editUsersSkills[0].tools.push({
+          title: title,
+          percentagem: percentagem
+        });
+      } else if (type === "skill") {
+        this.editarData.editUsersSkills[0].skills.push({
+          title: title,
+          percentagem: percentagem
+        });
+      } else {
+        console.log("Tipo não está bem. Não fazer nada.");
+      }
+      console.log("competenceNew: " + title + "  " + type + "  " + percentagem);
+    },
     competenceChanged(title, type, percentagem) {
       if (type === "tool") {
         this.editarData.editUsersSkills[0].tools.map(function(tool) {

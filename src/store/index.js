@@ -34,9 +34,14 @@ export default new Vuex.Store({
       : ""
   },
   getters: {
+    getToolsAvailable: state =>
+      state.tools /* Get de todas as tools que podem ser adicionadas no perfil de um utilizador */,
+    getSkillsAvailable: state =>
+      state.skills /* Get de todas as skills que podem ser adicionadas no perfil de um utilizador */,
     getLoggedUser: state => state.loggedUser,
     isLoggedUser: state => (state.loggedUser == "" ? false : true),
     getLoggedUserSkills: state => {
+      /* Get de todas as skills e tools que já estão adicionadas no perfil do utilizador logged */
       let userSkills = state.usersSkills.filter(
         userSkill =>
           userSkill.numeroEstudante === state.loggedUser.numeroEstudante
@@ -86,14 +91,8 @@ export default new Vuex.Store({
         context.commit("REGISTER_SKILLS", {
           /* Quando o utilizador se regista não tem nenhuma skill! */
           numeroEstudante: payload.numeroEstudante,
-          skills: [
-            { title: context.state.skills[0].title, percentagem: 25 },
-            { title: context.state.skills[1].title, percentagem: 15 }
-          ],
-          tools: [
-            { title: context.state.tools[0].title, percentagem: 70 },
-            { title: context.state.tools[1].title, percentagem: 50 }
-          ]
+          skills: [],
+          tools: []
         });
         localStorage.setItem(
           "usersSkills",

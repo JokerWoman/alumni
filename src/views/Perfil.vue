@@ -15,9 +15,7 @@
                 <div class="mt-3">
                   <h4>{{ this.$store.getters.getLoggedUser.nome }}</h4>
                   <p class="text-secondary mb-1">Licensiado em Multimédia</p>
-                  <p class="text-muted font-size-sm">
-                    "TODO"
-                  </p>
+                  <p class="text-muted font-size-sm"></p>
                   <button class="btn btn-primary">Seguir</button>
 
                   <router-link
