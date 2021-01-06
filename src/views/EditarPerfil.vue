@@ -218,7 +218,8 @@
                     <div>
                       <button
                         v-if="getSkillsAvailableForUser.length > 0"
-                        class="btn btn-dark"
+                        class="btn"
+                        style="margin-top:-8px;"
                         @click="modal.userSkillsModal = true"
                       >
                         Add +
@@ -263,7 +264,8 @@
                     <div>
                       <button
                         v-if="getToolsAvailableForUser.length > 0"
-                        class="btn btn-dark"
+                        class="btn"
+                        style="margin-top:-8px;"
                         @click="modal.userToolsModal = true"
                       >
                         Add +
@@ -362,6 +364,20 @@ export default {
       }
       console.log("competenceNew: " + title + "  " + type + "  " + percentagem);
     },
+    competenceDeleted(title, type) {
+      if (type === "tool") {
+        this.editarData.editUsersSkills[0].tools = this.editarData.editUsersSkills[0].tools.filter(
+          tool => tool.title != title
+        );
+      } else if (type === "skill") {
+        this.editarData.editUsersSkills[0].skills = this.editarData.editUsersSkills[0].skills.filter(
+          skill => skill.title != title
+        );
+      } else {
+        console.log("Tipo não está bem. Não fazer nada.");
+      }
+      console.log("competenceDeleted" + title + "  " + type);
+    },
     competenceChanged(title, type, percentagem) {
       if (type === "tool") {
         this.editarData.editUsersSkills[0].tools.map(function(tool) {
@@ -380,7 +396,9 @@ export default {
       } else {
         console.log("Tipo não está bem. Não fazer nada.");
       }
-      console.log(title + "  " + type + "  " + percentagem);
+      console.log(
+        "competenceChanged" + title + "  " + type + "  " + percentagem
+      );
     },
     editar() {
       try {

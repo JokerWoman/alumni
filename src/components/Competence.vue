@@ -16,15 +16,27 @@
       </div>
     </div>
 
-    <div class="progress mb-3" style="height: 5px">
-      <div
-        class="progress-bar bg-primary"
-        role="progressbar"
-        :style="{ width: percentagem + '%' }"
-        :aria-valuenow="percentagem"
-        aria-valuemin="0"
-        aria-valuemax="100"
-      ></div>
+    <div class="d-flex flex-row" style="margin-left:-6px;">
+      <button
+        style="margin-top:-20px;width:5px;"
+        class="p-2 btn"
+        v-if="edit === true"
+        v-on:click="remove"
+      >
+        x
+      </button>
+      <div class="p-2 flex-fill">
+        <div class="progress mb-3" style="height: 5px;">
+          <div
+            class="progress-bar bg-primary"
+            role="progressbar"
+            :style="{ width: percentagem + '%' }"
+            :aria-valuenow="percentagem"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          ></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +74,9 @@ export default {
         this.percentagem = 0;
       }
       this.$parent.competenceChanged(this.title, this.type, this.percentagem);
+    },
+    remove() {
+      this.$parent.competenceDeleted(this.title, this.type);
     }
   }
 };
