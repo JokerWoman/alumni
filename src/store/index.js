@@ -31,7 +31,24 @@ export default new Vuex.Store({
         ],
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
-      : ""
+      : "",
+    bolsas: localStorage.getItem("bolsas")
+      ? JSON.parse(localStorage.getItem("bolsas"))
+      : [],
+    categories: [
+      {
+        id: 1,
+        name: "Bolsas de emprego"
+      },
+      {
+        id: 2,
+        name: "Estágios Profissionais"
+      },
+      {
+        id: 3,
+        name: "Part-time"
+      }
+    ]
   },
   getters: {
     getToolsAvailable: state =>
@@ -47,6 +64,28 @@ export default new Vuex.Store({
           userSkill.numeroEstudante === state.loggedUser.numeroEstudante
       );
       return userSkills;
+    },
+    getCategoriesForSelect: state =>
+      state.categories.map(category => ({
+        value: category.id,
+        text: category.name
+      })),
+
+    getNextBolsaId: state => {
+      return state.bolsas.length > 0
+        ? state.bolsas[state.bolsas.length - 1].id + 1
+        : 1;
+    },
+
+    getCategoryById: state => id => {
+      return state.categories.find(category => category.id == id);
+    },
+
+    getCategories(state) {
+      return state.categories;
+    },
+    getBolsas: state => {
+      return state.bolsas;
     }
   },
   actions: {
@@ -123,6 +162,12 @@ export default new Vuex.Store({
         context.commit("LOGIN", user);
         localStorage.setItem("loggedUser", JSON.stringify(user));
       }
+    },
+    saveBolsa(context, bolsa) {
+      context.commit("SAVE_BOLSA", bolsa);
+    },
+    deleteBolsa(context, id) {
+      context.commit("REMOVE_BOLSA", id);
     }
   },
   mutations: {
@@ -162,6 +207,15 @@ export default new Vuex.Store({
           return userSkill;
         }
       });
+    },
+    SAVE_BOLSA(state, bolsa) {
+      state.bolsas.push(bolsa);
+      localStorage.setItem("bolsas", JSON.stringify(state.bolsas));
+    },
+    REMOVE_BOLSA(state, id) {
+      state.bolsas = state.bolsas.filter(bolsa => bolsa.id != id);
+
+      localStorage.setItem("bolsas", JSON.stringify(state.bolsas));
     }
   }
 });

@@ -8,6 +8,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import EditarPerfil from "../views/EditarPerfil.vue";
 import store from "../store";
+import AdicionarBolsa from "../views/AdicionarBolsa.vue";
 
 Vue.use(VueRouter);
 
@@ -64,6 +65,14 @@ const routes = [
     path: "/perfil",
     name: "Perfil",
     component: Perfil,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/adicionarBolsa",
+    name: "AdicionarBolsa",
+    component: AdicionarBolsa,
     meta: {
       requiresAuth: true
     }
