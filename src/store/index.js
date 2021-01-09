@@ -77,10 +77,6 @@ export default new Vuex.Store({
         : 1;
     },
 
-    getCategoryById: state => id => {
-      return state.categories.find(category => category.id == id);
-    },
-
     getCategories(state) {
       return state.categories;
     },

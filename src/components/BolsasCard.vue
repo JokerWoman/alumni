@@ -1,7 +1,6 @@
 <template>
   <b-card
-    :img-src="getCategory.img"
-    :img-alt="getCategory.name"
+    :img-src="getBolsaImg"
     img-top
     tag="article"
     style="max-width: 20rem"
@@ -21,8 +20,8 @@ export default {
     bolsa: Object,
   },
   computed: {
-    getCategory() {
-      return this.$store.getters.getCategoryById(this.bolsa.category);
+    getBolsaImg() {
+      return this.bolsa.img
     },
   },
   methods: {
