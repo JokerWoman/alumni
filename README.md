@@ -32,6 +32,12 @@ vue-router
 vue
 ```
 
+## Add Boostrap Steps
+```
+npm install vue bootstrap bootstrap-vue
+vue add bootstrap-vue
+```
+
 ## Reiniciar o npm do projecto
 ```
 delete da pasta: node_modules
