@@ -10,6 +10,26 @@
     >
     <br />
     <br />
+    <b-row class="justify-content-md-center">
+      <b-col>
+        <p>Localidade</p>
+        <b-form-input
+          type="text"
+          placeholder="Exemplo: Porto"
+          v-model="locality"
+        ></b-form-input>
+      </b-col>
+      <b-col>
+        <p>Tipo</p>
+        <b-form-select v-model="categorySelected" :options="getCategories">
+          <template #first>
+            <b-form-select-option value="all">TODAS</b-form-select-option>
+          </template>
+        </b-form-select>
+      </b-col>
+    </b-row>
+    <br />
+    <br />
 
     <b-row>
       <b-card-group columns v-if="getBolsas.length > 0">
@@ -29,15 +49,31 @@ import BolsasCard from "../components/BolsasCard";
 export default {
   name: "Bolsas",
   components: {
-    BolsasCard
+    BolsasCard,
   },
+
   data() {
-    return {};
+    return {
+      categorySelected: "all",
+      locality:"",
+    };
   },
   computed: {
+    /*
     getBolsas() {
       return this.$store.getters.getBolsas;
-    }
-  }
+    },*/
+    
+    getBolsas() {
+      return this.$store.getters.getBolsasFiltered(
+        this.categorySelected,
+        this.locality
+        
+      );
+    },
+    getCategories() {
+      return this.$store.getters.getCategoriesForSelect;
+    },
+  },
 };
 </script>

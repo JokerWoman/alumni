@@ -9,6 +9,7 @@ import Register from "../views/Register.vue";
 import EditarPerfil from "../views/EditarPerfil.vue";
 import store from "../store";
 import AdicionarBolsa from "../views/AdicionarBolsa.vue";
+import BolsaVerMais from "../views/BolsaVerMais.vue";
 
 Vue.use(VueRouter);
 
@@ -76,6 +77,11 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: "/bolsas/:bolsaId",
+    name: "BolsaVerMais",
+    component: BolsaVerMais
   }
 ];
 
