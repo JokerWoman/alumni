@@ -35,6 +35,15 @@ export default new Vuex.Store({
     bolsas: localStorage.getItem("bolsas")
       ? JSON.parse(localStorage.getItem("bolsas"))
       : [],
+      
+    testimonys: localStorage.getItem("testimonys")
+      ? JSON.parse(localStorage.getItem("testimonys"))
+      : [],
+
+    events: localStorage.getItem("events") 
+    ? JSON.parse(localStorage.getItem("events"))  
+    : [],
+
     categories: [
       {
         id: 1,
@@ -48,15 +57,33 @@ export default new Vuex.Store({
         id: 3,
         name: "Part-time"
       }
-    ]
+    ],
+
+    eventTypes:[
+      {
+        id:1,
+        value: "workshops",
+        text: "WorkShops"
+      },
+
+      {
+        id:2,
+        value: "seminarios",
+        text: "Seminários"
+      },
+    ],
   },
   getters: {
     getToolsAvailable: state =>
       state.tools /* Get de todas as tools que podem ser adicionadas no perfil de um utilizador */,
+
     getSkillsAvailable: state =>
       state.skills /* Get de todas as skills que podem ser adicionadas no perfil de um utilizador */,
+
     getLoggedUser: state => state.loggedUser,
+
     isLoggedUser: state => (state.loggedUser == "" ? false : true),
+
     getLoggedUserSkills: state => {
       /* Get de todas as skills e tools que já estão adicionadas no perfil do utilizador logged */
       let userSkills = state.usersSkills.filter(
@@ -65,6 +92,7 @@ export default new Vuex.Store({
       );
       return userSkills;
     },
+
     getCategoriesForSelect: state =>
       state.categories.map(category => ({
         value: category.id,
@@ -80,8 +108,32 @@ export default new Vuex.Store({
     getCategories(state) {
       return state.categories;
     },
+
     getBolsas: state => {
       return state.bolsas;
+    },
+
+    getEvents: (state)=>{
+      return state.events
+    },
+
+    getEventTypes: (state) => {
+      return state.eventTypes
+    },
+
+    getEventLocations: (state) =>{  
+
+      let eventCitys = []
+      state.events.forEach(event=>{
+
+        eventCitys.some(existingEvent=>existingEvent.location.city == event.location.city) ? {} : eventCitys.push(event.location.city)
+      })
+
+      return eventCitys
+    },
+
+    getTestimonys : state =>{
+      return state.testimonys
     }
   },
   actions: {
@@ -164,6 +216,9 @@ export default new Vuex.Store({
     },
     deleteBolsa(context, id) {
       context.commit("REMOVE_BOLSA", id);
+    },
+    saveTestimony(context, testimony) {
+      context.commit("SAVE_TESTIMONY", testimony);
     }
   },
   mutations: {
@@ -212,6 +267,10 @@ export default new Vuex.Store({
       state.bolsas = state.bolsas.filter(bolsa => bolsa.id != id);
 
       localStorage.setItem("bolsas", JSON.stringify(state.bolsas));
+    },
+    SAVE_TESTIMONY(state, testimony) {
+      state.testimonys.push(testimony);
+      localStorage.setItem("testimonys", JSON.stringify(state.testimonys));
     }
   }
 });
