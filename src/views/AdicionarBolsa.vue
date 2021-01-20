@@ -30,6 +30,15 @@
             >
             </b-form-input>
           </b-form-group>
+          <b-form-group id="input-group-5" label="Localidade" label-for="input-5">
+            <b-form-input
+              id="input-5"
+              v-model="task.locality"
+              type="text"
+              required
+            >
+            </b-form-input>
+          </b-form-group>
           <b-form-group id="input-group-3" label="Imagem" label-for="input-3">
             <b-form-input
               id="input-3"
@@ -75,7 +84,8 @@ export default {
         title: "",
         category: "",
         description: "",
-        img: ""
+        img: "",
+        locality:""
       },
       showSuccess: false
     };

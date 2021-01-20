@@ -8,7 +8,10 @@
     <b-card-img> {{ bolsa.img }}</b-card-img>
     <b-card-title>{{ bolsa.title }}</b-card-title>
     <b-card-text> {{ bolsa.description }}</b-card-text>
-    <b-button href="#" variant="primary">Ver mais</b-button>
+    <router-link :to="{name: 'BolsaVerMais', params:{bolsaId: bolsa.id}}"  class="btn btn-primary" variant="success"
+     >
+      VER MAIS
+    </router-link>
     <b-button @click="deleteBolsa" variant="danger">Apagar</b-button>
   </b-card>
 </template>

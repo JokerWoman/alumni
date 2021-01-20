@@ -134,7 +134,23 @@ export default new Vuex.Store({
 
     getTestimonys : state =>{
       return state.testimonys
-    }
+    },
+    
+    getBolsaById: (state) =>(id) =>{
+      const bolsaById = state.bolsas.find(
+        (bolsa) => bolsa.id === id
+      )
+      return bolsaById
+    },
+    getBolsasFiltered: (state) => (category ) => {
+      const cards_filtered = state.bolsas.filter(
+        (bolsa) => bolsa.category == category || category =="all"
+      );
+      return cards_filtered
+      
+     
+     
+    },
   },
   actions: {
     login(context, payload) {
