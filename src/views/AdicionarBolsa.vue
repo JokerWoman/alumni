@@ -97,7 +97,8 @@ export default {
         title: this.task.title,
         category: this.task.category,
         description: this.task.description,
-        img: this.task.img
+        img: this.task.img,
+        locality: this.task.locality
       };
       this.$store.dispatch("saveBolsa", bolsa);
       this.showSuccess = true;

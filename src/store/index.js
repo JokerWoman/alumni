@@ -142,11 +142,15 @@ export default new Vuex.Store({
       )
       return bolsaById
     },
-    getBolsasFiltered: (state) => (category ) => {
+    getBolsasFiltered: (state) => (category,locality ) => {
+      
       const cards_filtered = state.bolsas.filter(
         (bolsa) => bolsa.category == category || category =="all"
       );
-      return cards_filtered
+      return cards_filtered .filter(
+        bolsa => bolsa.locality.toUpperCase().includes(locality)
+     )
+      
       
      
      

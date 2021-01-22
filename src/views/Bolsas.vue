@@ -67,7 +67,7 @@ export default {
     getBolsas() {
       return this.$store.getters.getBolsasFiltered(
         this.categorySelected,
-        this.locality
+        this.locality.toUpperCase()
         
       );
     },
