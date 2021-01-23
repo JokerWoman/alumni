@@ -59,10 +59,9 @@ export default {
   computed: {
     getBolsa() {
       return this.$store.getters.getBolsaById(this.$route.params.bolsaId);
-    },
-  },
+    }
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

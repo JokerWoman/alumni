@@ -30,7 +30,11 @@
             >
             </b-form-input>
           </b-form-group>
-          <b-form-group id="input-group-5" label="Localidade" label-for="input-5">
+          <b-form-group
+            id="input-group-5"
+            label="Localidade"
+            label-for="input-5"
+          >
             <b-form-input
               id="input-5"
               v-model="task.locality"
@@ -85,16 +89,20 @@ export default {
         category: "",
         description: "",
         img: "",
-        locality:""
+        locality: ""
       },
       showSuccess: false
     };
   },
   methods: {
-    
     onSubmit() {
       var today = new Date();
-        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+      var date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
 
       const bolsa = {
         id: this.$store.getters.getNextBolsaId,

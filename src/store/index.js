@@ -83,7 +83,13 @@ export default new Vuex.Store({
     getLoggedUser: state => state.loggedUser,
 
     isLoggedUser: state => (state.loggedUser == "" ? false : true),
-
+    getAllAlumnisInformationExceptLoggedUser: state => {
+      return state.users.filter(
+        user =>
+          parseInt(user.numeroEstudante) !=
+          parseInt(state.loggedUser.numeroEstudante)
+      );
+    },
     getUserInformationByUsername: state => numeroEstudante => {
       const user = state.users.find(
         user => parseInt(user.numeroEstudante) === parseInt(numeroEstudante)

@@ -1,6 +1,5 @@
 <template>
   <div id="bolsas" class="container">
-
     <router-link
       class="btn btn-primary"
       style="margin-left: 10px"
@@ -32,20 +31,19 @@
         </b-form-select>
       </b-col>
     </b-row>
-    <br />  
     <br />
-    
-      <b-row>
-        <b-card-group columns v-if="getBolsas.length > 0">
-          <BolsasCard
-            v-for="myBolsa in getBolsas"
-            :key="myBolsa.id"
-            :bolsa="myBolsa"
-          />
-        </b-card-group>
-        <p v-else>Não há ofertas criadas!</p>
-      </b-row>
-    
+    <br />
+
+    <b-row>
+      <b-card-group columns v-if="getBolsas.length > 0">
+        <BolsasCard
+          v-for="myBolsa in getBolsas"
+          :key="myBolsa.id"
+          :bolsa="myBolsa"
+        />
+      </b-card-group>
+      <p v-else>Não há ofertas criadas!</p>
+    </b-row>
   </div>
 </template>
 
@@ -54,7 +52,7 @@ import BolsasCard from "../components/BolsasCard";
 export default {
   name: "Bolsas",
   components: {
-    BolsasCard,
+    BolsasCard
   },
 
   data() {
@@ -65,15 +63,15 @@ export default {
       optionsSort: [
         {
           value: 1,
-          text: "Mais Recentes",
+          text: "Mais Recentes"
         },
         {
           value: -1,
-          text: "Mais Antigos",
-        },
+          text: "Mais Antigos"
+        }
       ],
 
-      filterCategorySelected: "all",
+      filterCategorySelected: "all"
     };
   },
   computed: {
@@ -91,8 +89,7 @@ export default {
     },
     getCategories() {
       return this.$store.getters.getCategoriesForSelect;
-    },
-  },
+    }
+  }
 };
 </script>
-

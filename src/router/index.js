@@ -10,6 +10,7 @@ import EditarPerfil from "../views/EditarPerfil.vue";
 import store from "../store";
 import AdicionarBolsa from "../views/AdicionarBolsa.vue";
 import BolsaVerMais from "../views/BolsaVerMais.vue";
+import ProcurarAlumni from "../views/ProcurarAlumni.vue";
 
 Vue.use(VueRouter);
 
@@ -66,6 +67,14 @@ const routes = [
     path: "/perfil/:numeroEstudante",
     name: "Perfil",
     component: Perfil,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/procurarAlumni/",
+    name: "ProcurarAlumni",
+    component: ProcurarAlumni,
     meta: {
       requiresAuth: true
     }

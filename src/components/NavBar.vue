@@ -42,6 +42,12 @@
               }"
               >Perfil</b-dropdown-item
             >
+            <b-dropdown-item
+              :to="{
+                name: 'ProcurarAlumni'
+              }"
+              >Procurar Alumnis</b-dropdown-item
+            >
             <b-dropdown-item @click="logout()">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

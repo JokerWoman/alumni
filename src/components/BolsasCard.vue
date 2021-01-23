@@ -24,12 +24,12 @@
 export default {
   name: "BolsasCard",
   props: {
-    bolsa: Object,
+    bolsa: Object
   },
   computed: {
     getBolsaImg() {
       return this.bolsa.img;
-    },
+    }
   },
   methods: {
     deleteBolsa() {
@@ -45,7 +45,7 @@ export default {
       } else {
         return `${desc.substr(0, [30])}...`;
       }
-    },
-  },
+    }
+  }
 };
 </script>
