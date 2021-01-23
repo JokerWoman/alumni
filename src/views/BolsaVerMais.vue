@@ -1,18 +1,47 @@
 <template>
-  <div id="bolsa">
-    Bolsa:{{ $route.params.bolsaId }}
+  <div class="container">
+    <div class="main-body">
+      <div class="row gutters-sm">
+        <div class="col-lg-4 mb-3">
+          <div class="container" style="margin-top: 20px">
+            <div>
+              <div>
+                <img
+                  :src="getBolsa.img"
+                  alt="Indisponivel"
+                  width="250"
+                  height="250"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="container">
+            <div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h2 class="mb-0" style="margin-left: 250px">
+                    {{ getBolsa.title }}
+                  </h2>
+                </div>
+              </div>
+              <br />
 
-    <h1 style="margin-left: 250px; top: 50%; width: 80%; text-align: center">
-      {{ getBolsa.title }}
-    </h1>
-
-    <p style="margin-left: 500px; top: 50%; width: 40%">
-      {{ getBolsa.description }}
-    </p>
-
-    <img :src="getBolsa.img" alt="" width="400" height="300" />
-
-    <a href="#" class="btn btn-primary">Responder Oferta</a>
+              <div style=" height:200px">
+                <p style="width: 90%">{{ getBolsa.description }}</p>
+              </div>
+              <br />
+              <br />
+              <a href="#" class="btn btn-primary" style="margin-left: 200px; background-color: #2B4C8C;
+"
+                >Responder à Oferta</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
