@@ -4,15 +4,20 @@
       <div class="row gutters-sm">
         <div class="col-lg-4 mb-3">
           <div class="container" style="margin-top: 20px">
-            <div>
-              <div>
-                <img
-                  :src="getBolsa.img"
-                  alt="Indisponivel"
-                  width="250"
-                  height="250"
-                />
-              </div>
+            <div
+              style="
+                width: 250px;
+                height: 250px;
+                border-radius: 10%;
+                overflow: hidden;
+              "
+            >
+              <img
+                :src="getBolsa.img"
+                alt="Indisponivel"
+                width="250"
+                height="250"
+              />
             </div>
           </div>
         </div>
@@ -28,13 +33,15 @@
               </div>
               <br />
 
-              <div style=" height:200px">
+              <div style="height: 200px">
                 <p style="width: 90%">{{ getBolsa.description }}</p>
               </div>
               <br />
               <br />
-              <a href="#" class="btn btn-primary" style="margin-left: 200px; background-color: #2B4C8C;
-"
+              <a
+                href="#"
+                class="btn btn-primary"
+                style="margin-left: 200px; background-color: #2b4c8c"
                 >Responder à Oferta</a
               >
             </div>
