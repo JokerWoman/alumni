@@ -13,17 +13,26 @@
                   width="150"
                 />
                 <div class="mt-3">
-                  <h4>{{ this.$store.getters.getLoggedUser.nome }}</h4>
+                  <h4>{{ getUserInfomation.nome }}</h4>
                   <p class="text-secondary mb-1">Licensiado em Multimédia</p>
                   <p class="text-muted font-size-sm"></p>
-                  <button class="btn btn-primary">Seguir</button>
 
-                  <router-link
-                    class="btn btn-outline-primary"
-                    style="margin-left:10px;"
-                    :to="{ name: 'EditarPerfil' }"
-                    >Editar Perfil</router-link
+                  <template
+                    v-if="
+                      getUserLoggedInformation.numeroEstudante ===
+                        getUserInfomation.numeroEstudante
+                    "
                   >
+                    <router-link
+                      class="btn btn-outline-primary"
+                      style="margin-left:10px;"
+                      :to="{ name: 'EditarPerfil' }"
+                      >Editar Perfil</router-link
+                    >
+                  </template>
+                  <template v-else>
+                    <button class="btn btn-primary">Seguir</button>
+                  </template>
                 </div>
               </div>
             </div>
@@ -142,7 +151,7 @@
                   <h6 class="mb-0">Numero de Estudante</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.numeroEstudante }}
+                  {{ getUserInfomation.numeroEstudante }}
                 </div>
               </div>
               <hr />
@@ -151,7 +160,7 @@
                   <h6 class="mb-0">Email</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.email }}
+                  {{ getUserInfomation.email }}
                 </div>
               </div>
               <hr />
@@ -160,7 +169,7 @@
                   <h6 class="mb-0">Telemóvel</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.telemovel }}
+                  {{ getUserInfomation.telemovel }}
                 </div>
               </div>
               <hr />
@@ -169,7 +178,7 @@
                   <h6 class="mb-0">Data Nacimento</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.data_Nasc }}
+                  {{ getUserInfomation.data_Nasc }}
                 </div>
               </div>
               <hr />
@@ -178,7 +187,7 @@
                   <h6 class="mb-0">Morada</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.morada }}
+                  {{ getUserInfomation.morada }}
                 </div>
               </div>
             </div>
@@ -191,7 +200,7 @@
                   <h6 class="mb-0">Sobre Mim</h6>
                 </div>
                 <div class="col-sm-9 text-secondary text-justify">
-                  {{ this.$store.getters.getLoggedUser.descricao }}
+                  {{ getUserInfomation.descricao }}
                 </div>
               </div>
             </div>
@@ -208,7 +217,7 @@
                   </h6>
 
                   <div
-                    v-for="(skill, index) in usersSkills[0].skills"
+                    v-for="(skill, index) in getUserSkills[0].skills"
                     :key="index"
                   >
                     <Competence
@@ -231,7 +240,7 @@
                   </h6>
 
                   <div
-                    v-for="(tool, index) in usersSkills[0].tools"
+                    v-for="(tool, index) in getUserSkills[0].tools"
                     :key="index"
                   >
                     <Competence
@@ -258,13 +267,21 @@ export default {
   components: {
     Competence
   },
-  data() {
-    return {
-      usersSkills: []
-    };
-  },
-  created: function() {
-    this.usersSkills = this.$store.getters.getLoggedUserSkills;
+  created: function() {},
+  computed: {
+    getUserSkills() {
+      let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
+      return this.$store.getters.getUserSkillsByNumeroEstudante(
+        numeroEstudante
+      );
+    },
+    getUserInfomation() {
+      let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
+      return this.$store.getters.getUserInformationByUsername(numeroEstudante);
+    },
+    getUserLoggedInformation() {
+      return this.$store.getters.getLoggedUser;
+    }
   }
 };
 </script>

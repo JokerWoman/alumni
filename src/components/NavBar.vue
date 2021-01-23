@@ -32,7 +32,16 @@
               active: $route.name === 'Perfil' || $route.name === 'EditarPerfil'
             }"
           >
-            <b-dropdown-item :to="{ name: 'Perfil' }">Perfil</b-dropdown-item>
+            <b-dropdown-item
+              :to="{
+                name: 'Perfil',
+                params: {
+                  numeroEstudante: this.$store.getters.getLoggedUser
+                    .numeroEstudante
+                }
+              }"
+              >Perfil</b-dropdown-item
+            >
             <b-dropdown-item @click="logout()">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

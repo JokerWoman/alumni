@@ -63,7 +63,7 @@ const routes = [
     }
   },
   {
-    path: "/perfil",
+    path: "/perfil/:numeroEstudante",
     name: "Perfil",
     component: Perfil,
     meta: {

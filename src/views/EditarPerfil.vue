@@ -407,7 +407,12 @@ export default {
 
         /* Se o editar falhar por alguma razão um trow vai ser lançado e o redirect
            da route para o perfil não vai ser executado */
-        this.$router.push({ name: "Perfil" });
+        this.$router.push({
+          name: "Perfil",
+          params: {
+            numeroEstudante: this.$store.getters.getLoggedUser.numeroEstudante
+          }
+        });
       } catch (error) {
         console.log(error);
       }

@@ -14,21 +14,21 @@ export default new Vuex.Store({
     skills: localStorage.getItem("skills")
       ? JSON.parse(localStorage.getItem("skills"))
       : [
-        { title: "Web Design" },
-        { title: "Website Markup" },
-        { title: "One Page" },
-        { title: "Mobile Template" },
-        { title: "Backend API" }
-      ],
+          { title: "Web Design" },
+          { title: "Website Markup" },
+          { title: "One Page" },
+          { title: "Mobile Template" },
+          { title: "Backend API" }
+        ],
     tools: localStorage.getItem("tools")
       ? JSON.parse(localStorage.getItem("tools"))
       : [
-        { title: "Adobe Illustrator" },
-        { title: "Adobe Photoshop" },
-        { title: "Adobe After Effects" },
-        { title: "Adobe Premiere" },
-        { title: "Adobe XD" }
-      ],
+          { title: "Adobe Illustrator" },
+          { title: "Adobe Photoshop" },
+          { title: "Adobe After Effects" },
+          { title: "Adobe Premiere" },
+          { title: "Adobe XD" }
+        ],
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
       : "",
@@ -70,8 +70,8 @@ export default new Vuex.Store({
         id: 2,
         value: "seminarios",
         text: "Seminários"
-      },
-    ],
+      }
+    ]
   },
   getters: {
     getToolsAvailable: state =>
@@ -84,6 +84,20 @@ export default new Vuex.Store({
 
     isLoggedUser: state => (state.loggedUser == "" ? false : true),
 
+    getUserInformationByUsername: state => numeroEstudante => {
+      const user = state.users.find(
+        user => parseInt(user.numeroEstudante) === parseInt(numeroEstudante)
+      );
+      return user;
+    },
+    getUserSkillsByNumeroEstudante: state => numeroEstudante => {
+      /* Get de todas as skills e tools que já estão adicionadas no perfil de um estudante */
+      let userSkills = state.usersSkills.filter(
+        userSkill =>
+          parseInt(userSkill.numeroEstudante) === parseInt(numeroEstudante)
+      );
+      return userSkills;
+    },
     getLoggedUserSkills: state => {
       /* Get de todas as skills e tools que já estão adicionadas no perfil do utilizador logged */
       let userSkills = state.usersSkills.filter(
@@ -113,36 +127,36 @@ export default new Vuex.Store({
       return state.bolsas;
     },
 
-    getEvents: (state) => {
-      return state.events
+    getEvents: state => {
+      return state.events;
     },
 
-    getEventTypes: (state) => {
-      return state.eventTypes
+    getEventTypes: state => {
+      return state.eventTypes;
     },
 
-    getEventLocations: (state) => {
-
-      let eventCitys = []
+    getEventLocations: state => {
+      let eventCitys = [];
       state.events.forEach(event => {
+        eventCitys.some(
+          existingEvent => existingEvent.location.city == event.location.city
+        )
+          ? {}
+          : eventCitys.push(event.location.city);
+      });
 
-        eventCitys.some(existingEvent => existingEvent.location.city == event.location.city) ? {} : eventCitys.push(event.location.city)
-      })
-
-      return eventCitys
+      return eventCitys;
     },
 
     getTestimonys: state => {
-      return state.testimonys
+      return state.testimonys;
     },
 
-    getBolsaById: (state) => (id) => {
-      const bolsaById = state.bolsas.find(
-        (bolsa) => bolsa.id === id
-      )
-      return bolsaById
+    getBolsaById: state => id => {
+      const bolsaById = state.bolsas.find(bolsa => bolsa.id === id);
+      return bolsaById;
     },
-    getBolsasFiltered: (state) => (category, locality, _sort) => {
+    getBolsasFiltered: state => (category, locality, _sort) => {
       /*
       const cards_filtered = state.bolsas.filter(
         (bolsa) => bolsa.category == category || category =="all"
@@ -151,23 +165,17 @@ export default new Vuex.Store({
         bolsa => bolsa.locality.toUpperCase().includes(locality)
      )*/
       const cards_filtered = state.bolsas.filter(
-        (bolsa) => bolsa.category == category || category == "all"
+        bolsa => bolsa.category == category || category == "all"
       );
-      const cards_filter1 = cards_filtered.filter(
-        bolsa => bolsa.locality.toUpperCase().includes(locality))
-        return cards_filter1.sort((a, b) =>{
-          if (a.date > b.date) return -1 * _sort;
-          if (a.date < b.date) return 1 * _sort;
-          return 0;
-        })
-        
-
-      
-
-
-
-
-    },
+      const cards_filter1 = cards_filtered.filter(bolsa =>
+        bolsa.locality.toUpperCase().includes(locality)
+      );
+      return cards_filter1.sort((a, b) => {
+        if (a.date > b.date) return -1 * _sort;
+        if (a.date < b.date) return 1 * _sort;
+        return 0;
+      });
+    }
   },
   actions: {
     login(context, payload) {
@@ -269,7 +277,7 @@ export default new Vuex.Store({
     },
     EDITAR(state, editarPayload) {
       /* Atualizar os dados do utilizador que esta logado no array de utilizadores */
-      state.users.map(function (user) {
+      state.users.map(function(user) {
         if (user.numeroEstudante === state.loggedUser.numeroEstudante) {
           user.descricao = editarPayload.descricao;
           user.morada = editarPayload.morada;
@@ -280,7 +288,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar tools e skills do utilizador */
-      state.usersSkills.map(function (userSkill) {
+      state.usersSkills.map(function(userSkill) {
         if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
