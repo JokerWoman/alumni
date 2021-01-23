@@ -12,6 +12,11 @@
     <br />
     <b-row class="justify-content-md-center">
       <b-col>
+        <p>Data</p>
+        <b-form-select v-model="optionSortSelected" :options="optionsSort">
+        </b-form-select>
+      </b-col>
+      <b-col>
         <p>Localidade</p>
         <b-form-input
           type="text"
@@ -30,7 +35,7 @@
     </b-row>
     <br />
     <br />
-
+  <div id="myDiv">
     <b-row>
       <b-card-group columns v-if="getBolsas.length > 0">
         <BolsasCard
@@ -41,6 +46,7 @@
       </b-card-group>
       <p v-else>Não há ofertas criadas!</p>
     </b-row>
+    </div>
   </div>
 </template>
 
@@ -55,7 +61,20 @@ export default {
   data() {
     return {
       categorySelected: "all",
-      locality:"",
+      locality: "",
+      optionSortSelected: 1,
+      optionsSort: [
+        {
+          value: 1,
+          text: "Mais Recentes",
+        },
+        {
+          value: -1,
+          text: "Mais Antigos",
+        },
+      ],
+
+      filterCategorySelected: "all",
     };
   },
   computed: {
@@ -63,12 +82,12 @@ export default {
     getBolsas() {
       return this.$store.getters.getBolsas;
     },*/
-    
+
     getBolsas() {
       return this.$store.getters.getBolsasFiltered(
         this.categorySelected,
-        this.locality.toUpperCase()
-        
+        this.locality.toUpperCase(),
+        this.optionSortSelected
       );
     },
     getCategories() {
@@ -77,3 +96,4 @@ export default {
   },
 };
 </script>
+

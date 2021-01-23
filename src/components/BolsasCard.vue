@@ -2,6 +2,7 @@
   <b-card
     :img-src="getBolsaImg"
     img-top
+    img-height = 250;
     tag="article"
     style="max-width: 20rem"
   >

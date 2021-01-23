@@ -14,35 +14,35 @@ export default new Vuex.Store({
     skills: localStorage.getItem("skills")
       ? JSON.parse(localStorage.getItem("skills"))
       : [
-          { title: "Web Design" },
-          { title: "Website Markup" },
-          { title: "One Page" },
-          { title: "Mobile Template" },
-          { title: "Backend API" }
-        ],
+        { title: "Web Design" },
+        { title: "Website Markup" },
+        { title: "One Page" },
+        { title: "Mobile Template" },
+        { title: "Backend API" }
+      ],
     tools: localStorage.getItem("tools")
       ? JSON.parse(localStorage.getItem("tools"))
       : [
-          { title: "Adobe Illustrator" },
-          { title: "Adobe Photoshop" },
-          { title: "Adobe After Effects" },
-          { title: "Adobe Premiere" },
-          { title: "Adobe XD" }
-        ],
+        { title: "Adobe Illustrator" },
+        { title: "Adobe Photoshop" },
+        { title: "Adobe After Effects" },
+        { title: "Adobe Premiere" },
+        { title: "Adobe XD" }
+      ],
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
       : "",
     bolsas: localStorage.getItem("bolsas")
       ? JSON.parse(localStorage.getItem("bolsas"))
       : [],
-      
+
     testimonys: localStorage.getItem("testimonys")
       ? JSON.parse(localStorage.getItem("testimonys"))
       : [],
 
-    events: localStorage.getItem("events") 
-    ? JSON.parse(localStorage.getItem("events"))  
-    : [],
+    events: localStorage.getItem("events")
+      ? JSON.parse(localStorage.getItem("events"))
+      : [],
 
     categories: [
       {
@@ -59,15 +59,15 @@ export default new Vuex.Store({
       }
     ],
 
-    eventTypes:[
+    eventTypes: [
       {
-        id:1,
+        id: 1,
         value: "workshops",
         text: "WorkShops"
       },
 
       {
-        id:2,
+        id: 2,
         value: "seminarios",
         text: "Seminários"
       },
@@ -113,7 +113,7 @@ export default new Vuex.Store({
       return state.bolsas;
     },
 
-    getEvents: (state)=>{
+    getEvents: (state) => {
       return state.events
     },
 
@@ -121,39 +121,52 @@ export default new Vuex.Store({
       return state.eventTypes
     },
 
-    getEventLocations: (state) =>{  
+    getEventLocations: (state) => {
 
       let eventCitys = []
-      state.events.forEach(event=>{
+      state.events.forEach(event => {
 
-        eventCitys.some(existingEvent=>existingEvent.location.city == event.location.city) ? {} : eventCitys.push(event.location.city)
+        eventCitys.some(existingEvent => existingEvent.location.city == event.location.city) ? {} : eventCitys.push(event.location.city)
       })
 
       return eventCitys
     },
 
-    getTestimonys : state =>{
+    getTestimonys: state => {
       return state.testimonys
     },
-    
-    getBolsaById: (state) =>(id) =>{
+
+    getBolsaById: (state) => (id) => {
       const bolsaById = state.bolsas.find(
         (bolsa) => bolsa.id === id
       )
       return bolsaById
     },
-    getBolsasFiltered: (state) => (category,locality ) => {
-      
+    getBolsasFiltered: (state) => (category, locality, _sort) => {
+      /*
       const cards_filtered = state.bolsas.filter(
         (bolsa) => bolsa.category == category || category =="all"
       );
       return cards_filtered .filter(
         bolsa => bolsa.locality.toUpperCase().includes(locality)
-     )
+     )*/
+      const cards_filtered = state.bolsas.filter(
+        (bolsa) => bolsa.category == category || category == "all"
+      );
+      const cards_filter1 = cards_filtered.filter(
+        bolsa => bolsa.locality.toUpperCase().includes(locality))
+        return cards_filter1.sort((a, b) =>{
+          if (a.date > b.date) return -1 * _sort;
+          if (a.date < b.date) return 1 * _sort;
+          return 0;
+        })
+        
+
       
-      
-     
-     
+
+
+
+
     },
   },
   actions: {
@@ -256,7 +269,7 @@ export default new Vuex.Store({
     },
     EDITAR(state, editarPayload) {
       /* Atualizar os dados do utilizador que esta logado no array de utilizadores */
-      state.users.map(function(user) {
+      state.users.map(function (user) {
         if (user.numeroEstudante === state.loggedUser.numeroEstudante) {
           user.descricao = editarPayload.descricao;
           user.morada = editarPayload.morada;
@@ -267,7 +280,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar tools e skills do utilizador */
-      state.usersSkills.map(function(userSkill) {
+      state.usersSkills.map(function (userSkill) {
         if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
