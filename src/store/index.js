@@ -11,6 +11,9 @@ export default new Vuex.Store({
     usersSkills: localStorage.getItem("usersSkills")
       ? JSON.parse(localStorage.getItem("usersSkills"))
       : [],
+    usersNetwork: localStorage.getItem("usersNetwork")
+      ? JSON.parse(localStorage.getItem("usersNetwork"))
+      : [],
     skills: localStorage.getItem("skills")
       ? JSON.parse(localStorage.getItem("skills"))
       : [
@@ -111,6 +114,27 @@ export default new Vuex.Store({
           userSkill.numeroEstudante === state.loggedUser.numeroEstudante
       );
       return userSkills;
+    },
+    isAlumniInLoggedUserNetwork: state => numeroEstudante => {
+      let alumniInLoggedUsedNetwork = false;
+
+      let loggedUserNetwork = state.usersNetwork.find(
+        userNetwork =>
+          parseInt(userNetwork.numeroEstudante) ===
+          parseInt(state.loggedUser.numeroEstudante)
+      );
+
+      if (loggedUserNetwork !== undefined) {
+        let result = loggedUserNetwork.networking.find(
+          network => parseInt(network) === parseInt(numeroEstudante)
+        );
+
+        if (result !== undefined) {
+          alumniInLoggedUsedNetwork = true;
+        }
+      }
+
+      return alumniInLoggedUsedNetwork;
     },
 
     getCategoriesForSelect: state =>
@@ -232,6 +256,20 @@ export default new Vuex.Store({
           "usersSkills",
           JSON.stringify(context.state.usersSkills)
         );
+
+        /* Depois de criar uma conta para o alumni temos
+           que criar uma referencia do networking deste novo
+           alumni
+        */
+        context.commit("REGISTER_NETWORKING", {
+          /* Quando o utilizador se regista não tem nenhuma skill! */
+          numeroEstudante: payload.numeroEstudante,
+          networking: [] /* Vai ter os numero de estudante dos alumnis que o utilizador segue */
+        });
+        localStorage.setItem(
+          "usersNetwork",
+          JSON.stringify(context.state.usersNetwork)
+        );
       } else {
         /* O user já existe, por isso damos erro. */
         throw "O numero de estudante já esta registrado.";
@@ -258,6 +296,22 @@ export default new Vuex.Store({
         localStorage.setItem("loggedUser", JSON.stringify(user));
       }
     },
+    unFollowAlumni(context, payload) {
+      /* Editar os dados  */
+      context.commit("UNFOLLOW_ALUMNI", payload);
+      localStorage.setItem(
+        "usersNetwork",
+        JSON.stringify(context.state.usersNetwork)
+      );
+    },
+    followAlumni(context, payload) {
+      /* Editar os dados  */
+      context.commit("FOLLOW_ALUMNI", payload);
+      localStorage.setItem(
+        "usersNetwork",
+        JSON.stringify(context.state.usersNetwork)
+      );
+    },
     saveBolsa(context, bolsa) {
       context.commit("SAVE_BOLSA", bolsa);
     },
@@ -280,6 +334,30 @@ export default new Vuex.Store({
     },
     REGISTER_SKILLS(state, userSkillData) {
       state.usersSkills.push(userSkillData);
+    },
+    REGISTER_NETWORKING(state, userNetworkData) {
+      state.usersNetwork.push(userNetworkData);
+    },
+    UNFOLLOW_ALUMNI(state, numeroEstudante) {
+      /* Actualizar tools e skills do utilizador */
+      state.usersNetwork.map(function(userNetwork) {
+        if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
+          userNetwork.networking = userNetwork.networking.filter(
+            networkingNumeroEstudante =>
+              networkingNumeroEstudante != numeroEstudante
+          );
+        }
+        return userNetwork;
+      });
+    },
+    FOLLOW_ALUMNI(state, numeroEstudante) {
+      /* Actualizar tools e skills do utilizador */
+      state.usersNetwork.map(function(userNetwork) {
+        if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
+          userNetwork.networking.push(numeroEstudante);
+        }
+        return userNetwork;
+      });
     },
     EDITAR(state, editarPayload) {
       /* Atualizar os dados do utilizador que esta logado no array de utilizadores */

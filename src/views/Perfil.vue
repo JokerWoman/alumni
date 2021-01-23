@@ -31,7 +31,31 @@
                     >
                   </template>
                   <template v-else>
-                    <button class="btn btn-primary">Seguir</button>
+                    <template
+                      v-if="
+                        verifyAlumniInNetwork(
+                          getUserInfomation.numeroEstudante
+                        ) === true
+                      "
+                    >
+                      <b-button
+                        class="btn btn-primary"
+                        variant="danger"
+                        style="width:180px;"
+                        v-on:click="UnFollow(getUserInfomation.numeroEstudante)"
+                      >
+                        Deixar de seguir
+                      </b-button>
+                    </template>
+                    <template v-else>
+                      <button
+                        class="btn btn-primary"
+                        style="width:180px;"
+                        v-on:click="Follow(getUserInfomation.numeroEstudante)"
+                      >
+                        Seguir
+                      </button>
+                    </template>
                   </template>
                 </div>
               </div>
@@ -281,6 +305,17 @@ export default {
     },
     getUserLoggedInformation() {
       return this.$store.getters.getLoggedUser;
+    }
+  },
+  methods: {
+    verifyAlumniInNetwork(numeroEstudante) {
+      return this.$store.getters.isAlumniInLoggedUserNetwork(numeroEstudante);
+    },
+    UnFollow(numeroEstudante) {
+      this.$store.dispatch("unFollowAlumni", numeroEstudante);
+    },
+    Follow(numeroEstudante) {
+      this.$store.dispatch("followAlumni", numeroEstudante);
     }
   }
 };
