@@ -20,39 +20,79 @@ export default new Vuex.Store({
     cursos: localStorage.getItem("cursos")
       ? JSON.parse(localStorage.getItem("cursos"))
       : [
-          { title: "Licenciatura em Fotografia" },
-          { title: "Licenciatura em Multimédia" },
-          {
-            title:
-              "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
-          },
-          { title: "Mestrado em Design" },
-          { title: "Mestrado em Sistemas e Media Interativos" }
-        ],
+        { title: "Licenciatura em Fotografia" },
+        { title: "Licenciatura em Multimédia" },
+        {
+          title:
+            "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
+        },
+        { title: "Mestrado em Design" },
+        { title: "Mestrado em Sistemas e Media Interativos" }
+      ],
     skills: localStorage.getItem("skills")
       ? JSON.parse(localStorage.getItem("skills"))
       : [
-          { title: "Web Design" },
-          { title: "Website Markup" },
-          { title: "One Page" },
-          { title: "Mobile Template" },
-          { title: "Backend API" }
-        ],
+        { title: "Web Design" },
+        { title: "Website Markup" },
+        { title: "One Page" },
+        { title: "Mobile Template" },
+        { title: "Backend API" }
+      ],
     tools: localStorage.getItem("tools")
       ? JSON.parse(localStorage.getItem("tools"))
       : [
-          { title: "Adobe Illustrator" },
-          { title: "Adobe Photoshop" },
-          { title: "Adobe After Effects" },
-          { title: "Adobe Premiere" },
-          { title: "Adobe XD" }
-        ],
+        { title: "Adobe Illustrator" },
+        { title: "Adobe Photoshop" },
+        { title: "Adobe After Effects" },
+        { title: "Adobe Premiere" },
+        { title: "Adobe XD" }
+      ],
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
       : "",
     bolsas: localStorage.getItem("bolsas")
       ? JSON.parse(localStorage.getItem("bolsas"))
-      : [],
+      : [
+        {
+          id: 1,
+          title: "Oferta Blip",
+          category: 2,
+          description: "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
+          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2wT80KxmAt4CeKITCbU05jwDyr-MDJbkz1Q&usqp=CAU",
+          locality: "Porto",
+          date: "2021-01-20",
+          phone: "932499526",
+          email:"communications@blip.pt",
+          linkBolsa:"https://blip.pt/contact-us/",
+          estado:"ativo"
+        },
+        {
+          id: 2,
+          title: "DesignMasters",
+          category: 1,
+          description: "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+          img: "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
+          locality: "Braga",
+          date: "2021-01-22",
+          phone: "913845397",
+          email:"communications@designmasters.pt",
+          linkBolsa:"https://blip.pt/contact-us/",
+          estado:"ativo"
+        },
+        {
+          id: 3,
+          title: "DesignMasters (Estágio)",
+          category: 3,
+          description: "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+          img: "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
+          locality: "Braga",
+          date: "2021-01-24",
+          phone: "913845397",
+          email:"communications@designmasters.pt",
+          linkBolsa:"https://blip.pt/contact-us/",
+          estado:"ativo"
+        }
+      ],
 
     testimonys: localStorage.getItem("testimonys")
       ? JSON.parse(localStorage.getItem("testimonys"))
@@ -65,15 +105,16 @@ export default new Vuex.Store({
     categories: [
       {
         id: 1,
-        name: "Bolsas de emprego"
+        name: "Full-Time"
       },
+
       {
         id: 2,
-        name: "Estágios Profissionais"
+        name: "Part-Time"
       },
       {
         id: 3,
-        name: "Part-time"
+        name: "Estágios Profissionais"
       }
     ],
 
@@ -391,7 +432,7 @@ export default new Vuex.Store({
     },
     UNFOLLOW_ALUMNI(state, numeroEstudante) {
       /* Actualizar tools e skills do utilizador */
-      state.usersNetwork.map(function(userNetwork) {
+      state.usersNetwork.map(function (userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking = userNetwork.networking.filter(
             networkingNumeroEstudante =>
@@ -403,7 +444,7 @@ export default new Vuex.Store({
     },
     FOLLOW_ALUMNI(state, numeroEstudante) {
       /* Actualizar tools e skills do utilizador */
-      state.usersNetwork.map(function(userNetwork) {
+      state.usersNetwork.map(function (userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking.push(numeroEstudante);
         }
@@ -412,7 +453,7 @@ export default new Vuex.Store({
     },
     EDITAR(state, editarPayload) {
       /* Atualizar os dados do utilizador que esta logado no array de utilizadores */
-      state.users.map(function(user) {
+      state.users.map(function (user) {
         if (user.numeroEstudante === state.loggedUser.numeroEstudante) {
           user.descricao = editarPayload.descricao;
           user.morada = editarPayload.morada;
@@ -423,7 +464,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar tools e skills do utilizador */
-      state.usersSkills.map(function(userSkill) {
+      state.usersSkills.map(function (userSkill) {
         if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
@@ -436,7 +477,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar os cursos do utilizador */
-      state.usersCursosHistorico.map(function(userCursoHistorico) {
+      state.usersCursosHistorico.map(function (userCursoHistorico) {
         if (
           userCursoHistorico.numeroEstudante ===
           state.loggedUser.numeroEstudante

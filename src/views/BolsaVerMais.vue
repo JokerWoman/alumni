@@ -26,7 +26,7 @@
             <div>
               <div class="row">
                 <div class="col-sm-3">
-                  <h2 class="mb-0" style="margin-left: 250px">
+                  <h2 class="mb-0" style="margin-left: 220px">
                     {{ getBolsa.title }}
                   </h2>
                 </div>
@@ -35,15 +35,16 @@
 
               <div style="height: 200px">
                 <p style="width: 90%">{{ getBolsa.description }}</p>
+
+                <br />
+                <p>CTT: {{ getBolsa.phone }}</p>
+                <p>Email: {{ getBolsa.email }}</p>
               </div>
               <br />
               <br />
-              <a
-                href="#"
-                class="btn btn-primary"
-                style="margin-left: 200px; background-color: #2b4c8c"
-                >Responder à Oferta</a
-              >
+              <button @click="openOferta()"  class="btn btn-primary"
+                style="margin-left: 200px; background-color: #2b4c8c">Responder à Oferta</button>
+              
             </div>
           </div>
         </div>
@@ -55,12 +56,16 @@
 <script>
 export default {
   name: "BolsaVerMais",
-  methods: {},
+  methods: {
+    openOferta() {
+      window.open(this.getBolsa.linkBolsa);
+    },
+  },
   computed: {
     getBolsa() {
       return this.$store.getters.getBolsaById(this.$route.params.bolsaId);
-    }
-  }
+    },
+  },
 };
 </script>
 
