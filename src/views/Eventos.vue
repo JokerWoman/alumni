@@ -100,7 +100,8 @@
       <br><br><br>
       <b-container>
         <b-row >
-          <b-card-group columns >
+          <b-card-group 
+          style="margin:20px">
             <EventCard
               v-for="event in getEvents"
               :key="event.id"

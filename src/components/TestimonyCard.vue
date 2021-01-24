@@ -1,15 +1,23 @@
 <template>
     <b-card
+        align="center"
         :img-src="testimony.img"
         img-top
-        tag="article"
         :id="`cardTestimony${testimony.id}`"
+        img-height="200px"
+        style="width: 200px; margin-left:50px; margin-right:50px" 
     >
-    <b-card-img> {{ testimony.img }}</b-card-img>
-    <b-card-title> {{ testimony.name }}</b-card-title>
-    <b-card-text> {{ testimony.description }}</b-card-text>
+    <b-card-text style="color:#FF7F61; margin-bottom: 5px; font-size: 20px ">{{testimony.name}} </b-card-text>
+    <b-card-text >{{testimony.description}}</b-card-text>
   </b-card>
 </template>
+
+<style>
+
+    .b-card-image{
+        object-fit: cover
+    }
+</style>
 
 <script>
 

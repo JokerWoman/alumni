@@ -116,7 +116,26 @@ export default new Vuex.Store({
 
     testimonys: localStorage.getItem("testimonys")
       ? JSON.parse(localStorage.getItem("testimonys"))
-      : [],
+      : [
+        {
+          id:1,
+          name:"Marco Marques",
+          img:"https://pbs.twimg.com/profile_images/1280492884555415564/NwD5J2HM_400x400.jpg",
+          description:"Adoro o Alumni Esmad! Sem duvida que recomendo."
+        },
+        {
+          id:2,
+          name:"Tiago Mayan",
+          img:"https://upload.wikimedia.org/wikipedia/commons/a/a9/Tiago_Mayan.png",
+          description:"Bastou umas horas para arranjar o meu emprego de sonho."
+        },
+        {
+          id:3,
+          name:"Ana Gomes",
+          img:"https://pbs.twimg.com/profile_images/1312889865055412225/BTC3W6t5_400x400.jpg",
+          description:"Graças ao Alumni Esmad consegui localizar os meus ex colegas!"
+        }
+        ],
 
     events: localStorage.getItem("events")
       ? JSON.parse(localStorage.getItem("events"))

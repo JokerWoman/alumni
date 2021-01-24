@@ -1,13 +1,26 @@
 <template>
-  <div class="home">
+<div>
+  <b-container fluid>
     <b-img right src="@/assets/img/home.png" class="img-responsive w-75">
     </b-img>
 
     <div id="layer"></div>
+  </b-container>
+  
+    <b-container
+    style="background-color: #2B4C8C; height:450px;"
+    fluid
+    >
+    <div
+    style="background-color: #FF7F61; margin-top: 0px; width: 160px; height: 41px; padding:7px"
+    >
+    <h4 style="color:white;">Testemunhas</h4>
+    </div>
 
-    <b-container>
       <b-row>
-        <b-card-group columns>
+        <b-card-group
+        style="margin:20px"
+        >
           <TestimonyCard
             v-for="testimony in getTestimonys"
             :key="testimony.id"
@@ -16,7 +29,7 @@
         </b-card-group>
       </b-row>
     </b-container>
-  </div>
+</div>
 </template>
 
 <style>
