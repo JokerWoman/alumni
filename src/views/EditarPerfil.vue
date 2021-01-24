@@ -40,107 +40,41 @@
             </div>
           </div>
           <div class="card mt-3">
+            <button
+              v-if="getLinksAvailableForUser.length > 0"
+              class="btn"
+              style="margin-top:-8px;"
+              @click="modal.usersLinksModal = true"
+            >
+              Add +
+            </button>
+
+            <LinkModal
+              @close="modal.usersLinksModal = false"
+              :showModal="modal.usersLinksModal"
+              modalTitle="Adicionar Links"
+              :links="getLinksAvailableForUser"
+            ></LinkModal>
+
             <ul class="list-group list-group-flush">
               <li
+                v-for="(link, index) in editarData.editUsersLinks[0].links"
+                v-bind:key="index"
                 class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
               >
                 <h6 class="mb-0">
-                  <img
-                    class="icon_perfil"
-                    src="https://images.vexels.com/media/users/3/205387/isolated/preview/9e5a4a16e78a187fc3e47fc6e2c5f03a-internet-website-icon-stroke-by-vexels.png"
-                  />
-                  Website
-                </h6>
-                <span class="text-secondary">"TODO"</span>
-              </li>
-              <li
-                class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
-              >
-                <h6 class="mb-0">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-github mr-2 icon-inline"
+                  <button
+                    style="margin-top:-5px;width:5px;"
+                    class="p-2 btn"
+                    v-on:click="RemoveLink(link.title)"
                   >
-                    <path
-                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                    ></path></svg
-                  >Github
+                    x
+                  </button>
+                  {{ link.title }}
                 </h6>
-                <span class="text-secondary">"TODO"</span>
-              </li>
-              <li
-                class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
-              >
-                <h6 class="mb-0">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-twitter mr-2 icon-inline text-info"
-                  >
-                    <path
-                      d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
-                    ></path></svg
-                  >Twitter
-                </h6>
-                <span class="text-secondary">"TODO"</span>
-              </li>
-              <li
-                class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
-              >
-                <h6 class="mb-0">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-instagram mr-2 icon-inline text-danger"
-                  >
-                    <rect
-                      x="2"
-                      y="2"
-                      width="20"
-                      height="20"
-                      rx="5"
-                      ry="5"
-                    ></rect>
-                    <path
-                      d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
-                    ></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg
-                  >Instagram
-                </h6>
-                <span class="text-secondary">"TODO"</span>
-              </li>
-              <li
-                class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
-              >
-                <h6 class="mb-0">
-                  <img
-                    class="icon_perfil"
-                    src="https://i.pinimg.com/originals/1b/60/f9/1b60f9d42fd84e31b304d5e7779cccfd.png"
-                  />Facebook
-                </h6>
-                <span class="text-secondary">"TODO"</span>
+                <a class="text-secondary" :href="link.href">
+                  {{ LimitNumberCharsLinkSize(link.href) }}
+                </a>
               </li>
             </ul>
           </div>
@@ -356,13 +290,15 @@
 import Competence from "../components/Competence";
 import CompetenceModal from "../components/CompetenceModal";
 import CursoModal from "../components/CursoModal";
+import LinkModal from "../components/LinkModal";
 
 export default {
   name: "EditarPerfil",
   components: {
     Competence,
     CompetenceModal,
-    CursoModal
+    CursoModal,
+    LinkModal
   },
   data() {
     return {
@@ -371,12 +307,14 @@ export default {
         telemovel: this.$store.getters.getLoggedUser.telemovel,
         descricao: this.$store.getters.getLoggedUser.descricao,
         editUsersSkills: [],
-        editUsersCursosHistorico: []
+        editUsersCursosHistorico: [],
+        editUsersLinks: []
       },
       modal: {
         userToolsModal: false,
         userSkillsModal: false,
-        usersCursosHistoricoModal: false
+        usersCursosHistoricoModal: false,
+        usersLinksModal: false
       }
     };
   },
@@ -387,8 +325,21 @@ export default {
     this.editarData.editUsersCursosHistorico = this.$store.getters.getUsersCursosHistoricoByNumeroEstudante(
       this.$store.getters.getLoggedUser.numeroEstudante
     );
+
+    this.editarData.editUsersLinks = this.$store.getters.getUsersLinksByNumeroEstudante(
+      this.$store.getters.getLoggedUser.numeroEstudante
+    );
   },
   computed: {
+    getLinksAvailableForUser() {
+      let allLinksAvailable = this.$store.getters.getLinksAvailable;
+      let linksUserHasAlready = this.editarData.editUsersLinks[0].links;
+      return allLinksAvailable.filter(function(link) {
+        return !linksUserHasAlready.some(
+          linkUserHas => linkUserHas.title === link.title
+        );
+      });
+    },
     getCursosAvailableForUser() {
       let allCursosAvailable = this.$store.getters.getCursosAvailable;
       let cursosUserHasAlready = this.editarData.editUsersCursosHistorico[0]
@@ -417,6 +368,20 @@ export default {
     }
   },
   methods: {
+    RemoveLink(linkTitle) {
+      this.editarData.editUsersLinks[0].links = this.editarData.editUsersLinks[0].links.filter(
+        link => link.title != linkTitle
+      );
+      console.log("RemoveLink: " + linkTitle);
+    },
+    AddLink(title, href) {
+      this.editarData.editUsersLinks[0].links.push({
+        title: title,
+        href: href
+      });
+      console.log("AddLink: " + title + "  " + href);
+    },
+
     RemoveCurso(cursoTitle) {
       this.editarData.editUsersCursosHistorico[0].cursos = this.editarData.editUsersCursosHistorico[0].cursos.filter(
         curso => curso.title != cursoTitle
@@ -480,6 +445,12 @@ export default {
       console.log(
         "competenceChanged" + title + "  " + type + "  " + percentagem
       );
+    },
+    LimitNumberCharsLinkSize(link) {
+      if (link.length > 15) {
+        link = link.substr(0, 15) + "...";
+      }
+      return link;
     },
     editar() {
       try {
