@@ -95,7 +95,12 @@
                   <label class="mb-1">
                     <h6 class="mb-0 text-sm">Data de nascimento</h6>
                   </label>
-                  <input class="mb-4" type="date" v-model="registo.data_Nasc" />
+                  <input
+                    class="mb-4"
+                    type="date"
+                    v-model="registo.data_Nasc"
+                    required
+                  />
                 </div>
 
                 <div class="col-lg-6">

@@ -11,9 +11,24 @@ export default new Vuex.Store({
     usersSkills: localStorage.getItem("usersSkills")
       ? JSON.parse(localStorage.getItem("usersSkills"))
       : [],
+    usersCursosHistorico: localStorage.getItem("usersCursosHistorico")
+      ? JSON.parse(localStorage.getItem("usersCursosHistorico"))
+      : [],
     usersNetwork: localStorage.getItem("usersNetwork")
       ? JSON.parse(localStorage.getItem("usersNetwork"))
       : [],
+    cursos: localStorage.getItem("cursos")
+      ? JSON.parse(localStorage.getItem("cursos"))
+      : [
+          { title: "Licenciatura em Fotografia" },
+          { title: "Licenciatura em Multimédia" },
+          {
+            title:
+              "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
+          },
+          { title: "Mestrado em Design" },
+          { title: "Mestrado em Sistemas e Media Interativos" }
+        ],
     skills: localStorage.getItem("skills")
       ? JSON.parse(localStorage.getItem("skills"))
       : [
@@ -80,6 +95,9 @@ export default new Vuex.Store({
     getToolsAvailable: state =>
       state.tools /* Get de todas as tools que podem ser adicionadas no perfil de um utilizador */,
 
+    getCursosAvailable: state =>
+      state.cursos /* Get de todos os cursos que podem ser adicionados no perfil de um utilizador */,
+
     getSkillsAvailable: state =>
       state.skills /* Get de todas as skills que podem ser adicionadas no perfil de um utilizador */,
 
@@ -107,13 +125,14 @@ export default new Vuex.Store({
       );
       return userSkills;
     },
-    getLoggedUserSkills: state => {
-      /* Get de todas as skills e tools que já estão adicionadas no perfil do utilizador logged */
-      let userSkills = state.usersSkills.filter(
-        userSkill =>
-          userSkill.numeroEstudante === state.loggedUser.numeroEstudante
+    getUsersCursosHistoricoByNumeroEstudante: state => numeroEstudante => {
+      /* Get de todos os cursos que já estão adicionadas no perfil de um estudante */
+      let usersCursosHistorico = state.usersCursosHistorico.filter(
+        cursosHistorico =>
+          parseInt(cursosHistorico.numeroEstudante) ===
+          parseInt(numeroEstudante)
       );
-      return userSkills;
+      return usersCursosHistorico;
     },
     isAlumniInLoggedUserNetwork: state => numeroEstudante => {
       let alumniInLoggedUsedNetwork = false;
@@ -270,6 +289,20 @@ export default new Vuex.Store({
           "usersNetwork",
           JSON.stringify(context.state.usersNetwork)
         );
+
+        /* Depois de criar uma conta para o alumni temos
+           que criar uma lista de cursos deste novo
+           alumni
+          */
+        context.commit("REGISTER_CURSOS", {
+          /* Quando o utilizador se regista não tem nenhuma skill! */
+          numeroEstudante: payload.numeroEstudante,
+          cursos: [] /* Vai ter os titulos dos cursos e o ano da conclusão */
+        });
+        localStorage.setItem(
+          "usersCursosHistorico",
+          JSON.stringify(context.state.usersCursosHistorico)
+        );
       } else {
         /* O user já existe, por isso damos erro. */
         throw "O numero de estudante já esta registrado.";
@@ -284,6 +317,12 @@ export default new Vuex.Store({
       localStorage.setItem(
         "usersSkills",
         JSON.stringify(context.state.usersSkills)
+      );
+
+      /* Actualizar os cursos */
+      localStorage.setItem(
+        "usersCursosHistorico",
+        JSON.stringify(context.state.usersCursosHistorico)
       );
 
       /* Atualizar o logged user com os novos dados no loggedUser*/
@@ -335,6 +374,9 @@ export default new Vuex.Store({
     REGISTER_SKILLS(state, userSkillData) {
       state.usersSkills.push(userSkillData);
     },
+    REGISTER_CURSOS(state, userCursoHistoricoData) {
+      state.usersCursosHistorico.push(userCursoHistoricoData);
+    },
     REGISTER_NETWORKING(state, userNetworkData) {
       state.usersNetwork.push(userNetworkData);
     },
@@ -381,6 +423,21 @@ export default new Vuex.Store({
           };
         } else {
           return userSkill;
+        }
+      });
+
+      /* Actualizar os cursos do utilizador */
+      state.usersCursosHistorico.map(function(userCursoHistorico) {
+        if (
+          userCursoHistorico.numeroEstudante ===
+          state.loggedUser.numeroEstudante
+        ) {
+          return {
+            numeroEstudante: state.loggedUser.numeroEstudante,
+            cursos: editarPayload.editUsersCursosHistorico[0].cursos
+          };
+        } else {
+          return userCursoHistorico;
         }
       });
     },

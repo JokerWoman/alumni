@@ -14,8 +14,11 @@
                 />
                 <div class="mt-3">
                   <h4>{{ this.$store.getters.getLoggedUser.nome }}</h4>
-                  <p class="text-secondary mb-1">Licensiado em Multimédia</p>
-                  <p class="text-muted font-size-sm"></p>
+                  <textarea
+                    class="form-control"
+                    v-model="editarData.descricao"
+                    rows="3"
+                  ></textarea>
                   <button
                     v-on:click="editar"
                     class="btn btn-outline-primary pull-rigth"
@@ -188,17 +191,54 @@
 
           <div class="card mb-3">
             <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Sobre Mim</h6>
+              <div class="d-flex justify-content-between">
+                <div>
+                  <h6 class="d-flex align-items-center mb-3">
+                    <i class="material-icons text-info mr-2">Cursos</i>
+                  </h6>
                 </div>
-                <div class="col-sm-9 text-secondary text-justify">
-                  <textarea
-                    class="form-control"
-                    v-model="editarData.descricao"
-                    rows="3"
-                  ></textarea>
+                <div>
+                  <button
+                    v-if="getCursosAvailableForUser.length > 0"
+                    class="btn"
+                    style="margin-top:-8px;"
+                    @click="modal.usersCursosHistoricoModal = true"
+                  >
+                    Add +
+                  </button>
                 </div>
+              </div>
+
+              <CursoModal
+                @close="modal.usersCursosHistoricoModal = false"
+                :showModal="modal.usersCursosHistoricoModal"
+                modalTitle="Adicionar Cursos"
+                :cursos="getCursosAvailableForUser"
+              ></CursoModal>
+
+              <div
+                v-for="(cursoHistorico, index) in editarData
+                  .editUsersCursosHistorico[0].cursos"
+                v-bind:key="index"
+              >
+                <div class="row">
+                  <div class="col-sm-1">
+                    <button
+                      style="margin-top:-10px;width:5px;"
+                      class="p-2 btn"
+                      v-on:click="RemoveCurso(cursoHistorico.title)"
+                    >
+                      x
+                    </button>
+                  </div>
+                  <div class="col-sm-9">
+                    <h6 class="mb-0">{{ cursoHistorico.title }}</h6>
+                  </div>
+                  <div class="col-sm-2 text-secondary">
+                    {{ cursoHistorico.year }}
+                  </div>
+                </div>
+                <hr />
               </div>
             </div>
           </div>
@@ -305,12 +345,14 @@
 <script>
 import Competence from "../components/Competence";
 import CompetenceModal from "../components/CompetenceModal";
+import CursoModal from "../components/CursoModal";
 
 export default {
   name: "EditarPerfil",
   components: {
     Competence,
-    CompetenceModal
+    CompetenceModal,
+    CursoModal
   },
   data() {
     return {
@@ -318,18 +360,35 @@ export default {
         morada: this.$store.getters.getLoggedUser.morada,
         telemovel: this.$store.getters.getLoggedUser.telemovel,
         descricao: this.$store.getters.getLoggedUser.descricao,
-        editUsersSkills: []
+        editUsersSkills: [],
+        editUsersCursosHistorico: []
       },
       modal: {
         userToolsModal: false,
-        userSkillsModal: false
+        userSkillsModal: false,
+        usersCursosHistoricoModal: false
       }
     };
   },
   created: function() {
-    this.editarData.editUsersSkills = this.$store.getters.getLoggedUserSkills;
+    this.editarData.editUsersSkills = this.$store.getters.getUserSkillsByNumeroEstudante(
+      this.$store.getters.getLoggedUser.numeroEstudante
+    );
+    this.editarData.editUsersCursosHistorico = this.$store.getters.getUsersCursosHistoricoByNumeroEstudante(
+      this.$store.getters.getLoggedUser.numeroEstudante
+    );
   },
   computed: {
+    getCursosAvailableForUser() {
+      let allCursosAvailable = this.$store.getters.getCursosAvailable;
+      let cursosUserHasAlready = this.editarData.editUsersCursosHistorico[0]
+        .cursos;
+      return allCursosAvailable.filter(function(curso) {
+        return !cursosUserHasAlready.some(
+          cursoUserHas => cursoUserHas.title === curso.title
+        );
+      });
+    },
     getSkillsAvailableForUser() {
       let allSkillsAvailable = this.$store.getters.getSkillsAvailable;
       let skillsUserHas = this.editarData.editUsersSkills[0].skills;
@@ -348,6 +407,18 @@ export default {
     }
   },
   methods: {
+    RemoveCurso(cursoTitle) {
+      this.editarData.editUsersCursosHistorico[0].cursos = this.editarData.editUsersCursosHistorico[0].cursos.filter(
+        curso => curso.title != cursoTitle
+      );
+    },
+    AddCurso(title, year) {
+      this.editarData.editUsersCursosHistorico[0].cursos.push({
+        title: title,
+        year: year
+      });
+      console.log("AddCurso: " + title + "  " + year);
+    },
     competenceNew(title, type, percentagem) {
       if (type === "tool") {
         this.editarData.editUsersSkills[0].tools.push({

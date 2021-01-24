@@ -14,9 +14,9 @@
                 />
                 <div class="mt-3">
                   <h4>{{ getUserInfomation.nome }}</h4>
-                  <p class="text-secondary mb-1">Licensiado em Multimédia</p>
-                  <p class="text-muted font-size-sm"></p>
-
+                  <div class="col-sm-12 text-secondary text-justify">
+                    {{ getUserInfomation.descricao }}
+                  </div>
                   <template
                     v-if="
                       getUserLoggedInformation.numeroEstudante ===
@@ -220,12 +220,26 @@
           <div class="card mb-3">
             <div class="card-body">
               <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Sobre Mim</h6>
+                <div class="col-sm-12">
+                  <h6 class="d-flex align-items-center mb-3">
+                    <i class="material-icons text-info mr-2">Cursos</i>
+                  </h6>
                 </div>
-                <div class="col-sm-9 text-secondary text-justify">
-                  {{ getUserInfomation.descricao }}
+              </div>
+              <div
+                v-for="(cursoHistorico, index) in getUsersCursosHistorico[0]
+                  .cursos"
+                v-bind:key="index"
+              >
+                <div class="row">
+                  <div class="col-sm-10">
+                    <h6 class="mb-0">{{ cursoHistorico.title }}</h6>
+                  </div>
+                  <div class="col-sm-2 text-secondary">
+                    {{ cursoHistorico.year }}
+                  </div>
                 </div>
+                <hr />
               </div>
             </div>
           </div>
@@ -296,6 +310,12 @@ export default {
     getUserSkills() {
       let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
       return this.$store.getters.getUserSkillsByNumeroEstudante(
+        numeroEstudante
+      );
+    },
+    getUsersCursosHistorico() {
+      let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
+      return this.$store.getters.getUsersCursosHistoricoByNumeroEstudante(
         numeroEstudante
       );
     },
