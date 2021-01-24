@@ -5,7 +5,7 @@
         <div class="col-lg-6">
           <div class="card1 pb-5">
             <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
-              <img src="@/assets/img/login.jpg" class="img-fluid" />
+              <img src="@/assets/img/loginProfessor.jpg" class="img-fluid" />
             </div>
           </div>
         </div>
@@ -14,13 +14,9 @@
             <form @submit.prevent="login">
               <div class="row px-3">
                 <label class="mb-1">
-                  <h6 class="mb-0 text-sm">Numero de estudante</h6>
+                  <h6 class="mb-0 text-sm">Professor Username</h6>
                 </label>
-                <input
-                  class="mb-4"
-                  type="text"
-                  v-model="loginData.numeroEstudante"
-                />
+                <input class="mb-4" type="text" v-model="loginData.username" />
               </div>
               <div class="row px-3">
                 <label class="mb-1">
@@ -38,24 +34,7 @@
                   LOGIN
                 </button>
               </div>
-              <small class="font-weight-bold"
-                >Não tens conta?
-                <router-link class="text-danger " :to="{ name: 'Register' }"
-                  >Registar</router-link
-                >
-              </small>
             </form>
-
-            <div class="row mb-4 px-3">
-              <small class="font-weight-bold"
-                >És Professor?
-                <router-link
-                  class="text-danger "
-                  :to="{ name: 'LoginProfessor' }"
-                  >Entrar</router-link
-                >
-              </small>
-            </div>
           </div>
         </div>
       </div>
@@ -65,11 +44,11 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "LoginProfessor",
   data() {
     return {
       loginData: {
-        numeroEstudante: "",
+        username: "",
         password: ""
       },
       formErros: ""
@@ -81,7 +60,7 @@ export default {
         this.formErros = "";
 
         /* Chamar a ação disponivel no store */
-        this.$store.dispatch("login", this.$data.loginData);
+        this.$store.dispatch("loginProfessor", this.$data.loginData);
 
         /* Se o login falhar por alguma razão um trow vai ser lançado e o redirect
            da route para o home não vai ser executado */
