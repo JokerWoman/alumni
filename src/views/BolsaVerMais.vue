@@ -1,12 +1,55 @@
 <template>
-  <div id="bolsa">
-      Bolsa:{{$route.params.bolsaId}}
-    <h1>
-    {{getBolsa.title}}
-    </h1>
-    <img :src=getBolsa.img alt="">
-    <p>{{getBolsa.description}}</p>
-   
+  <div class="container">
+    <div class="main-body">
+      <div class="row gutters-sm">
+        <div class="col-lg-4 mb-3">
+          <div class="container" style="margin-top: 20px">
+            <div
+              style="
+                width: 250px;
+                height: 250px;
+                border-radius: 10%;
+                overflow: hidden;
+              "
+            >
+              <img
+                :src="getBolsa.img"
+                alt="Indisponivel"
+                width="250"
+                height="250"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="container">
+            <div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h2 class="mb-0" style="margin-left: 220px">
+                    {{ getBolsa.title }}
+                  </h2>
+                </div>
+              </div>
+              <br />
+
+              <div style="height: 200px">
+                <p style="width: 90%">{{ getBolsa.description }}</p>
+
+                <br />
+                <p>CTT: {{ getBolsa.phone }}</p>
+                <p>Email: {{ getBolsa.email }}</p>
+              </div>
+              <br />
+              <br />
+              <button @click="openOferta()"  class="btn btn-primary"
+                style="margin-left: 200px; background-color: #2b4c8c">Responder à Oferta</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -14,7 +57,9 @@
 export default {
   name: "BolsaVerMais",
   methods: {
-   
+    openOferta() {
+      window.open(this.getBolsa.linkBolsa);
+    },
   },
   computed: {
     getBolsa() {
@@ -24,5 +69,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
