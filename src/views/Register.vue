@@ -95,7 +95,12 @@
                   <label class="mb-1">
                     <h6 class="mb-0 text-sm">Data de nascimento</h6>
                   </label>
-                  <input class="mb-4" type="date" v-model="registo.data_Nasc" />
+                  <input
+                    class="mb-4"
+                    type="date"
+                    v-model="registo.data_Nasc"
+                    required
+                  />
                 </div>
 
                 <div class="col-lg-6">
@@ -187,6 +192,10 @@ export default {
         }
         if (this.$data.registo.genero === "") {
           throw "Tem que selecionar algum genero.";
+        }
+
+        if (isNaN(this.$data.registo.numeroEstudante)) {
+          throw "O número de estudante só pode conter numeros.";
         }
 
         /* Chamar a ação disponivel no store */

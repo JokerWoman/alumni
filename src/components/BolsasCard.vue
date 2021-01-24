@@ -2,14 +2,18 @@
   <b-card
     :img-src="getBolsaImg"
     img-top
+    img-height="250;"
     tag="article"
     style="max-width: 20rem"
   >
     <b-card-img> {{ bolsa.img }}</b-card-img>
     <b-card-title>{{ bolsa.title }}</b-card-title>
-    <b-card-text> {{ bolsa.description }}</b-card-text>
-    <router-link :to="{name: 'BolsaVerMais', params:{bolsaId: bolsa.id}}"  class="btn btn-primary" variant="success"
-     >
+    <b-card-text> {{ getDescription(bolsa.description) }}</b-card-text>
+    <router-link
+      :to="{ name: 'BolsaVerMais', params: { bolsaId: bolsa.id } }"
+      class="btn btn-primary"
+      variant="success"
+    >
       VER MAIS
     </router-link>
     <b-button @click="deleteBolsa" variant="danger">Apagar</b-button>
@@ -20,12 +24,12 @@
 export default {
   name: "BolsasCard",
   props: {
-    bolsa: Object,
+    bolsa: Object
   },
   computed: {
     getBolsaImg() {
-      return this.bolsa.img
-    },
+      return this.bolsa.img;
+    }
   },
   methods: {
     deleteBolsa() {
@@ -34,6 +38,14 @@ export default {
         console.log("apagado");
       }
     },
-  },
+
+    getDescription(desc) {
+      if (desc.length < 30) {
+        return desc;
+      } else {
+        return `${desc.substr(0, [30])}...`;
+      }
+    }
+  }
 };
 </script>

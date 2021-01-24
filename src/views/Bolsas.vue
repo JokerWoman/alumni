@@ -1,7 +1,5 @@
 <template>
   <div id="bolsas" class="container">
-    <h1>Bolsas de Emprego</h1>
-
     <router-link
       class="btn btn-primary"
       style="margin-left: 10px"
@@ -11,6 +9,11 @@
     <br />
     <br />
     <b-row class="justify-content-md-center">
+      <b-col>
+        <p>Data</p>
+        <b-form-select v-model="optionSortSelected" :options="optionsSort">
+        </b-form-select>
+      </b-col>
       <b-col>
         <p>Localidade</p>
         <b-form-input
@@ -49,13 +52,26 @@ import BolsasCard from "../components/BolsasCard";
 export default {
   name: "Bolsas",
   components: {
-    BolsasCard,
+    BolsasCard
   },
 
   data() {
     return {
       categorySelected: "all",
-      locality:"",
+      locality: "",
+      optionSortSelected: 1,
+      optionsSort: [
+        {
+          value: 1,
+          text: "Mais Recentes"
+        },
+        {
+          value: -1,
+          text: "Mais Antigos"
+        }
+      ],
+
+      filterCategorySelected: "all"
     };
   },
   computed: {
@@ -63,17 +79,17 @@ export default {
     getBolsas() {
       return this.$store.getters.getBolsas;
     },*/
-    
+
     getBolsas() {
       return this.$store.getters.getBolsasFiltered(
         this.categorySelected,
-        this.locality
-        
+        this.locality.toUpperCase(),
+        this.optionSortSelected
       );
     },
     getCategories() {
       return this.$store.getters.getCategoriesForSelect;
-    },
-  },
+    }
+  }
 };
 </script>

@@ -7,23 +7,64 @@
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
                 <img
-                  src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                  v-if="getUserInfomation.genero === 'Masculino'"
+                  src="@/assets/img/usersFoto/homem.jpg"
+                  alt="Admin"
+                  class="rounded-circle"
+                  width="150"
+                />
+                <img
+                  v-else
+                  src="@/assets/img/usersFoto/mulher.jpg"
                   alt="Admin"
                   class="rounded-circle"
                   width="150"
                 />
                 <div class="mt-3">
-                  <h4>{{ this.$store.getters.getLoggedUser.nome }}</h4>
-                  <p class="text-secondary mb-1">Licensiado em Multimédia</p>
-                  <p class="text-muted font-size-sm"></p>
-                  <button class="btn btn-primary">Seguir</button>
-
-                  <router-link
-                    class="btn btn-outline-primary"
-                    style="margin-left:10px;"
-                    :to="{ name: 'EditarPerfil' }"
-                    >Editar Perfil</router-link
+                  <h4>{{ getUserInfomation.nome }}</h4>
+                  <div class="col-sm-12 text-secondary text-justify">
+                    {{ getUserInfomation.descricao }}
+                  </div>
+                  <template
+                    v-if="
+                      getUserLoggedInformation.numeroEstudante ===
+                        getUserInfomation.numeroEstudante
+                    "
                   >
+                    <router-link
+                      class="btn btn-outline-primary"
+                      style="margin-left:10px;"
+                      :to="{ name: 'EditarPerfil' }"
+                      >Editar Perfil</router-link
+                    >
+                  </template>
+                  <template v-else>
+                    <template
+                      v-if="
+                        verifyAlumniInNetwork(
+                          getUserInfomation.numeroEstudante
+                        ) === true
+                      "
+                    >
+                      <b-button
+                        class="btn btn-primary"
+                        variant="danger"
+                        style="width:180px;"
+                        v-on:click="UnFollow(getUserInfomation.numeroEstudante)"
+                      >
+                        Deixar de seguir
+                      </b-button>
+                    </template>
+                    <template v-else>
+                      <button
+                        class="btn btn-primary"
+                        style="width:180px;"
+                        v-on:click="Follow(getUserInfomation.numeroEstudante)"
+                      >
+                        Seguir
+                      </button>
+                    </template>
+                  </template>
                 </div>
               </div>
             </div>
@@ -142,7 +183,7 @@
                   <h6 class="mb-0">Numero de Estudante</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.numeroEstudante }}
+                  {{ getUserInfomation.numeroEstudante }}
                 </div>
               </div>
               <hr />
@@ -151,7 +192,7 @@
                   <h6 class="mb-0">Email</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.email }}
+                  {{ getUserInfomation.email }}
                 </div>
               </div>
               <hr />
@@ -160,7 +201,7 @@
                   <h6 class="mb-0">Telemóvel</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.telemovel }}
+                  {{ getUserInfomation.telemovel }}
                 </div>
               </div>
               <hr />
@@ -169,7 +210,7 @@
                   <h6 class="mb-0">Data Nacimento</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.data_Nasc }}
+                  {{ getUserInfomation.data_Nasc }}
                 </div>
               </div>
               <hr />
@@ -178,7 +219,7 @@
                   <h6 class="mb-0">Morada</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  {{ this.$store.getters.getLoggedUser.morada }}
+                  {{ getUserInfomation.morada }}
                 </div>
               </div>
             </div>
@@ -187,12 +228,26 @@
           <div class="card mb-3">
             <div class="card-body">
               <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Sobre Mim</h6>
+                <div class="col-sm-12">
+                  <h6 class="d-flex align-items-center mb-3">
+                    <i class="material-icons text-info mr-2">Cursos</i>
+                  </h6>
                 </div>
-                <div class="col-sm-9 text-secondary text-justify">
-                  {{ this.$store.getters.getLoggedUser.descricao }}
+              </div>
+              <div
+                v-for="(cursoHistorico, index) in getUsersCursosHistorico[0]
+                  .cursos"
+                v-bind:key="index"
+              >
+                <div class="row">
+                  <div class="col-sm-10">
+                    <h6 class="mb-0">{{ cursoHistorico.title }}</h6>
+                  </div>
+                  <div class="col-sm-2 text-secondary">
+                    {{ cursoHistorico.year }}
+                  </div>
                 </div>
+                <hr />
               </div>
             </div>
           </div>
@@ -208,7 +263,7 @@
                   </h6>
 
                   <div
-                    v-for="(skill, index) in usersSkills[0].skills"
+                    v-for="(skill, index) in getUserSkills[0].skills"
                     :key="index"
                   >
                     <Competence
@@ -231,7 +286,7 @@
                   </h6>
 
                   <div
-                    v-for="(tool, index) in usersSkills[0].tools"
+                    v-for="(tool, index) in getUserSkills[0].tools"
                     :key="index"
                   >
                     <Competence
@@ -258,13 +313,38 @@ export default {
   components: {
     Competence
   },
-  data() {
-    return {
-      usersSkills: []
-    };
+  created: function() {},
+  computed: {
+    getUserSkills() {
+      let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
+      return this.$store.getters.getUserSkillsByNumeroEstudante(
+        numeroEstudante
+      );
+    },
+    getUsersCursosHistorico() {
+      let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
+      return this.$store.getters.getUsersCursosHistoricoByNumeroEstudante(
+        numeroEstudante
+      );
+    },
+    getUserInfomation() {
+      let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
+      return this.$store.getters.getUserInformationByUsername(numeroEstudante);
+    },
+    getUserLoggedInformation() {
+      return this.$store.getters.getLoggedUser;
+    }
   },
-  created: function() {
-    this.usersSkills = this.$store.getters.getLoggedUserSkills;
+  methods: {
+    verifyAlumniInNetwork(numeroEstudante) {
+      return this.$store.getters.isAlumniInLoggedUserNetwork(numeroEstudante);
+    },
+    UnFollow(numeroEstudante) {
+      this.$store.dispatch("unFollowAlumni", numeroEstudante);
+    },
+    Follow(numeroEstudante) {
+      this.$store.dispatch("followAlumni", numeroEstudante);
+    }
   }
 };
 </script>
