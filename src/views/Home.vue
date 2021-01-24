@@ -54,7 +54,7 @@
     </b-container>
 
     <!----------- Footer ------------>
-    <footer>
+    <footer class="footer_custom">
       <div class="row">
         <div class="col-md-3 text-center">
           <img
@@ -114,4 +114,3 @@ export default {
 </script>
 
 <style src="./../assets/footer.css"></style>
-
