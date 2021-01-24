@@ -41,6 +41,44 @@
         <p v-else>Não há ofertas criadas!</p>
       </b-row>
     </b-container>
+
+    <!----------- Footer ------------>
+    <footer class="footer_custom">
+      <div class="row">
+        <div class="col-md-3 text-center">
+          <img
+            src="@/assets/logo.png"
+            class="img-fluid"
+            height="250px"
+            width="250px"
+            alt=""
+          />
+        </div>
+        <div class="col-md-4 footer-nav">
+          <h4>Outros Links —</h4>
+          <div class="col-md-6">
+            <ul>
+              <li><a href="">Cartão Alumni</a></li>
+              <li><a href="">FAQ's</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-5 footer-nav">
+          <h4>Localização —</h4>
+
+          <div class="col-md-6">
+            <ul>
+              <li>Escola Superior de Media Artes e Design</li>
+              <li>Campus 2 P.Porto ESMAD, 981, R.Dom Sancho l, 4480.876</li>
+              <hr />
+              <li>252 291 700</li>
+              <hr />
+              <li>academicos-campus2@sc.ipp.pt</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   </b-container>
 </template>
 
