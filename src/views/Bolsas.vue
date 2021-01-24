@@ -1,11 +1,6 @@
 <template>
   <div id="bolsas" class="container">
-    <router-link
-      class="btn btn-primary"
-      style="margin-left: 10px"
-      :to="{ name: 'AdicionarBolsa' }"
-      >Adicionar</router-link
-    >
+    
     <br />
     <br />
     <b-row class="justify-content-md-center">
