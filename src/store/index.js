@@ -5,6 +5,17 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    professors: localStorage.getItem("professors")
+      ? JSON.parse(localStorage.getItem("professors"))
+      : [
+          { username: "Admin", nome: "Mario Pinto", password: "Esmad_2021" },
+          {
+            username: "Admin2",
+            nome: "Ricardo Queirós",
+            password: "Esmad_2021"
+          },
+          { username: "Admin3", nome: "Jorgue Lima", password: "Esmad_2021" }
+        ],
     users: localStorage.getItem("users")
       ? JSON.parse(localStorage.getItem("users"))
       : [],
@@ -20,109 +31,121 @@ export default new Vuex.Store({
     cursos: localStorage.getItem("cursos")
       ? JSON.parse(localStorage.getItem("cursos"))
       : [
-        { title: "Licenciatura em Fotografia" },
-        { title: "Licenciatura em Multimédia" },
-        {
-          title:
-            "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
-        },
-        { title: "Mestrado em Design" },
-        { title: "Mestrado em Sistemas e Media Interativos" }
-      ],
+          { title: "Licenciatura em Fotografia" },
+          { title: "Licenciatura em Multimédia" },
+          {
+            title:
+              "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
+          },
+          { title: "Mestrado em Design" },
+          { title: "Mestrado em Sistemas e Media Interativos" }
+        ],
     skills: localStorage.getItem("skills")
       ? JSON.parse(localStorage.getItem("skills"))
       : [
-        { title: "Web Design" },
-        { title: "Website Markup" },
-        { title: "One Page" },
-        { title: "Mobile Template" },
-        { title: "Backend API" }
-      ],
+          { title: "Web Design" },
+          { title: "Website Markup" },
+          { title: "One Page" },
+          { title: "Mobile Template" },
+          { title: "Backend API" }
+        ],
     tools: localStorage.getItem("tools")
       ? JSON.parse(localStorage.getItem("tools"))
       : [
-        { title: "Adobe Illustrator" },
-        { title: "Adobe Photoshop" },
-        { title: "Adobe After Effects" },
-        { title: "Adobe Premiere" },
-        { title: "Adobe XD" }
-      ],
+          { title: "Adobe Illustrator" },
+          { title: "Adobe Photoshop" },
+          { title: "Adobe After Effects" },
+          { title: "Adobe Premiere" },
+          { title: "Adobe XD" }
+        ],
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
+      : "",
+    loggedProfessor: localStorage.getItem("loggedProfessor")
+      ? JSON.parse(localStorage.getItem("loggedProfessor"))
       : "",
     bolsas: localStorage.getItem("bolsas")
       ? JSON.parse(localStorage.getItem("bolsas"))
       : [
-        {
-          id: 1,
-          title: "Oferta Blip",
-          category: 2,
-          description: "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
-          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2wT80KxmAt4CeKITCbU05jwDyr-MDJbkz1Q&usqp=CAU",
-          locality: "Porto",
-          date: "2021-01-20",
-          phone: "932499526",
-          email:"communications@blip.pt",
-          linkBolsa:"https://blip.pt/contact-us/",
-          estado:"ativo"
-        },
-        {
-          id: 2,
-          title: "DesignMasters",
-          category: 1,
-          description: "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-          img: "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
-          locality: "Braga",
-          date: "2021-01-22",
-          phone: "913845397",
-          email:"communications@designmasters.pt",
-          linkBolsa:"https://blip.pt/contact-us/",
-          estado:"ativo"
-        },
-        {
-          id: 3,
-          title: "DesignMasters (Estágio)",
-          category: 3,
-          description: "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-          img: "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
-          locality: "Braga",
-          date: "2021-01-24",
-          phone: "913845397",
-          email:"communications@designmasters.pt",
-          linkBolsa:"https://blip.pt/contact-us/",
-          estado:"ativo"
-        }
-      ],
+          {
+            id: 1,
+            title: "Oferta Blip",
+            category: 2,
+            description:
+              "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
+            img:
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2wT80KxmAt4CeKITCbU05jwDyr-MDJbkz1Q&usqp=CAU",
+            locality: "Porto",
+            date: "2021-01-20",
+            phone: "932499526",
+            email: "communications@blip.pt",
+            linkBolsa: "https://blip.pt/contact-us/",
+            estado: "ativo"
+          },
+          {
+            id: 2,
+            title: "DesignMasters",
+            category: 1,
+            description:
+              "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+            img:
+              "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
+            locality: "Braga",
+            date: "2021-01-22",
+            phone: "913845397",
+            email: "communications@designmasters.pt",
+            linkBolsa: "https://blip.pt/contact-us/",
+            estado: "ativo"
+          },
+          {
+            id: 3,
+            title: "DesignMasters (Estágio)",
+            category: 3,
+            description:
+              "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+            img:
+              "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
+            locality: "Braga",
+            date: "2021-01-24",
+            phone: "913845397",
+            email: "communications@designmasters.pt",
+            linkBolsa: "https://blip.pt/contact-us/",
+            estado: "ativo"
+          }
+        ],
 
     testimonys: localStorage.getItem("testimonys")
       ? JSON.parse(localStorage.getItem("testimonys"))
       : [],
 
-    events: localStorage.getItem("events") 
-    ? JSON.parse(localStorage.getItem("events"))  
-    : [
-      {
-      id:1,
-      name:"Plug-IN",
-      type:"workshop",
-      location:{city : "Póvoa de Varzim"},
-      state:"active",
-      date:{day:"15-1-2020",hour:"1530"},
-      img:"https://www.esmad.ipp.pt/noticias/plug-in/image_large",
-      description:"Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
-      },
-      {
-        id:2,
-        name:"Web Summit",
-        type:"simeira",
-        location:{city : "Lisboa"},
-        state:"active",
-        date:{day:"15-1-2020",hour:"1530"},
-        img:"https://web-summit-library.imgix.net/websummit/2018/10/staffgroup.jpg?auto=compress%2Cformat&ixlib=php-1.2.1&s=bbfafdcad5b85917ee9eca631113e96b",
-        description:"A Web Summit é a maior conferência da Europa em tecnologias, realizada anualmente desde 2009. Aparece!"
-      }
-    ],
-    activeEvent:[],
+    events: localStorage.getItem("events")
+      ? JSON.parse(localStorage.getItem("events"))
+      : [
+          {
+            id: 1,
+            name: "Plug-IN",
+            type: "workshop",
+            location: { city: "Póvoa de Varzim" },
+            state: "active",
+            date: { day: "15-1-2020", hour: "1530" },
+            img: "https://www.esmad.ipp.pt/noticias/plug-in/image_large",
+            description:
+              "Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
+          },
+          {
+            id: 2,
+            name: "Web Summit",
+            type: "simeira",
+            location: { city: "Lisboa" },
+            state: "active",
+            date: { day: "15-1-2020", hour: "1530" },
+            img:
+              "https://web-summit-library.imgix.net/websummit/2018/10/staffgroup.jpg?auto=compress%2Cformat&ixlib=php-1.2.1&s=bbfafdcad5b85917ee9eca631113e96b",
+            description:
+              "A Web Summit é a maior conferência da Europa em tecnologias, realizada anualmente desde 2009. Aparece!"
+          }
+        ],
+    activeEvent: [],
 
     categories: [
       {
@@ -139,7 +162,6 @@ export default new Vuex.Store({
         name: "Estágios Profissionais"
       }
     ],
-
     eventTypes: [
       {
         id: 1,
@@ -148,17 +170,17 @@ export default new Vuex.Store({
       },
 
       {
-        id:2,
+        id: 2,
         value: "seminario",
         text: "Seminários"
       },
 
       {
-        id:3,
-        value:"simeira",
-        text:"Simeiras"
+        id: 3,
+        value: "simeira",
+        text: "Simeiras"
       }
-    ],
+    ]
   },
   getters: {
     getToolsAvailable: state =>
@@ -173,6 +195,11 @@ export default new Vuex.Store({
     getLoggedUser: state => state.loggedUser,
 
     isLoggedUser: state => (state.loggedUser == "" ? false : true),
+
+    getLoggedProfessor: state => state.loggedProfessor,
+
+    isLoggedProfessor: state => (state.loggedProfessor == "" ? false : true),
+
     getAllAlumnisInformationExceptLoggedUser: state => {
       return state.users.filter(
         user =>
@@ -253,20 +280,21 @@ export default new Vuex.Store({
       return state.eventTypes;
     },
 
-    getEventLocations: (state) =>{  
+    getEventLocations: state => {
+      let citys = [];
+      state.events.forEach(event => {
+        citys.some(obj => obj === event.location.city)
+          ? {}
+          : citys.push(event.location.city);
+      });
 
-      let citys = []
-      state.events.forEach(event=>{
-
-        citys.some(obj => obj === event.location.city) ? {} : citys.push(event.location.city)
-      })
-
-      return citys
+      return citys;
     },
 
-    getNextEventId: (state) =>{
-
-      return state.events.length ? state.events[state.events.length - 1].id + 1 : {}
+    getNextEventId: state => {
+      return state.events.length
+        ? state.events[state.events.length - 1].id + 1
+        : {};
     },
 
     getTestimonys: state => {
@@ -289,9 +317,32 @@ export default new Vuex.Store({
         if (a.date < b.date) return 1 * _sort;
         return 0;
       });
-    },
+    }
   },
   actions: {
+    loginProfessor(context, payload) {
+      /* Verificar se o user existe para efetuar o login */
+      const professor = context.state.professors.find(
+        professor =>
+          professor.username === payload.username &&
+          professor.password === payload.password
+      );
+      if (professor != undefined) {
+        /* Username e password estão match */
+        context.commit("LOGIN_PROFESSOR", professor);
+        localStorage.setItem(
+          "loggedUser",
+          JSON.stringify(context.state.loggedUser)
+        );
+        localStorage.setItem(
+          "loggedProfessor",
+          JSON.stringify(context.state.loggedProfessor)
+        );
+      } else {
+        /* Falhou login e fazemos throw de um erro */
+        throw "Professor Username ou palava passe inválidas!";
+      }
+    },
     login(context, payload) {
       /* Verificar se o user existe para efetuar o login */
       const user = context.state.users.find(
@@ -301,18 +352,29 @@ export default new Vuex.Store({
       );
       if (user != undefined) {
         /* numero de estudante e passord existem por isso
-                   login efectuado com sucesso 
-                */
-        context.commit("LOGIN", user);
-        localStorage.setItem("loggedUser", JSON.stringify(user));
+                           login efectuado com sucesso 
+                        */
+        context.commit("LOGIN_USER", user);
+        localStorage.setItem(
+          "loggedUser",
+          JSON.stringify(context.state.loggedUser)
+        );
+        localStorage.setItem(
+          "loggedProfessor",
+          JSON.stringify(context.state.loggedProfessor)
+        );
       } else {
         /* Falhou login e fazemos throw de um erro */
         throw "Numero de estudante ou palava passe inválidas!";
       }
     },
-    logout(context) {
-      context.commit("LOGOUT");
+    logoutUser(context) {
+      context.commit("LOGOUT_USER");
       localStorage.removeItem("loggedUser");
+    },
+    logoutProfessor(context) {
+      context.commit("LOGOUT_PROFESSOR");
+      localStorage.removeItem("loggedProfessor");
     },
     register(context, payload) {
       /* verificar se este user já existe */
@@ -326,14 +388,14 @@ export default new Vuex.Store({
       if (userWithSameEmail == undefined) {
         if (userWithSameNumeroEstudante == undefined) {
           /* numero de estudante não existe por isso
-                      podemos registar este novo numero de estudante 
-                    */
+                                podemos registar este novo numero de estudante 
+                              */
           context.commit("REGISTER", payload);
           localStorage.setItem("users", JSON.stringify(context.state.users));
 
           /* Depois de criar uma conta para o alumni temos
-              que criar uma referencia das suas skills vazia 
-            */
+                        que criar uma referencia das suas skills vazia 
+                      */
 
           context.commit("REGISTER_SKILLS", {
             /* Quando o utilizador se regista não tem nenhuma skill! */
@@ -347,9 +409,9 @@ export default new Vuex.Store({
           );
 
           /* Depois de criar uma conta para o alumni temos
-              que criar uma referencia do networking deste novo
-              alumni
-            */
+                        que criar uma referencia do networking deste novo
+                        alumni
+                      */
           context.commit("REGISTER_NETWORKING", {
             /* Quando o utilizador se regista não tem nenhuma skill! */
             numeroEstudante: payload.numeroEstudante,
@@ -361,9 +423,9 @@ export default new Vuex.Store({
           );
 
           /* Depois de criar uma conta para o alumni temos
-              que criar uma lista de cursos deste novo
-              alumni
-              */
+                        que criar uma lista de cursos deste novo
+                        alumni
+                        */
           context.commit("REGISTER_CURSOS", {
             /* Quando o utilizador se regista não tem nenhuma skill! */
             numeroEstudante: payload.numeroEstudante,
@@ -405,8 +467,11 @@ export default new Vuex.Store({
           user.numeroEstudante === context.state.loggedUser.numeroEstudante
       );
       if (user != undefined) {
-        context.commit("LOGIN", user);
-        localStorage.setItem("loggedUser", JSON.stringify(user));
+        context.commit("LOGIN_USER", user);
+        localStorage.setItem(
+          "loggedUser",
+          JSON.stringify(context.state.loggedUser)
+        );
       }
     },
     unFollowAlumni(context, payload) {
@@ -434,16 +499,24 @@ export default new Vuex.Store({
     saveTestimony(context, testimony) {
       context.commit("SAVE_TESTIMONY", testimony);
     },
-    createEvent(context,event){
-      context.commit("SAVE_EVENT",event)
+    createEvent(context, event) {
+      context.commit("SAVE_EVENT", event);
     }
   },
   mutations: {
-    LOGIN(state, user) {
-      state.loggedUser = user;
-    },
-    LOGOUT(state) {
+    LOGIN_PROFESSOR(state, professor) {
+      state.loggedProfessor = professor;
       state.loggedUser = "";
+    },
+    LOGIN_USER(state, user) {
+      state.loggedUser = user;
+      state.loggedProfessor = "";
+    },
+    LOGOUT_USER(state) {
+      state.loggedUser = "";
+    },
+    LOGOUT_PROFESSOR(state) {
+      state.loggedProfessor = "";
     },
     REGISTER(state, user) {
       state.users.push(user);
@@ -459,7 +532,7 @@ export default new Vuex.Store({
     },
     UNFOLLOW_ALUMNI(state, numeroEstudante) {
       /* Actualizar tools e skills do utilizador */
-      state.usersNetwork.map(function (userNetwork) {
+      state.usersNetwork.map(function(userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking = userNetwork.networking.filter(
             networkingNumeroEstudante =>
@@ -471,7 +544,7 @@ export default new Vuex.Store({
     },
     FOLLOW_ALUMNI(state, numeroEstudante) {
       /* Actualizar tools e skills do utilizador */
-      state.usersNetwork.map(function (userNetwork) {
+      state.usersNetwork.map(function(userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking.push(numeroEstudante);
         }
@@ -480,7 +553,7 @@ export default new Vuex.Store({
     },
     EDITAR(state, editarPayload) {
       /* Atualizar os dados do utilizador que esta logado no array de utilizadores */
-      state.users.map(function (user) {
+      state.users.map(function(user) {
         if (user.numeroEstudante === state.loggedUser.numeroEstudante) {
           user.descricao = editarPayload.descricao;
           user.morada = editarPayload.morada;
@@ -491,7 +564,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar tools e skills do utilizador */
-      state.usersSkills.map(function (userSkill) {
+      state.usersSkills.map(function(userSkill) {
         if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
@@ -504,7 +577,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar os cursos do utilizador */
-      state.usersCursosHistorico.map(function (userCursoHistorico) {
+      state.usersCursosHistorico.map(function(userCursoHistorico) {
         if (
           userCursoHistorico.numeroEstudante ===
           state.loggedUser.numeroEstudante
@@ -531,9 +604,9 @@ export default new Vuex.Store({
       state.testimonys.push(testimony);
       localStorage.setItem("testimonys", JSON.stringify(state.testimonys));
     },
-    SAVE_EVENT(state,event){
-      state.events.push(event)
-      localStorage.setItem("events", JSON.stringify(state.events))
+    SAVE_EVENT(state, event) {
+      state.events.push(event);
+      localStorage.setItem("events", JSON.stringify(state.events));
     }
   }
 });

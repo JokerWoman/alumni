@@ -12,16 +12,31 @@
           :class="{ active: $route.name === 'Home' }"
           >Alumni</b-nav-item
         >
-        <b-nav-item
-          :to="{ name: 'Eventos' }"
-          :class="{ active: $route.name === 'Eventos' }"
-          >Eventos</b-nav-item
-        >
-        <b-nav-item
-          :to="{ name: 'Bolsas' }"
-          :class="{ active: $route.name === 'Bolsas' }"
-          >Bolsas de Emprego</b-nav-item
-        >
+
+        <template v-if="this.$store.getters.isLoggedUser">
+          <b-nav-item
+            :to="{ name: 'Eventos' }"
+            :class="{ active: $route.name === 'Eventos' }"
+            >Eventos</b-nav-item
+          >
+          <b-nav-item
+            :to="{ name: 'Bolsas' }"
+            :class="{ active: $route.name === 'Bolsas' }"
+            >Bolsas de Emprego</b-nav-item
+          >
+        </template>
+        <template v-else-if="this.$store.getters.isLoggedProfessor">
+          <!-- Adicionem o nome das duas routes abaixo e o class
+               :to="{ name: 'Bolsas' }"
+               :class="{ active: $route.name === 'Bolsas' }" 
+          -->
+          <b-nav-item>Adicionar Eventos</b-nav-item>
+          <b-nav-item
+            :to="{ name: 'AdicionarBolsa' }"
+            :class="{ active: $route.name === 'AdicionarBolsa' }"
+            >Adicionar Bolsas de Emprego</b-nav-item
+          >
+        </template>
       </b-navbar-nav>
       <template v-if="this.$store.getters.isLoggedUser">
         <b-navbar-nav class="ml-auto">
@@ -48,7 +63,17 @@
               }"
               >Procurar Alumnis</b-dropdown-item
             >
-            <b-dropdown-item @click="logout()">Sair</b-dropdown-item>
+            <b-dropdown-item @click="logoutUser()">Sair</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </template>
+      <template v-else-if="this.$store.getters.isLoggedProfessor">
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown
+            :text="this.$store.getters.getLoggedProfessor.nome"
+            right
+          >
+            <b-dropdown-item @click="logoutProfessor()">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </template>
@@ -74,9 +99,17 @@
 export default {
   name: "NavBar",
   methods: {
-    logout() {
+    logoutUser() {
       /* Chamar a ação disponivel no store */
-      this.$store.dispatch("logout", this.$data);
+      this.$store.dispatch("logoutUser", this.$data);
+
+      /* O logout foi feito redirecionamos 
+            para o home*/
+      this.$router.push({ name: "Home" });
+    },
+    logoutProfessor() {
+      /* Chamar a ação disponivel no store */
+      this.$store.dispatch("logoutProfessor", this.$data);
 
       /* O logout foi feito redirecionamos 
             para o home*/

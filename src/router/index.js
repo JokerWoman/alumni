@@ -11,8 +11,15 @@ import store from "../store";
 import AdicionarBolsa from "../views/AdicionarBolsa.vue";
 import BolsaVerMais from "../views/BolsaVerMais.vue";
 import ProcurarAlumni from "../views/ProcurarAlumni.vue";
+import LoginProfessor from "../views/LoginProfessor.vue";
 
 Vue.use(VueRouter);
+
+/*
+  IMPORTANTE:
+  requiresUserAuth e requiresProfessorAuth nunca podem
+  estar os dois a true numa das routes! Apenas um a true!
+*/
 
 const routes = [
   {
@@ -20,7 +27,8 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
-      requiresAuth: false
+      requiresUserAuth: false,
+      requiresProfessorAuth: false
     }
   },
   {
@@ -28,7 +36,17 @@ const routes = [
     name: "Login",
     component: Login,
     meta: {
-      requiresAuth: false
+      requiresUserAuth: false,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/loginProfessor",
+    name: "LoginProfessor",
+    component: LoginProfessor,
+    meta: {
+      requiresUserAuth: false,
+      requiresProfessorAuth: false
     }
   },
   {
@@ -36,7 +54,8 @@ const routes = [
     name: "EditarPerfil",
     component: EditarPerfil,
     meta: {
-      requiresAuth: true
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
     }
   },
   {
@@ -44,7 +63,8 @@ const routes = [
     name: "Register",
     component: Register,
     meta: {
-      requiresAuth: false
+      requiresUserAuth: false,
+      requiresProfessorAuth: false
     }
   },
   {
@@ -52,7 +72,8 @@ const routes = [
     name: "Eventos",
     component: Eventos,
     meta: {
-      requiresAuth: true
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
     }
   },
   {
@@ -60,7 +81,8 @@ const routes = [
     name: "Bolsas",
     component: Bolsas,
     meta: {
-      requiresAuth: true
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
     }
   },
   {
@@ -68,7 +90,8 @@ const routes = [
     name: "Perfil",
     component: Perfil,
     meta: {
-      requiresAuth: true
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
     }
   },
   {
@@ -76,7 +99,8 @@ const routes = [
     name: "ProcurarAlumni",
     component: ProcurarAlumni,
     meta: {
-      requiresAuth: true
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
     }
   },
   {
@@ -84,13 +108,18 @@ const routes = [
     name: "AdicionarBolsa",
     component: AdicionarBolsa,
     meta: {
-      requiresAuth: true
+      requiresUserAuth: false,
+      requiresProfessorAuth: true
     }
   },
   {
     path: "/bolsas/:bolsaId",
     name: "BolsaVerMais",
-    component: BolsaVerMais
+    component: BolsaVerMais,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
   }
 ];
 
@@ -101,10 +130,23 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  /* Sempre que uma das routes seja pedida e o utilizador não estiver logged in
-      enviamos a route para o home caso contrário deixamos ir para a route */
-  if (to.meta.requiresAuth === true && !store.getters.isLoggedUser) {
-    next("/");
+  /* Sempre que uma das routes seja pedida e o estudante não estiver logged in
+     ou o professor nao estiver logged in enviamos a route para o home caso contrário
+     deixamos ir para a route
+  */
+
+  if (to.meta.requiresUserAuth === true) {
+    if (store.getters.isLoggedUser) {
+      next();
+    } else {
+      next("/");
+    }
+  } else if (to.meta.requiresProfessorAuth === true) {
+    if (store.getters.isLoggedProfessor) {
+      next();
+    } else {
+      next("/");
+    }
   } else {
     next();
   }
