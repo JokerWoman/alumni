@@ -164,7 +164,7 @@ export default new Vuex.Store({
     ],
     eventTypes: [
       {
-        id:1,
+        id: 1,
         value: "workshop",
         text: "WorkShops"
       },
@@ -297,11 +297,6 @@ export default new Vuex.Store({
         : {};
     },
 
-    getNextEventId: (state) =>{
-
-      return state.events.length ? state.events[state.events.length - 1].id + 1 : {}
-    },
-
     getTestimonys: state => {
       return state.testimonys;
     },
@@ -323,11 +318,10 @@ export default new Vuex.Store({
         return 0;
       });
     },
-    getActiveEvent: (state) => {
-      return state.activeEvent
-    },
-   
-   },
+    getActiveEvent: state => {
+      return state.activeEvent;
+    }
+  },
   actions: {
     loginProfessor(context, payload) {
       /* Verificar se o user existe para efetuar o login */
@@ -508,16 +502,15 @@ export default new Vuex.Store({
     saveTestimony(context, testimony) {
       context.commit("SAVE_TESTIMONY", testimony);
     },
-    createEvent(context,event){
-      context.commit("SAVE_EVENT",event)
+    createEvent(context, event) {
+      context.commit("SAVE_EVENT", event);
     },
-    setActiveEvent(context,event){
-    context.commit("SET_ACTIVE_EVENT",event)
+    setActiveEvent(context, event) {
+      context.commit("SET_ACTIVE_EVENT", event);
     },
-    deleteEvent(context,event){
-      context.commit("DELETE_EVENT",event)
+    deleteEvent(context, event) {
+      context.commit("DELETE_EVENT", event);
     }
-    
   },
   mutations: {
     LOGIN_PROFESSOR(state, professor) {
@@ -620,16 +613,16 @@ export default new Vuex.Store({
       state.testimonys.push(testimony);
       localStorage.setItem("testimonys", JSON.stringify(state.testimonys));
     },
-    SAVE_EVENT(state,event){
-      state.events.push(event)
-      localStorage.setItem("events", JSON.stringify(state.events))
+    SAVE_EVENT(state, event) {
+      state.events.push(event);
+      localStorage.setItem("events", JSON.stringify(state.events));
     },
-    SET_ACTIVE_EVENT(state, event){
-      state.activeEvent = event
+    SET_ACTIVE_EVENT(state, event) {
+      state.activeEvent = event;
     },
-    DELETE_EVENT(state,event){
-      state.events = state.events.filter(object => object != event)
-      localStorage.setItem("events", JSON.stringify(state.events))
+    DELETE_EVENT(state, event) {
+      state.events = state.events.filter(object => object != event);
+      localStorage.setItem("events", JSON.stringify(state.events));
     }
   }
 });
