@@ -12,6 +12,7 @@ import AdicionarBolsa from "../views/AdicionarBolsa.vue";
 import BolsaVerMais from "../views/BolsaVerMais.vue";
 import ProcurarAlumni from "../views/ProcurarAlumni.vue";
 import LoginProfessor from "../views/LoginProfessor.vue";
+import EventoVerMais from "../views/EventoVerMais.vue";
 
 Vue.use(VueRouter);
 
@@ -120,7 +121,18 @@ const routes = [
       requiresUserAuth: true,
       requiresProfessorAuth: false
     }
+    
+  },
+  {
+    path: "/events/:eventId",
+    name: "EventoVerMais",
+    component: EventoVerMais,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
   }
+
 ];
 
 const router = new VueRouter({
