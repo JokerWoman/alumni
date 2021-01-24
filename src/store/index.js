@@ -98,9 +98,31 @@ export default new Vuex.Store({
       ? JSON.parse(localStorage.getItem("testimonys"))
       : [],
 
-    events: localStorage.getItem("events")
-      ? JSON.parse(localStorage.getItem("events"))
-      : [],
+    events: localStorage.getItem("events") 
+    ? JSON.parse(localStorage.getItem("events"))  
+    : [
+      {
+      id:1,
+      name:"Plug-IN",
+      type:"workshop",
+      location:{city : "Póvoa de Varzim"},
+      state:"active",
+      date:{day:"15-1-2020",hour:"1530"},
+      img:"https://www.esmad.ipp.pt/noticias/plug-in/image_large",
+      description:"Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
+      },
+      {
+        id:2,
+        name:"Web Summit",
+        type:"simeira",
+        location:{city : "Lisboa"},
+        state:"active",
+        date:{day:"15-1-2020",hour:"1530"},
+        img:"https://web-summit-library.imgix.net/websummit/2018/10/staffgroup.jpg?auto=compress%2Cformat&ixlib=php-1.2.1&s=bbfafdcad5b85917ee9eca631113e96b",
+        description:"A Web Summit é a maior conferência da Europa em tecnologias, realizada anualmente desde 2009. Aparece!"
+      }
+    ],
+    activeEvent:[],
 
     categories: [
       {
@@ -126,11 +148,17 @@ export default new Vuex.Store({
       },
 
       {
-        id: 2,
-        value: "seminarios",
+        id:2,
+        value: "seminario",
         text: "Seminários"
+      },
+
+      {
+        id:3,
+        value:"simeira",
+        text:"Simeiras"
       }
-    ]
+    ],
   },
   getters: {
     getToolsAvailable: state =>
@@ -225,17 +253,20 @@ export default new Vuex.Store({
       return state.eventTypes;
     },
 
-    getEventLocations: state => {
-      let eventCitys = [];
-      state.events.forEach(event => {
-        eventCitys.some(
-          existingEvent => existingEvent.location.city == event.location.city
-        )
-          ? {}
-          : eventCitys.push(event.location.city);
-      });
+    getEventLocations: (state) =>{  
 
-      return eventCitys;
+      let citys = []
+      state.events.forEach(event=>{
+
+        citys.some(obj => obj === event.location.city) ? {} : citys.push(event.location.city)
+      })
+
+      return citys
+    },
+
+    getNextEventId: (state) =>{
+
+      return state.events.length ? state.events[state.events.length - 1].id + 1 : {}
     },
 
     getTestimonys: state => {
@@ -247,13 +278,6 @@ export default new Vuex.Store({
       return bolsaById;
     },
     getBolsasFiltered: state => (category, locality, _sort) => {
-      /*
-      const cards_filtered = state.bolsas.filter(
-        (bolsa) => bolsa.category == category || category =="all"
-      );
-      return cards_filtered .filter(
-        bolsa => bolsa.locality.toUpperCase().includes(locality)
-     )*/
       const cards_filtered = state.bolsas.filter(
         bolsa => bolsa.category == category || category == "all"
       );
@@ -265,7 +289,7 @@ export default new Vuex.Store({
         if (a.date < b.date) return 1 * _sort;
         return 0;
       });
-    }
+    },
   },
   actions: {
     login(context, payload) {
@@ -409,6 +433,9 @@ export default new Vuex.Store({
     },
     saveTestimony(context, testimony) {
       context.commit("SAVE_TESTIMONY", testimony);
+    },
+    createEvent(context,event){
+      context.commit("SAVE_EVENT",event)
     }
   },
   mutations: {
@@ -503,6 +530,10 @@ export default new Vuex.Store({
     SAVE_TESTIMONY(state, testimony) {
       state.testimonys.push(testimony);
       localStorage.setItem("testimonys", JSON.stringify(state.testimonys));
+    },
+    SAVE_EVENT(state,event){
+      state.events.push(event)
+      localStorage.setItem("events", JSON.stringify(state.events))
     }
   }
 });
