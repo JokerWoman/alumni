@@ -194,6 +194,10 @@ export default {
           throw "Tem que selecionar algum genero.";
         }
 
+        if (isNaN(this.$data.registo.numeroEstudante)) {
+          throw "O número de estudante só pode conter numeros.";
+        }
+
         /* Chamar a ação disponivel no store */
         this.$store.dispatch("register", this.$data.registo);
 

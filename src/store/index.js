@@ -251,61 +251,70 @@ export default new Vuex.Store({
     },
     register(context, payload) {
       /* verificar se este user já existe */
-      const user = context.state.users.find(
+      const userWithSameNumeroEstudante = context.state.users.find(
         user => user.numeroEstudante === payload.numeroEstudante
       );
-      if (user == undefined) {
-        /* numero de estudante não existe por isso
-                   podemos registar este novo numero de estudante 
-                */
-        context.commit("REGISTER", payload);
-        localStorage.setItem("users", JSON.stringify(context.state.users));
 
-        /* Depois de criar uma conta para o alumni temos
-           que criar uma referencia das suas skills vazia 
-        */
+      const userWithSameEmail = context.state.users.find(
+        user => user.email === payload.email
+      );
+      if (userWithSameEmail == undefined) {
+        if (userWithSameNumeroEstudante == undefined) {
+          /* numero de estudante não existe por isso
+                      podemos registar este novo numero de estudante 
+                    */
+          context.commit("REGISTER", payload);
+          localStorage.setItem("users", JSON.stringify(context.state.users));
 
-        context.commit("REGISTER_SKILLS", {
-          /* Quando o utilizador se regista não tem nenhuma skill! */
-          numeroEstudante: payload.numeroEstudante,
-          skills: [],
-          tools: []
-        });
-        localStorage.setItem(
-          "usersSkills",
-          JSON.stringify(context.state.usersSkills)
-        );
+          /* Depois de criar uma conta para o alumni temos
+              que criar uma referencia das suas skills vazia 
+            */
 
-        /* Depois de criar uma conta para o alumni temos
-           que criar uma referencia do networking deste novo
-           alumni
-        */
-        context.commit("REGISTER_NETWORKING", {
-          /* Quando o utilizador se regista não tem nenhuma skill! */
-          numeroEstudante: payload.numeroEstudante,
-          networking: [] /* Vai ter os numero de estudante dos alumnis que o utilizador segue */
-        });
-        localStorage.setItem(
-          "usersNetwork",
-          JSON.stringify(context.state.usersNetwork)
-        );
+          context.commit("REGISTER_SKILLS", {
+            /* Quando o utilizador se regista não tem nenhuma skill! */
+            numeroEstudante: payload.numeroEstudante,
+            skills: [],
+            tools: []
+          });
+          localStorage.setItem(
+            "usersSkills",
+            JSON.stringify(context.state.usersSkills)
+          );
 
-        /* Depois de criar uma conta para o alumni temos
-           que criar uma lista de cursos deste novo
-           alumni
-          */
-        context.commit("REGISTER_CURSOS", {
-          /* Quando o utilizador se regista não tem nenhuma skill! */
-          numeroEstudante: payload.numeroEstudante,
-          cursos: [] /* Vai ter os titulos dos cursos e o ano da conclusão */
-        });
-        localStorage.setItem(
-          "usersCursosHistorico",
-          JSON.stringify(context.state.usersCursosHistorico)
-        );
+          /* Depois de criar uma conta para o alumni temos
+              que criar uma referencia do networking deste novo
+              alumni
+            */
+          context.commit("REGISTER_NETWORKING", {
+            /* Quando o utilizador se regista não tem nenhuma skill! */
+            numeroEstudante: payload.numeroEstudante,
+            networking: [] /* Vai ter os numero de estudante dos alumnis que o utilizador segue */
+          });
+          localStorage.setItem(
+            "usersNetwork",
+            JSON.stringify(context.state.usersNetwork)
+          );
+
+          /* Depois de criar uma conta para o alumni temos
+              que criar uma lista de cursos deste novo
+              alumni
+              */
+          context.commit("REGISTER_CURSOS", {
+            /* Quando o utilizador se regista não tem nenhuma skill! */
+            numeroEstudante: payload.numeroEstudante,
+            cursos: [] /* Vai ter os titulos dos cursos e o ano da conclusão */
+          });
+          localStorage.setItem(
+            "usersCursosHistorico",
+            JSON.stringify(context.state.usersCursosHistorico)
+          );
+        } else {
+          /* O user já existe, por isso damos erro. */
+          throw "O numero de estudante já esta registrado.";
+        }
       } else {
-        /* O user já existe, por isso damos erro. */
-        throw "O numero de estudante já esta registrado.";
+        /* O email já se encontra em uso, por isso damos erro. */
+        throw "O email já esta registrado.";
       }
     },
     editar(context, payload) {
