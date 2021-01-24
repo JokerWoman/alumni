@@ -12,6 +12,7 @@ import AdicionarBolsa from "../views/AdicionarBolsa.vue";
 import BolsaVerMais from "../views/BolsaVerMais.vue";
 import ProcurarAlumni from "../views/ProcurarAlumni.vue";
 import LoginProfessor from "../views/LoginProfessor.vue";
+import EventoVerMais from "../views/EventoVerMais.vue";
 
 Vue.use(VueRouter);
 
@@ -82,7 +83,7 @@ const routes = [
     component: Bolsas,
     meta: {
       requiresUserAuth: true,
-      requiresProfessorAuth: false
+      
     }
   },
   {
@@ -120,7 +121,18 @@ const routes = [
       requiresUserAuth: true,
       requiresProfessorAuth: false
     }
+    
+  },
+  {
+    path: "/events/:eventId",
+    name: "EventoVerMais",
+    component: EventoVerMais,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
   }
+
 ];
 
 const router = new VueRouter({
@@ -136,7 +148,7 @@ router.beforeEach((to, from, next) => {
   */
 
   if (to.meta.requiresUserAuth === true) {
-    if (store.getters.isLoggedUser) {
+    if (store.getters.isLoggedUser || store.getters.isLoggedProfessor) {
       next();
     } else {
       next("/");

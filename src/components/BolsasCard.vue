@@ -10,18 +10,29 @@
     <b-card-title>{{ bolsa.title }}</b-card-title>
     <b-card-text> {{ getDescription(bolsa.description) }}</b-card-text>
     <span v-if="bolsaEstado()">
-    <router-link
-      :to="{ name: 'BolsaVerMais', params: { bolsaId: bolsa.id } }"
-      class="btn btn-primary"
-      variant="success"
-    >
-      VER MAIS
-    </router-link>
+      <router-link
+        :to="{ name: 'BolsaVerMais', params: { bolsaId: bolsa.id } }"
+        class="btn btn-primary"
+        variant="success"
+      >
+        VER MAIS
+      </router-link>
     </span>
     <span v-else>
-      <b-button  variant="danger" disabled>Terminado</b-button>
+      <b-button variant="danger" disabled>Terminado</b-button>
     </span>
-    <b-button @click="deleteBolsa" variant="danger">Apagar</b-button>
+
+    <span v-if="isLoggedProfessor()">
+      <span v-if="bolsaEstado()">
+        <b-button @click="finishBolsa" variant="danger" class="ml-1">Terminar</b-button>
+      </span>
+    </span>
+
+    <span v-if="isLoggedProfessor()">
+      <b-button @click="deleteBolsa" variant="danger" class="ml-3"
+        >Apagar</b-button
+      >
+    </span>
   </b-card>
 </template>
 
@@ -37,6 +48,10 @@ export default {
     },
   },
   methods: {
+    isLoggedProfessor() {
+      return this.$store.getters.isLoggedProfessor;
+    },
+
     deleteBolsa() {
       if (confirm("Deseja apagar esta oferta")) {
         this.$store.dispatch("deleteBolsa", this.bolsa.id);
@@ -49,6 +64,10 @@ export default {
       } else {
         return false;
       }
+    },
+    finishBolsa() {
+      this.$store.dispatch("finishBolsa",this.bolsa.id);
+       console.log("finished");
     },
 
     getDescription(desc) {

@@ -15,6 +15,22 @@
                 placeholder="Nome Alumni"
               />
             </div>
+            
+            <div class="text-secondary">
+              <select v-model="filterSelectedCurso">
+                  <option value="TODOS">TODOS</option>
+                  <option
+                    v-for="(curso, index) in this.$store.getters.getCursosAvailable"
+                    v-bind:value="curso.title"
+                    v-bind:key="index"
+                  >
+                    {{ curso.title }}
+                  </option>
+                </select>
+
+             
+            </div>
+
           </div>
           <AlumniList :alumnis="AlumnisInformation"> </AlumniList>
         </div>
@@ -33,7 +49,8 @@ export default {
   },
   data() {
     return {
-      filterName: ""
+      filterName: "",
+      filterSelectedCurso: null
     };
   },
   created: function() {},
@@ -47,6 +64,11 @@ export default {
         allAlumni = allAlumni.filter(alumni =>
           alumni.nome.toUpperCase().includes(this.filterName.toUpperCase())
         );
+      }
+
+      if(this.filterSelectedCurso != null && this.filterSelectedCurso != "TODOS")
+      {
+        allAlumni = allAlumni.filter(alumni => this.$store.getters.AlumniHasCursoByTitle(alumni.numeroEstudante, this.filterSelectedCurso))
       }
 
       return allAlumni;
