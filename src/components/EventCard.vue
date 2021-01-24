@@ -8,7 +8,7 @@
         tag="article"
         :id="`cardEvent${event.id}`"
         img-height="150px"
-        style="width: 220px; margin-left:50px; margin-right:50px"
+        style="width: 220px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
     >
         <b-card-text> {{ event.description }}</b-card-text>
           <router-link

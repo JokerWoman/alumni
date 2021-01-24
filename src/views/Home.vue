@@ -8,7 +8,7 @@
   </b-container>
   
     <b-container
-    style="background-color: #2B4C8C; height:450px;"
+    style="background-color: #2B4C8C; height:500px;"
     fluid
     >
     <div

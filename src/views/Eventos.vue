@@ -1,4 +1,5 @@
 <template>
+<div>
   <b-container>
     <b-row align-v="start">
       <b-col cols="2">
@@ -97,9 +98,16 @@
           </b-form>
       </b-modal>
     
-      <br><br><br>
-      <b-container>
-        <b-row >
+      <br><br>
+  
+  </b-container>
+
+      <b-container 
+      style="background-color: #2B4C8C;"
+      fluid
+      >
+
+        <b-row>
           <b-card-group 
           style="margin:20px">
             <EventCard
@@ -110,10 +118,7 @@
           </b-card-group>
         </b-row>
       </b-container>
-  
-  
-  
-  </b-container>
+</div>
 </template>
 
 <script>
