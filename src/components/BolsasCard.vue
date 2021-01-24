@@ -4,7 +4,8 @@
     img-top
     img-height="250;"
     tag="article"
-    style="max-width: 20rem"
+    
+    style="max-width: 20rem; margin-left:50px; margin-right:50px; margin-bottom:50px; background-color:#DCEAFF"
   >
     <b-card-img> {{ bolsa.img }}</b-card-img>
     <b-card-title>{{ bolsa.title }}</b-card-title>
