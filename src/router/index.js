@@ -83,7 +83,7 @@ const routes = [
     component: Bolsas,
     meta: {
       requiresUserAuth: true,
-      requiresProfessorAuth: false
+      
     }
   },
   {
@@ -148,7 +148,7 @@ router.beforeEach((to, from, next) => {
   */
 
   if (to.meta.requiresUserAuth === true) {
-    if (store.getters.isLoggedUser) {
+    if (store.getters.isLoggedUser || store.getters.isLoggedProfessor) {
       next();
     } else {
       next("/");

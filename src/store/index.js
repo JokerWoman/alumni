@@ -8,14 +8,14 @@ export default new Vuex.Store({
     professors: localStorage.getItem("professors")
       ? JSON.parse(localStorage.getItem("professors"))
       : [
-          { username: "Admin", nome: "Mario Pinto", password: "Esmad_2021" },
-          {
-            username: "Admin2",
-            nome: "Ricardo Queirós",
-            password: "Esmad_2021"
-          },
-          { username: "Admin3", nome: "Jorgue Lima", password: "Esmad_2021" }
-        ],
+        { username: "Admin", nome: "Mario Pinto", password: "Esmad_2021" },
+        {
+          username: "Admin2",
+          nome: "Ricardo Queirós",
+          password: "Esmad_2021"
+        },
+        { username: "Admin3", nome: "Jorgue Lima", password: "Esmad_2021" }
+      ],
     users: localStorage.getItem("users")
       ? JSON.parse(localStorage.getItem("users"))
       : [],
@@ -31,33 +31,33 @@ export default new Vuex.Store({
     cursos: localStorage.getItem("cursos")
       ? JSON.parse(localStorage.getItem("cursos"))
       : [
-          { title: "Licenciatura em Fotografia" },
-          { title: "Licenciatura em Multimédia" },
-          {
-            title:
-              "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
-          },
-          { title: "Mestrado em Design" },
-          { title: "Mestrado em Sistemas e Media Interativos" }
-        ],
+        { title: "Licenciatura em Fotografia" },
+        { title: "Licenciatura em Multimédia" },
+        {
+          title:
+            "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
+        },
+        { title: "Mestrado em Design" },
+        { title: "Mestrado em Sistemas e Media Interativos" }
+      ],
     skills: localStorage.getItem("skills")
       ? JSON.parse(localStorage.getItem("skills"))
       : [
-          { title: "Web Design" },
-          { title: "Website Markup" },
-          { title: "One Page" },
-          { title: "Mobile Template" },
-          { title: "Backend API" }
-        ],
+        { title: "Web Design" },
+        { title: "Website Markup" },
+        { title: "One Page" },
+        { title: "Mobile Template" },
+        { title: "Backend API" }
+      ],
     tools: localStorage.getItem("tools")
       ? JSON.parse(localStorage.getItem("tools"))
       : [
-          { title: "Adobe Illustrator" },
-          { title: "Adobe Photoshop" },
-          { title: "Adobe After Effects" },
-          { title: "Adobe Premiere" },
-          { title: "Adobe XD" }
-        ],
+        { title: "Adobe Illustrator" },
+        { title: "Adobe Photoshop" },
+        { title: "Adobe After Effects" },
+        { title: "Adobe Premiere" },
+        { title: "Adobe XD" }
+      ],
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
       : "",
@@ -67,52 +67,52 @@ export default new Vuex.Store({
     bolsas: localStorage.getItem("bolsas")
       ? JSON.parse(localStorage.getItem("bolsas"))
       : [
-          {
-            id: 1,
-            title: "Oferta Blip",
-            category: 2,
-            description:
-              "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
-            img:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2wT80KxmAt4CeKITCbU05jwDyr-MDJbkz1Q&usqp=CAU",
-            locality: "Porto",
-            date: "2021-01-20",
-            phone: "932499526",
-            email: "communications@blip.pt",
-            linkBolsa: "https://blip.pt/contact-us/",
-            estado: "ativo"
-          },
-          {
-            id: 2,
-            title: "DesignMasters",
-            category: 1,
-            description:
-              "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img:
-              "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
-            locality: "Braga",
-            date: "2021-01-22",
-            phone: "913845397",
-            email: "communications@designmasters.pt",
-            linkBolsa: "https://blip.pt/contact-us/",
-            estado: "ativo"
-          },
-          {
-            id: 3,
-            title: "DesignMasters (Estágio)",
-            category: 3,
-            description:
-              "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img:
-              "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
-            locality: "Braga",
-            date: "2021-01-24",
-            phone: "913845397",
-            email: "communications@designmasters.pt",
-            linkBolsa: "https://blip.pt/contact-us/",
-            estado: "ativo"
-          }
-        ],
+        {
+          id: 1,
+          title: "Oferta Blip",
+          category: 2,
+          description:
+            "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
+          img:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2wT80KxmAt4CeKITCbU05jwDyr-MDJbkz1Q&usqp=CAU",
+          locality: "Porto",
+          date: "2021-01-20",
+          phone: "932499526",
+          email: "communications@blip.pt",
+          linkBolsa: "https://blip.pt/contact-us/",
+          estado: "ativo"
+        },
+        {
+          id: 2,
+          title: "DesignMasters",
+          category: 1,
+          description:
+            "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+          img:
+            "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
+          locality: "Braga",
+          date: "2021-01-22",
+          phone: "913845397",
+          email: "communications@designmasters.pt",
+          linkBolsa: "https://blip.pt/contact-us/",
+          estado: "ativo"
+        },
+        {
+          id: 3,
+          title: "DesignMasters (Estágio)",
+          category: 3,
+          description:
+            "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+          img:
+            "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
+          locality: "Braga",
+          date: "2021-01-24",
+          phone: "913845397",
+          email: "communications@designmasters.pt",
+          linkBolsa: "https://blip.pt/contact-us/",
+          estado: "ativo"
+        }
+      ],
 
     testimonys: localStorage.getItem("testimonys")
       ? JSON.parse(localStorage.getItem("testimonys"))
@@ -121,30 +121,30 @@ export default new Vuex.Store({
     events: localStorage.getItem("events")
       ? JSON.parse(localStorage.getItem("events"))
       : [
-          {
-            id: 1,
-            name: "Plug-IN",
-            type: "workshop",
-            location: { city: "Póvoa de Varzim" },
-            state: "active",
-            date: { day: "15-1-2020", hour: "1530" },
-            img: "https://www.esmad.ipp.pt/noticias/plug-in/image_large",
-            description:
-              "Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
-          },
-          {
-            id: 2,
-            name: "Web Summit",
-            type: "simeira",
-            location: { city: "Lisboa" },
-            state: "active",
-            date: { day: "15-1-2020", hour: "1530" },
-            img:
-              "https://web-summit-library.imgix.net/websummit/2018/10/staffgroup.jpg?auto=compress%2Cformat&ixlib=php-1.2.1&s=bbfafdcad5b85917ee9eca631113e96b",
-            description:
-              "A Web Summit é a maior conferência da Europa em tecnologias, realizada anualmente desde 2009. Aparece!"
-          }
-        ],
+        {
+          id: 1,
+          name: "Plug-IN",
+          type: "workshop",
+          location: { city: "Póvoa de Varzim" },
+          state: "active",
+          date: { day: "15-1-2020", hour: "1530" },
+          img: "https://www.esmad.ipp.pt/noticias/plug-in/image_large",
+          description:
+            "Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
+        },
+        {
+          id: 2,
+          name: "Web Summit",
+          type: "simeira",
+          location: { city: "Lisboa" },
+          state: "active",
+          date: { day: "15-1-2020", hour: "1530" },
+          img:
+            "https://web-summit-library.imgix.net/websummit/2018/10/staffgroup.jpg?auto=compress%2Cformat&ixlib=php-1.2.1&s=bbfafdcad5b85917ee9eca631113e96b",
+          description:
+            "A Web Summit é a maior conferência da Europa em tecnologias, realizada anualmente desde 2009. Aparece!"
+        }
+      ],
     activeEvent: [],
 
     categories: [
@@ -164,7 +164,7 @@ export default new Vuex.Store({
     ],
     eventTypes: [
       {
-        id:1,
+        id: 1,
         value: "workshop",
         text: "WorkShops"
       },
@@ -189,6 +189,16 @@ export default new Vuex.Store({
     getCursosAvailable: state =>
       state.cursos /* Get de todos os cursos que podem ser adicionados no perfil de um utilizador */,
 
+    AlumniHasCursoByTitle: state => (numeroEstudante, title) => 
+    {
+      let usersCursosHistorico = state.usersCursosHistorico.filter(
+        cursosHistorico =>
+          parseInt(cursosHistorico.numeroEstudante) ===
+          parseInt(numeroEstudante)
+      );
+
+      return usersCursosHistorico[0].cursos.some(curso => curso.title === title)     
+    },
     getSkillsAvailable: state =>
       state.skills /* Get de todas as skills que podem ser adicionadas no perfil de um utilizador */,
 
@@ -297,11 +307,6 @@ export default new Vuex.Store({
         : {};
     },
 
-    getNextEventId: (state) =>{
-
-      return state.events.length ? state.events[state.events.length - 1].id + 1 : {}
-    },
-
     getTestimonys: state => {
       return state.testimonys;
     },
@@ -323,11 +328,10 @@ export default new Vuex.Store({
         return 0;
       });
     },
-    getActiveEvent: (state) => {
-      return state.activeEvent
-    },
-   
-   },
+    getActiveEvent: state => {
+      return state.activeEvent;
+    }
+  },
   actions: {
     loginProfessor(context, payload) {
       /* Verificar se o user existe para efetuar o login */
@@ -502,22 +506,24 @@ export default new Vuex.Store({
     saveBolsa(context, bolsa) {
       context.commit("SAVE_BOLSA", bolsa);
     },
+    finishBolsa(context, id) {
+      context.commit("FINISH_BOLSA", id);
+    },
     deleteBolsa(context, id) {
       context.commit("REMOVE_BOLSA", id);
     },
     saveTestimony(context, testimony) {
       context.commit("SAVE_TESTIMONY", testimony);
     },
-    createEvent(context,event){
-      context.commit("SAVE_EVENT",event)
+    createEvent(context, event) {
+      context.commit("SAVE_EVENT", event);
     },
-    setActiveEvent(context,event){
-    context.commit("SET_ACTIVE_EVENT",event)
+    setActiveEvent(context, event) {
+      context.commit("SET_ACTIVE_EVENT", event);
     },
-    deleteEvent(context,event){
-      context.commit("DELETE_EVENT",event)
+    deleteEvent(context, event) {
+      context.commit("DELETE_EVENT", event);
     }
-    
   },
   mutations: {
     LOGIN_PROFESSOR(state, professor) {
@@ -548,7 +554,7 @@ export default new Vuex.Store({
     },
     UNFOLLOW_ALUMNI(state, numeroEstudante) {
       /* Actualizar tools e skills do utilizador */
-      state.usersNetwork.map(function(userNetwork) {
+      state.usersNetwork.map(function (userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking = userNetwork.networking.filter(
             networkingNumeroEstudante =>
@@ -560,7 +566,7 @@ export default new Vuex.Store({
     },
     FOLLOW_ALUMNI(state, numeroEstudante) {
       /* Actualizar tools e skills do utilizador */
-      state.usersNetwork.map(function(userNetwork) {
+      state.usersNetwork.map(function (userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking.push(numeroEstudante);
         }
@@ -569,7 +575,7 @@ export default new Vuex.Store({
     },
     EDITAR(state, editarPayload) {
       /* Atualizar os dados do utilizador que esta logado no array de utilizadores */
-      state.users.map(function(user) {
+      state.users.map(function (user) {
         if (user.numeroEstudante === state.loggedUser.numeroEstudante) {
           user.descricao = editarPayload.descricao;
           user.morada = editarPayload.morada;
@@ -580,7 +586,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar tools e skills do utilizador */
-      state.usersSkills.map(function(userSkill) {
+      state.usersSkills.map(function (userSkill) {
         if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
@@ -593,7 +599,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar os cursos do utilizador */
-      state.usersCursosHistorico.map(function(userCursoHistorico) {
+      state.usersCursosHistorico.map(function (userCursoHistorico) {
         if (
           userCursoHistorico.numeroEstudante ===
           state.loggedUser.numeroEstudante
@@ -616,20 +622,28 @@ export default new Vuex.Store({
 
       localStorage.setItem("bolsas", JSON.stringify(state.bolsas));
     },
+    FINISH_BOLSA(state, id) {
+      state.bolsas.forEach((bolsa) => {
+        if (bolsa.id == id) {
+          bolsa.estado = "inativo"
+        }
+      });
+      localStorage.setItem("bolsas", JSON.stringify(state.bolsas));
+    },
     SAVE_TESTIMONY(state, testimony) {
       state.testimonys.push(testimony);
       localStorage.setItem("testimonys", JSON.stringify(state.testimonys));
     },
-    SAVE_EVENT(state,event){
-      state.events.push(event)
-      localStorage.setItem("events", JSON.stringify(state.events))
+    SAVE_EVENT(state, event) {
+      state.events.push(event);
+      localStorage.setItem("events", JSON.stringify(state.events));
     },
-    SET_ACTIVE_EVENT(state, event){
-      state.activeEvent = event
+    SET_ACTIVE_EVENT(state, event) {
+      state.activeEvent = event;
     },
-    DELETE_EVENT(state,event){
-      state.events = state.events.filter(object => object != event)
-      localStorage.setItem("events", JSON.stringify(state.events))
+    DELETE_EVENT(state, event) {
+      state.events = state.events.filter(object => object != event);
+      localStorage.setItem("events", JSON.stringify(state.events));
     }
   }
 });
