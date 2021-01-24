@@ -189,6 +189,16 @@ export default new Vuex.Store({
     getCursosAvailable: state =>
       state.cursos /* Get de todos os cursos que podem ser adicionados no perfil de um utilizador */,
 
+    AlumniHasCursoByTitle: state => (numeroEstudante, title) => 
+    {
+      let usersCursosHistorico = state.usersCursosHistorico.filter(
+        cursosHistorico =>
+          parseInt(cursosHistorico.numeroEstudante) ===
+          parseInt(numeroEstudante)
+      );
+
+      return usersCursosHistorico[0].cursos.some(curso => curso.title === title)     
+    },
     getSkillsAvailable: state =>
       state.skills /* Get de todas as skills que podem ser adicionadas no perfil de um utilizador */,
 
