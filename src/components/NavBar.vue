@@ -13,7 +13,7 @@
           >Alumni</b-nav-item
         >
 
-        <template v-if="this.$store.getters.isLoggedUser">
+        <template>
           <b-nav-item
             :to="{ name: 'Eventos' }"
             :class="{ active: $route.name === 'Eventos' }"
@@ -24,25 +24,6 @@
             :to="{ name: 'Bolsas' }"
             :class="{ active: $route.name === 'Bolsas' }"
             >Bolsas de Emprego</b-nav-item
-          >
-        </template>
-        <template v-else-if="this.$store.getters.isLoggedProfessor">
-          <!-- Adicionem o nome das duas routes abaixo e o class
-               :to="{ name: 'Bolsas' }"
-               :class="{ active: $route.name === 'Bolsas' }" 
-          -->
-          <b-nav-item>Adicionar Eventos</b-nav-item>
-
-          <b-nav-item
-            :to="{ name: 'Bolsas' }"
-            :class="{ active: $route.name === 'Bolsas' }"
-            >Bolsas de Emprego</b-nav-item
-          >
-
-          <b-nav-item
-            :to="{ name: 'AdicionarBolsa' }"
-            :class="{ active: $route.name === 'AdicionarBolsa' }"
-            >Adicionar Bolsas de Emprego</b-nav-item
           >
         </template>
       </b-navbar-nav>

@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-lg-5" style="padding-top:200px; padding-left:150px;">
           <h1>BEM-VINDOS AO PORTAL ALUMNI ESMAD</h1>
-          <h5>Faça Parte da Nossa Comunicade</h5>
+          <h5>Faça Parte da Nossa Comunidade</h5>
           <div class="d-lg-flex">
             <b-button
               :to="{
@@ -12,7 +12,7 @@
               }"
               class="btn btn-primary"
               variant="primary"
-              style="margin-left:10px; width:180px;"
+              style="margin-top:20px; width:180px;"
             >
               Login
             </b-button>
@@ -23,7 +23,7 @@
               }"
               class="btn btn-primary"
               variant="primary"
-              style="margin-left:10px; width:180px;"
+              style="margin-left:15px; margin-top:20px;width:180px;"
             >
               Registar
             </b-button>

@@ -14,7 +14,7 @@ export default new Vuex.Store({
             nome: "Ricardo Queirós",
             password: "Esmad_2021"
           },
-          { username: "Admin3", nome: "Jorgue Lima", password: "Esmad_2021" }
+          { username: "Admin3", nome: "Jorge Lima", password: "Esmad_2021" }
         ],
     users: localStorage.getItem("users")
       ? JSON.parse(localStorage.getItem("users"))
@@ -162,7 +162,8 @@ export default new Vuex.Store({
             type: "workshop",
             location: { city: "Póvoa de Varzim" },
             state: "active",
-            date: { day: "15-1-2020", hour: "1530" },
+            date: "2021-06-25",
+            hour:"13:56:00",
             img: "https://www.esmad.ipp.pt/noticias/plug-in/image_large",
             description:
               "Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
@@ -173,7 +174,8 @@ export default new Vuex.Store({
             type: "simeira",
             location: { city: "Lisboa" },
             state: "active",
-            date: { day: "15-1-2020", hour: "1530" },
+            date:"2021-09-01",
+            hour:"13:45:00",
             img:
               "https://web-summit-library.imgix.net/websummit/2018/10/staffgroup.jpg?auto=compress%2Cformat&ixlib=php-1.2.1&s=bbfafdcad5b85917ee9eca631113e96b",
             description:
@@ -339,7 +341,7 @@ export default new Vuex.Store({
     getEventLocations: state => {
       let citys = [];
       state.events.forEach(event => {
-        citys.some(obj => obj === event.location.city)
+        citys.some(city => city === event.location.city)
           ? {}
           : citys.push(event.location.city);
       });
@@ -374,8 +376,11 @@ export default new Vuex.Store({
         return 0;
       });
     },
-    getActiveEvent: state => {
-      return state.activeEvent;
+    getEventById: state => id =>{
+      return state.events.find(e=> e.id === id);
+    },
+    getActiveEvent: state =>{
+      return state.activeEvent
     }
   },
   actions: {
@@ -577,6 +582,9 @@ export default new Vuex.Store({
     },
     deleteEvent(context, event) {
       context.commit("DELETE_EVENT", event);
+    },
+    editEvent(context,event){
+      context.commit("EDIT_EVENT",event)
     }
   },
   mutations: {
@@ -713,6 +721,11 @@ export default new Vuex.Store({
     DELETE_EVENT(state, event) {
       state.events = state.events.filter(object => object != event);
       localStorage.setItem("events", JSON.stringify(state.events));
+    },
+    EDIT_EVENT(state,event){
+      state.events = state.events.filter(e => e.id != event.id)
+      state.events.push(event)
+      localStorage.setItem("events", JSON.stringify(state.events))
     }
   }
 });
