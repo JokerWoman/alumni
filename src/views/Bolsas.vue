@@ -3,35 +3,132 @@
     <br />
     <br />
     <b-container fluid>
-    <b-row class="justify-content-md-left">
-      <b-col cols="2"> 
-        <p>Data</p>
-        <b-form-select v-model="optionSortSelected" :options="optionsSort">
-        </b-form-select>
-      </b-col>
-      <b-col  cols="2" style="margin-top:5px">
-        <p>Localidade</p>
-        <b-form-input
-          type="text"
-          placeholder="Exemplo: Porto"
-          v-model="locality"
-        ></b-form-input>
-      </b-col>
-      <b-col cols="3">
-        <p>Tipo</p>
-        <b-form-select v-model="categorySelected" :options="getCategories">
-          <template #first>
-            <b-form-select-option value="all">TODAS</b-form-select-option>
-          </template>
-        </b-form-select>
-      </b-col>
-    </b-row>
+      <b-row class="justify-content-md-left">
+        <b-col cols="2">
+          <p>Data</p>
+          <b-form-select v-model="optionSortSelected" :options="optionsSort">
+          </b-form-select>
+        </b-col>
+        <b-col cols="2" style="margin-top: 5px">
+          <p>Localidade</p>
+          <b-form-input
+            type="text"
+            placeholder="Exemplo: Porto"
+            v-model="locality"
+          ></b-form-input>
+        </b-col>
+        <b-col cols="2">
+          <p>Tipo</p>
+          <b-form-select v-model="categorySelected" :options="getCategories">
+            <template #first>
+              <b-form-select-option value="all">TODAS</b-form-select-option>
+            </template>
+          </b-form-select>
+        </b-col>
+        <b-col cols="2" style="margin-top: 40px" v-if="getLoggedUserType()">
+          <b-button variant="primary" v-b-modal.createBolsaModal
+            >Criar Bolsa</b-button
+          >
+        </b-col>
+      </b-row>
+
+      <b-modal id="createBolsaModal" @show="clearForm" hide-footer>
+        <b-form @submit.prevent="onSubmit()">
+          <b-form-input
+            type="text"
+            v-model="frm.title"
+            placeholder="Título"
+            required
+          ></b-form-input>
+          
+          <b-row>
+            <b-col sm="12">
+              <b-form-textarea
+                size="lg"
+                placeholder="Descrição"
+                required
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
+          
+         
+          <b-row>
+            <b-col cols="6">
+              <b-form-input
+                type="url"
+                v-model="frm.img"
+                placeholder="Imagem"
+                required
+              ></b-form-input>
+            </b-col>
+            <br />
+            <b-col cols="6">
+              <b-form-input
+                type="url"
+                v-model="frm.link"
+                placeholder="Link da Oferta"
+                required
+              ></b-form-input>
+            </b-col>
+            <br />
+          </b-row>
+
+          <b-row>
+            <b-col cols="6">
+              <b-form-select
+                v-model="frm.category"
+                :options="$store.getters.getCategoriesForSelect"
+                required
+              >
+                <option value="null" disabled>Tipo</option>
+              </b-form-select>
+            </b-col>
+
+            <b-col cols="6">
+              <b-form-input
+                type="text"
+                v-model="frm.locality"
+                placeholder="Cidade"
+                required
+              >
+              </b-form-input>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col cols="6">
+             <b-form-input
+                type="number"
+                v-model="frm.phone"
+                placeholder="Telefone"
+                required
+              >
+              </b-form-input>
+            </b-col>
+
+            <b-col cols="6">
+              <b-form-input
+                type="email"
+                v-model="frm.email"
+                placeholder="Email"
+                required
+              >
+              </b-form-input>
+            </b-col>
+          </b-row>
+
+          <br />
+
+          <b-row class="justify-content-md-center">
+            <b-button type="submit" variant="danger">Submeter</b-button>
+          </b-row>
+        </b-form>
+      </b-modal>
     </b-container>
     <br />
     <br />
-    <b-container style="background-color: #2b4c8c;" fluid>
+    <b-container style="background-color: #2b4c8c" fluid>
       <b-row>
-        <b-card-group style="margin:20px" columns v-if="getBolsas.length > 0">
+        <b-card-group style="margin: 20px" columns v-if="getBolsas.length > 0">
           <BolsasCard
             v-for="myBolsa in getBolsas"
             :key="myBolsa.id"
@@ -92,6 +189,16 @@ export default {
 
   data() {
     return {
+      frm: {
+        title: "",
+        img: "",
+        description: "",
+        link: "",
+        category: null,
+        locality: "",
+        phone: "",
+        email: "",
+      },
       categorySelected: "all",
       locality: "",
       optionSortSelected: 1,
@@ -108,6 +215,36 @@ export default {
 
       filterCategorySelected: "all",
     };
+  },
+  methods: {
+    getLoggedUserType() {
+      return this.$store.getters.getLoggedProfessor ? true : false;
+    },
+    onSubmit() {
+      var today = new Date();
+      var date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+
+      const bolsa = {
+        id: this.$store.getters.getNextBolsaId,
+        title: this.frm.title,
+        category: this.frm.category,
+        description: this.frm.description,
+        img: this.frm.img,
+        locality: this.frm.locality,
+        date: date,
+        phone: this.frm.phone,
+        email: this.frm.email,
+        linkBolsa: this.frm.link,
+        estado: "ativo",
+      };
+      this.$store.dispatch("saveBolsa", bolsa);
+      
+    },
   },
   computed: {
     /*
