@@ -43,3 +43,18 @@ vue add bootstrap-vue
 delete da pasta: node_modules
 npm install
 ```
+
+## Deploy
+```
+Abrir o Git Bash
+cd /c/Users/andre/Documents/
+rm --f jokerwoman.github.io
+git clone https://github.com/JokerWoman/jokerwoman.github.io.git
+cd /c/Users/andre/Documents/projeto_alumni/alumni
+npm run build
+cp -r dist/. /C/Users/andre/Documents/jokerwoman.github.io/
+cd /C/Users/andre/Documents/jokerwoman.github.io/
+git add .
+git commit -m "Commit Message"
+git push -u origin master
+```
