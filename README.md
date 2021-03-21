@@ -52,7 +52,7 @@ rm --f jokerwoman.github.io
 git clone https://github.com/JokerWoman/jokerwoman.github.io.git
 cd /c/Users/andre/Documents/projeto_alumni/alumni
 npm run build
-cp -r dist/. /C/Users/andre/Documents/jokerwoman.github.io/
+cp -R dist/. /C/Users/andre/Documents/jokerwoman.github.io/
 cd /C/Users/andre/Documents/jokerwoman.github.io/
 git add .
 git commit -m "Commit Message"
