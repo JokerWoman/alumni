@@ -13,7 +13,7 @@
           >Alumni</b-nav-item
         >
 
-        <template>
+        <template v-if="this.$store.getters.isLoggedProfessor || this.$store.getters.isLoggedUser">
           <b-nav-item
             :to="{ name: 'Eventos' }"
             :class="{ active: $route.name === 'Eventos' }"
