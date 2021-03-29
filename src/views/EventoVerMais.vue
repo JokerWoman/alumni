@@ -35,14 +35,9 @@
 
               <div style="height: 200px">
                 <p style="width: 90%">{{ this.getEvent.description }}</p>
-
-              
               </div>
               <br />
               <br />
-              
-                
-              
             </div>
           </div>
         </div>
@@ -54,21 +49,19 @@
 <script>
 export default {
   name: "EventoVerMais",
-  data(){
-return{
-  getEvent:''
-}
+  data() {
+    return {
+      getEvent: ""
+    };
   },
 
-  methods: {
-    
+  methods: {},
+  created() {
+    this.getEvent = this.$store.state.events.filter(
+      event => event.id == this.$route.params.eventId
+    );
   },
-  created(){
-   this.getEvent =  this.$store.state.events.filter(event => event.id == this.$route.params.eventId)
-  },
-  computed: {
-  
-  },
+  computed: {}
 };
 </script>
 

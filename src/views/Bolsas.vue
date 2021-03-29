@@ -40,7 +40,7 @@
             placeholder="Título"
             required
           ></b-form-input>
-          
+
           <b-row>
             <b-col sm="12">
               <b-form-textarea
@@ -50,8 +50,7 @@
               ></b-form-textarea>
             </b-col>
           </b-row>
-          
-         
+
           <b-row>
             <b-col cols="6">
               <b-form-input
@@ -96,7 +95,7 @@
           </b-row>
           <b-row>
             <b-col cols="6">
-             <b-form-input
+              <b-form-input
                 type="number"
                 v-model="frm.phone"
                 placeholder="Telefone"
@@ -184,7 +183,7 @@ import BolsasCard from "../components/BolsasCard";
 export default {
   name: "Bolsas",
   components: {
-    BolsasCard,
+    BolsasCard
   },
 
   data() {
@@ -197,7 +196,7 @@ export default {
         category: null,
         locality: "",
         phone: "",
-        email: "",
+        email: ""
       },
       categorySelected: "all",
       locality: "",
@@ -205,15 +204,15 @@ export default {
       optionsSort: [
         {
           value: 1,
-          text: "Mais Recentes",
+          text: "Mais Recentes"
         },
         {
           value: -1,
-          text: "Mais Antigos",
-        },
+          text: "Mais Antigos"
+        }
       ],
 
-      filterCategorySelected: "all",
+      filterCategorySelected: "all"
     };
   },
   methods: {
@@ -240,11 +239,10 @@ export default {
         phone: this.frm.phone,
         email: this.frm.email,
         linkBolsa: this.frm.link,
-        estado: "ativo",
+        estado: "ativo"
       };
       this.$store.dispatch("saveBolsa", bolsa);
-      
-    },
+    }
   },
   computed: {
     /*
@@ -261,7 +259,7 @@ export default {
     },
     getCategories() {
       return this.$store.getters.getCategoriesForSelect;
-    },
-  },
+    }
+  }
 };
 </script>

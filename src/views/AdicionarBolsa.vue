@@ -1,8 +1,8 @@
 <template>
   <b-container>
-    <div >
+    <div>
       <b-row class="justify-content-md-center">
-      <h1>Adicionar </h1>
+        <h1>Adicionar</h1>
       </b-row>
       <b-row class="justify-content-md-center">
         <b-alert variant="success" :show="showSuccess"
@@ -12,8 +12,8 @@
 
       <b-row class="justify-content-md-center">
         <b-form @submit.prevent="onSubmit" @reset="onReset">
-          <b-form-group id="input-group-2" label="Título" label-for="input-2" >
-            <b-form-input 
+          <b-form-group id="input-group-2" label="Título" label-for="input-2">
+            <b-form-input
               id="input-2"
               v-model="task.title"
               type="text"
@@ -73,7 +73,11 @@
               required
             ></b-form-input>
           </b-form-group>
-          <b-form-group id="input-group-8" label="linkOferta" label-for="input-8">
+          <b-form-group
+            id="input-group-8"
+            label="linkOferta"
+            label-for="input-8"
+          >
             <b-form-input
               id="input-8"
               v-model="task.linkBolsa"
@@ -82,13 +86,13 @@
             ></b-form-input>
           </b-form-group>
           <b-col sm="20">
-            <b-form-group 
+            <b-form-group
               size="lg"
               id="input-group-4"
               label="Descrição"
               label-for="input-4"
             >
-              <b-form-textarea 
+              <b-form-textarea
                 size="md"
                 id="input-4"
                 v-model="task.description"
@@ -122,9 +126,9 @@ export default {
         locality: "",
         phone: "",
         email: "",
-        linkBolsa:""
+        linkBolsa: ""
       },
-      showSuccess: false,
+      showSuccess: false
     };
   },
   methods: {
@@ -148,14 +152,14 @@ export default {
         phone: this.task.phone,
         email: this.task.email,
         linkBolsa: this.task.linkBolsa,
-        estado: "ativo",
+        estado: "ativo"
       };
       this.$store.dispatch("saveBolsa", bolsa);
       this.showSuccess = true;
     },
     onReset() {
       this.showSuccess = false;
-    },
-  },
+    }
+  }
 };
 </script>

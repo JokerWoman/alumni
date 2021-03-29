@@ -82,8 +82,7 @@ const routes = [
     name: "Bolsas",
     component: Bolsas,
     meta: {
-      requiresUserAuth: true,
-      
+      requiresUserAuth: true
     }
   },
   {
@@ -121,7 +120,6 @@ const routes = [
       requiresUserAuth: true,
       requiresProfessorAuth: false
     }
-    
   },
   {
     path: "/events/:eventId",
@@ -132,20 +130,19 @@ const routes = [
       requiresProfessorAuth: false
     }
   }
-
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL,
   routes
 });
 
 router.beforeEach((to, from, next) => {
   /* Sempre que uma das routes seja pedida e o estudante não estiver logged in
-     ou o professor nao estiver logged in enviamos a route para o home caso contrário
-     deixamos ir para a route
-  */
+       ou o professor nao estiver logged in enviamos a route para o home caso contrário
+       deixamos ir para a route
+    */
 
   if (to.meta.requiresUserAuth === true) {
     if (store.getters.isLoggedUser || store.getters.isLoggedProfessor) {

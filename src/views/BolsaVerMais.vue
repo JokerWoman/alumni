@@ -42,9 +42,13 @@
               </div>
               <br />
               <br />
-              <button @click="openOferta()"  class="btn btn-primary"
-                style="margin-left: 200px; background-color: #2b4c8c">Responder à Oferta</button>
-              
+              <button
+                @click="openOferta()"
+                class="btn btn-primary"
+                style="margin-left: 200px; background-color: #2b4c8c"
+              >
+                Responder à Oferta
+              </button>
             </div>
           </div>
         </div>
@@ -59,13 +63,13 @@ export default {
   methods: {
     openOferta() {
       window.open(this.getBolsa.linkBolsa);
-    },
+    }
   },
   computed: {
     getBolsa() {
       return this.$store.getters.getBolsaById(this.$route.params.bolsaId);
-    },
-  },
+    }
+  }
 };
 </script>
 

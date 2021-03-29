@@ -13,7 +13,12 @@
           >Alumni</b-nav-item
         >
 
-        <template v-if="this.$store.getters.isLoggedProfessor || this.$store.getters.isLoggedUser">
+        <template
+          v-if="
+            this.$store.getters.isLoggedProfessor ||
+              this.$store.getters.isLoggedUser
+          "
+        >
           <b-nav-item
             :to="{ name: 'Eventos' }"
             :class="{ active: $route.name === 'Eventos' }"
@@ -33,8 +38,7 @@
             :text="this.$store.getters.getLoggedUser.nome"
             right
             :class="{
-              active:
-                $route.name === 'Perfil' || $route.name === 'EditarPerfil',
+              active: $route.name === 'Perfil' || $route.name === 'EditarPerfil'
             }"
           >
             <b-dropdown-item
@@ -42,14 +46,14 @@
                 name: 'Perfil',
                 params: {
                   numeroEstudante: this.$store.getters.getLoggedUser
-                    .numeroEstudante,
-                },
+                    .numeroEstudante
+                }
               }"
               >Perfil</b-dropdown-item
             >
             <b-dropdown-item
               :to="{
-                name: 'ProcurarAlumni',
+                name: 'ProcurarAlumni'
               }"
               >Procurar Alumnis</b-dropdown-item
             >
@@ -104,8 +108,8 @@ export default {
       /* O logout foi feito redirecionamos 
             para o home*/
       this.$router.push({ name: "Home" });
-    },
-  },
+    }
+  }
 };
 </script>
 

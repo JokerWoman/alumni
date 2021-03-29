@@ -4,7 +4,6 @@
     img-top
     img-height="250;"
     tag="article"
-    
     style="max-width: 20rem; margin-left:50px; margin-right:50px; margin-bottom:50px; background-color:#DCEAFF"
   >
     <b-card-img> {{ bolsa.img }}</b-card-img>
@@ -25,7 +24,9 @@
 
     <span v-if="isLoggedProfessor()">
       <span v-if="bolsaEstado()">
-        <b-button @click="finishBolsa" variant="danger" class="ml-1">Terminar</b-button>
+        <b-button @click="finishBolsa" variant="danger" class="ml-1"
+          >Terminar</b-button
+        >
       </span>
     </span>
 
@@ -41,12 +42,12 @@
 export default {
   name: "BolsasCard",
   props: {
-    bolsa: Object,
+    bolsa: Object
   },
   computed: {
     getBolsaImg() {
       return this.bolsa.img;
-    },
+    }
   },
   methods: {
     isLoggedProfessor() {
@@ -67,8 +68,8 @@ export default {
       }
     },
     finishBolsa() {
-      this.$store.dispatch("finishBolsa",this.bolsa.id);
-       console.log("finished");
+      this.$store.dispatch("finishBolsa", this.bolsa.id);
+      console.log("finished");
     },
 
     getDescription(desc) {
@@ -77,7 +78,7 @@ export default {
       } else {
         return `${desc.substr(0, [30])}...`;
       }
-    },
-  },
+    }
+  }
 };
 </script>

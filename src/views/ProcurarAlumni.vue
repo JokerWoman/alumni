@@ -15,22 +15,20 @@
                 placeholder="Nome Alumni"
               />
             </div>
-            
+
             <div class="text-secondary">
               <select v-model="filterSelectedCurso">
-                  <option value="TODOS">TODOS</option>
-                  <option
-                    v-for="(curso, index) in this.$store.getters.getCursosAvailable"
-                    v-bind:value="curso.title"
-                    v-bind:key="index"
-                  >
-                    {{ curso.title }}
-                  </option>
-                </select>
-
-             
+                <option value="TODOS">TODOS</option>
+                <option
+                  v-for="(curso, index) in this.$store.getters
+                    .getCursosAvailable"
+                  v-bind:value="curso.title"
+                  v-bind:key="index"
+                >
+                  {{ curso.title }}
+                </option>
+              </select>
             </div>
-
           </div>
           <AlumniList :alumnis="AlumnisInformation"> </AlumniList>
         </div>
@@ -66,9 +64,16 @@ export default {
         );
       }
 
-      if(this.filterSelectedCurso != null && this.filterSelectedCurso != "TODOS")
-      {
-        allAlumni = allAlumni.filter(alumni => this.$store.getters.AlumniHasCursoByTitle(alumni.numeroEstudante, this.filterSelectedCurso))
+      if (
+        this.filterSelectedCurso != null &&
+        this.filterSelectedCurso != "TODOS"
+      ) {
+        allAlumni = allAlumni.filter(alumni =>
+          this.$store.getters.AlumniHasCursoByTitle(
+            alumni.numeroEstudante,
+            this.filterSelectedCurso
+          )
+        );
       }
 
       return allAlumni;
