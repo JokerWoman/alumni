@@ -24,47 +24,26 @@
                 />
                 <div class="mt-3">
                   <h4>{{ this.$store.getters.getLoggedUser.nome }}</h4>
-                  <textarea
-                    class="form-control"
-                    v-model="editarData.descricao"
-                    rows="3"
-                  ></textarea>
-                  <button
-                    v-on:click="editar"
-                    class="btn btn-outline-primary pull-rigth"
-                  >
-                    Guardar
-                  </button>
+                  <div class="col-sm-12 text-secondary text-justify">
+                    {{ this.$store.getters.getLoggedUser.descricao }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="card mt-3">
+
+
+      <div class="card mt-3">
             <div class="card-body">
               <div class="d-flex justify-content-between">
-                <div>
+                <div style="margin-top:7px;">
                   <h6 class="d-flex align-items-center mb-3">
                     <i class="material-icons text-info mr-2">Portefolio</i>
                   </h6>
                 </div>
                 <div>
-                  <button
-                    v-if="getLinksAvailableForUser.length > 0"
-                    class="btn"
-                    style="margin-top:-8px;"
-                    @click="modal.usersLinksModal = true"
-                  >
-                    Add +
-                  </button>
                 </div>
               </div>
-
-              <LinkModal
-                @close="modal.usersLinksModal = false"
-                :showModal="modal.usersLinksModal"
-                modalTitle="Adicionar Links"
-                :links="getLinksAvailableForUser"
-              ></LinkModal>
 
               <ul class="list-group list-group-flush">
                 <li
@@ -73,16 +52,9 @@
                   class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
                 >
                   <h6 class="mb-0">
-                    <button
-                      style="margin-top:-5px;margin-left:-25px;margin-right:20px;width:5px;"
-                      class="p-2 btn"
-                      v-on:click="RemoveLink(link.title)"
-                    >
-                      x
-                    </button>
                     {{ link.title }}
                   </h6>
-                  <a class="text-secondary" :href="link.href">
+                  <a class="text-secondary" target="_blank" :href="link.href">
                     {{ LimitNumberCharsLinkSize(link.href) }}
                   </a>
                 </li>
@@ -116,11 +88,7 @@
                   <h6 class="mb-0">Telemóvel</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input
-                    class="mb-4"
-                    type="text"
-                    v-model="editarData.telemovel"
-                  />
+                  {{ this.$store.getters.getLoggedUser.telemovel }}
                 </div>
               </div>
               <hr />
@@ -138,7 +106,7 @@
                   <h6 class="mb-0">Morada</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  <input type="text" v-model="editarData.morada" />
+                  {{ this.$store.getters.getLoggedUser.morada }}
                 </div>
               </div>
             </div>
@@ -146,8 +114,8 @@
 
           <div class="card mb-3">
             <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <div>
+            <div class="d-flex justify-content-between">
+                <div style="margin-top:7px;">
                   <h6 class="d-flex align-items-center mb-3">
                     <i class="material-icons text-info mr-2">Cursos</i>
                   </h6>
@@ -155,11 +123,18 @@
                 <div>
                   <button
                     v-if="getCursosAvailableForUser.length > 0"
-                    class="btn"
-                    style="margin-top:-8px;"
                     @click="modal.usersCursosHistoricoModal = true"
+                    class="btn btn-outline-primary btn-sm"
                   >
-                    Add +
+                    Adicionar
+                  </button>
+
+                  <button
+                    style="margin-left:5px;"
+                    v-on:click="editar"
+                    class="btn btn-outline-primary btn-sm"
+                  >
+                    Guardar
                   </button>
                 </div>
               </div>
@@ -198,48 +173,27 @@
             </div>
           </div>
 
-          <div class="row gutters-sm">
+
+
+      <div class="row gutters-sm">
             <div class="col-sm-6 mb-3">
               <div class="card h-100">
                 <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <h6 class="d-flex align-items-center mb-3">
-                        <i class="material-icons text-info mr-2"
-                          >Experiência / Skills</i
-                        >
-                      </h6>
-                    </div>
-                    <div>
-                      <button
-                        v-if="getSkillsAvailableForUser.length > 0"
-                        class="btn"
-                        style="margin-top:-8px;"
-                        @click="modal.userSkillsModal = true"
-                      >
-                        Add +
-                      </button>
-                    </div>
-                  </div>
-
-                  <CompetenceModal
-                    @close="modal.userSkillsModal = false"
-                    :showModal="modal.userSkillsModal"
-                    modalTitle="Adicionar Skills"
-                    type="skill"
-                    :competences="getSkillsAvailableForUser"
-                  ></CompetenceModal>
+                  <h6 class="d-flex align-items-center mb-3">
+                    <i class="material-icons text-info mr-2"
+                      >Experiência / Skills</i
+                    >
+                  </h6>
 
                   <div
-                    v-for="(skill, index) in editarData.editUsersSkills[0]
-                      .skills"
+                    v-for="(skill, index) in editarData.editUsersSkills[0].skills"
                     :key="index"
                   >
                     <Competence
                       :title="skill.title"
                       :originalPercentagem="skill.percentagem"
                       type="skill"
-                      v-bind:edit="true"
+                      v-bind:edit="false"
                     ></Competence>
                   </div>
                 </div>
@@ -248,33 +202,11 @@
             <div class="col-sm-6 mb-3">
               <div class="card h-100">
                 <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <h6 class="d-flex align-items-center mb-3">
-                        <i class="material-icons text-info mr-2"
-                          >Dominio de Ferramentas</i
-                        >
-                      </h6>
-                    </div>
-                    <div>
-                      <button
-                        v-if="getToolsAvailableForUser.length > 0"
-                        class="btn"
-                        style="margin-top:-8px;"
-                        @click="modal.userToolsModal = true"
-                      >
-                        Add +
-                      </button>
-                    </div>
-                  </div>
-
-                  <CompetenceModal
-                    @close="modal.userToolsModal = false"
-                    :showModal="modal.userToolsModal"
-                    modalTitle="Adicionar Tools"
-                    type="tool"
-                    :competences="getToolsAvailableForUser"
-                  ></CompetenceModal>
+                  <h6 class="d-flex align-items-center mb-3">
+                    <i class="material-icons text-info mr-2"
+                      >Dominio de Ferramentas</i
+                    >
+                  </h6>
 
                   <div
                     v-for="(tool, index) in editarData.editUsersSkills[0].tools"
@@ -284,13 +216,14 @@
                       :title="tool.title"
                       :originalPercentagem="tool.percentagem"
                       type="tool"
-                      v-bind:edit="true"
+                      v-bind:edit="false"
                     ></Competence>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -299,17 +232,13 @@
 
 <script>
 import Competence from "../components/Competence";
-import CompetenceModal from "../components/CompetenceModal";
 import CursoModal from "../components/CursoModal";
-import LinkModal from "../components/LinkModal";
 
 export default {
-  name: "EditarPerfil",
+  name: "EditarPortefolio",
   components: {
     Competence,
-    CompetenceModal,
     CursoModal,
-    LinkModal
   },
   data() {
     return {

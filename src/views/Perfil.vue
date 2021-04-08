@@ -70,20 +70,38 @@
             </div>
           </div>
           <div class="card mt-3">
-            <ul class="list-group list-group-flush">
-              <li
-                v-for="(link, index) in getUsersLinks[0].links"
-                v-bind:key="index"
-                class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
-              >
-                <h6 class="mb-0">
-                  {{ link.title }}
-                </h6>
-                <a class="text-secondary" target="_blank" :href="link.href">
-                  {{ LimitNumberCharsLinkSize(link.href) }}
-                </a>
-              </li>
-            </ul>
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div style="margin-top:7px;">
+                  <h6 class="d-flex align-items-center mb-3">
+                    <i class="material-icons text-info mr-2">Portefolio</i>
+                  </h6>
+                </div>
+                <div>
+                  <router-link
+                    class="btn btn-outline-primary btn-sm"
+                    style="margin-left:10px;"
+                    :to="{ name: 'EditarPortefolio' }"
+                    >Editar</router-link
+                  >
+                </div>
+              </div>
+
+              <ul class="list-group list-group-flush">
+                <li
+                  v-for="(link, index) in getUsersLinks[0].links"
+                  v-bind:key="index"
+                  class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
+                >
+                  <h6 class="mb-0">
+                    {{ link.title }}
+                  </h6>
+                  <a class="text-secondary" target="_blank" :href="link.href">
+                    {{ LimitNumberCharsLinkSize(link.href) }}
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <div class="col-lg-8">
@@ -138,13 +156,22 @@
 
           <div class="card mb-3">
             <div class="card-body">
-              <div class="row">
-                <div class="col-sm-12">
+          <div class="d-flex justify-content-between">
+                <div style="margin-top:7px;">
                   <h6 class="d-flex align-items-center mb-3">
                     <i class="material-icons text-info mr-2">Cursos</i>
                   </h6>
                 </div>
+                <div>
+                  <router-link
+                    class="btn btn-outline-primary btn-sm"
+                    style="margin-left:10px;"
+                    :to="{ name: 'EditarCursos' }"
+                    >Editar</router-link
+                  >
+                </div>
               </div>
+
               <div
                 v-for="(cursoHistorico, index) in getUsersCursosHistorico[0]
                   .cursos"
