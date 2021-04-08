@@ -276,32 +276,6 @@ export default {
           linkUserHas => linkUserHas.title === link.title
         );
       });
-    },
-    getCursosAvailableForUser() {
-      let allCursosAvailable = this.$store.getters.getCursosAvailable;
-      let cursosUserHasAlready = this.editarData.editUsersCursosHistorico[0]
-        .cursos;
-      return allCursosAvailable.filter(function(curso) {
-        return !cursosUserHasAlready.some(
-          cursoUserHas => cursoUserHas.title === curso.title
-        );
-      });
-    },
-    getSkillsAvailableForUser() {
-      let allSkillsAvailable = this.$store.getters.getSkillsAvailable;
-      let skillsUserHas = this.editarData.editUsersSkills[0].skills;
-      return allSkillsAvailable.filter(function(skill) {
-        return !skillsUserHas.some(
-          skillUser => skillUser.title === skill.title
-        );
-      });
-    },
-    getToolsAvailableForUser() {
-      let allToolsAvailable = this.$store.getters.getToolsAvailable;
-      let toolsUserHas = this.editarData.editUsersTools[0].tools;
-      return allToolsAvailable.filter(function(tool) {
-        return !toolsUserHas.some(toolUser => toolUser.title === tool.title);
-      });
     }
   },
   methods: {
@@ -317,71 +291,6 @@ export default {
         href: href
       });
       console.log("AddLink: " + title + "  " + href);
-    },
-
-    RemoveCurso(cursoTitle) {
-      this.editarData.editUsersCursosHistorico[0].cursos = this.editarData.editUsersCursosHistorico[0].cursos.filter(
-        curso => curso.title != cursoTitle
-      );
-    },
-    AddCurso(title, year) {
-      this.editarData.editUsersCursosHistorico[0].cursos.push({
-        title: title,
-        year: year
-      });
-      console.log("AddCurso: " + title + "  " + year);
-    },
-    competenceNew(title, type, percentagem) {
-      if (type === "tool") {
-        this.editarData.editUsersTools[0].tools.push({
-          title: title,
-          percentagem: percentagem
-        });
-      } else if (type === "skill") {
-        this.editarData.editUsersSkills[0].skills.push({
-          title: title,
-          percentagem: percentagem
-        });
-      } else {
-        console.log("Tipo não está bem. Não fazer nada.");
-      }
-      console.log("competenceNew: " + title + "  " + type + "  " + percentagem);
-    },
-    competenceDeleted(title, type) {
-      if (type === "tool") {
-        this.editarData.editUsersTools[0].tools = this.editarData.editUsersTools[0].tools.filter(
-          tool => tool.title != title
-        );
-      } else if (type === "skill") {
-        this.editarData.editUsersSkills[0].skills = this.editarData.editUsersSkills[0].skills.filter(
-          skill => skill.title != title
-        );
-      } else {
-        console.log("Tipo não está bem. Não fazer nada.");
-      }
-      console.log("competenceDeleted" + title + "  " + type);
-    },
-    competenceChanged(title, type, percentagem) {
-      if (type === "tool") {
-        this.editarData.editUsersTools[0].tools.map(function(tool) {
-          if (tool.title === title) {
-            tool.percentagem = percentagem;
-          }
-          return tool;
-        });
-      } else if (type === "skill") {
-        this.editarData.editUsersSkills[0].skills.map(function(skill) {
-          if (skill.title === title) {
-            skill.percentagem = percentagem;
-          }
-          return skill;
-        });
-      } else {
-        console.log("Tipo não está bem. Não fazer nada.");
-      }
-      console.log(
-        "competenceChanged" + title + "  " + type + "  " + percentagem
-      );
     },
     LimitNumberCharsLinkSize(link) {
       if (link.length > 15) {

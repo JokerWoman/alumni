@@ -245,10 +245,7 @@ export default {
         editUsersLinks: []
       },
       modal: {
-        userToolsModal: false,
-        userSkillsModal: false,
-        usersCursosHistoricoModal: false,
-        usersLinksModal: false
+        userSkillsModal: false
       }
     };
   },
@@ -268,25 +265,6 @@ export default {
     );
   },
   computed: {
-    getLinksAvailableForUser() {
-      let allLinksAvailable = this.$store.getters.getLinksAvailable;
-      let linksUserHasAlready = this.editarData.editUsersLinks[0].links;
-      return allLinksAvailable.filter(function(link) {
-        return !linksUserHasAlready.some(
-          linkUserHas => linkUserHas.title === link.title
-        );
-      });
-    },
-    getCursosAvailableForUser() {
-      let allCursosAvailable = this.$store.getters.getCursosAvailable;
-      let cursosUserHasAlready = this.editarData.editUsersCursosHistorico[0]
-        .cursos;
-      return allCursosAvailable.filter(function(curso) {
-        return !cursosUserHasAlready.some(
-          cursoUserHas => cursoUserHas.title === curso.title
-        );
-      });
-    },
     getSkillsAvailableForUser() {
       let allSkillsAvailable = this.$store.getters.getSkillsAvailable;
       let skillsUserHas = this.editarData.editUsersSkills[0].skills;
@@ -295,42 +273,9 @@ export default {
           skillUser => skillUser.title === skill.title
         );
       });
-    },
-    getToolsAvailableForUser() {
-      let allToolsAvailable = this.$store.getters.getToolsAvailable;
-      let toolsUserHas = this.editarData.editUsersTools[0].tools;
-      return allToolsAvailable.filter(function(tool) {
-        return !toolsUserHas.some(toolUser => toolUser.title === tool.title);
-      });
     }
   },
   methods: {
-    RemoveLink(linkTitle) {
-      this.editarData.editUsersLinks[0].links = this.editarData.editUsersLinks[0].links.filter(
-        link => link.title != linkTitle
-      );
-      console.log("RemoveLink: " + linkTitle);
-    },
-    AddLink(title, href) {
-      this.editarData.editUsersLinks[0].links.push({
-        title: title,
-        href: href
-      });
-      console.log("AddLink: " + title + "  " + href);
-    },
-
-    RemoveCurso(cursoTitle) {
-      this.editarData.editUsersCursosHistorico[0].cursos = this.editarData.editUsersCursosHistorico[0].cursos.filter(
-        curso => curso.title != cursoTitle
-      );
-    },
-    AddCurso(title, year) {
-      this.editarData.editUsersCursosHistorico[0].cursos.push({
-        title: title,
-        year: year
-      });
-      console.log("AddCurso: " + title + "  " + year);
-    },
     competenceNew(title, type, percentagem) {
       if (type === "tool") {
         this.editarData.editUsersTools[0].tools.push({
