@@ -55,6 +55,11 @@ export default {
       percentagem: 0
     };
   },
+  watch: {
+    originalPercentagem: function(val) {
+      this.percentagem = val;
+    }
+  },
   created: function() {
     this.percentagem = this.originalPercentagem;
   },
