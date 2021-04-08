@@ -9,6 +9,8 @@ import Register from "../views/Register.vue";
 import EditarPerfil from "../views/EditarPerfil.vue";
 import EditarPortefolio from "../views/EditarPortefolio.vue";
 import EditarCursos from "../views/EditarCursos.vue";
+import EditarTools from "../views/EditarTools.vue";
+import EditarSkills from "../views/EditarSkills.vue";
 import store from "../store";
 import AdicionarBolsa from "../views/AdicionarBolsa.vue";
 import BolsaVerMais from "../views/BolsaVerMais.vue";
@@ -56,6 +58,24 @@ const routes = [
     path: "/editarPerfil",
     name: "EditarPerfil",
     component: EditarPerfil,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/editarTools",
+    name: "EditarTools",
+    component: EditarTools,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/editarSkills",
+    name: "EditarSkills",
+    component: EditarSkills,
     meta: {
       requiresUserAuth: true,
       requiresProfessorAuth: false

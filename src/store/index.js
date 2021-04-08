@@ -22,6 +22,9 @@ export default new Vuex.Store({
     usersSkills: localStorage.getItem("usersSkills")
       ? JSON.parse(localStorage.getItem("usersSkills"))
       : [],
+    usersTools: localStorage.getItem("usersTools")
+      ? JSON.parse(localStorage.getItem("usersTools"))
+      : [],
     usersCursosHistorico: localStorage.getItem("usersCursosHistorico")
       ? JSON.parse(localStorage.getItem("usersCursosHistorico"))
       : [],
@@ -264,12 +267,20 @@ export default new Vuex.Store({
       return user;
     },
     getUserSkillsByNumeroEstudante: state => numeroEstudante => {
-      /* Get de todas as skills e tools que já estão adicionadas no perfil de um estudante */
+      /* Get de todas as skills que já estão adicionadas no perfil de um estudante */
       let userSkills = state.usersSkills.filter(
         userSkill =>
           parseInt(userSkill.numeroEstudante) === parseInt(numeroEstudante)
       );
       return userSkills;
+    },
+    getUserToolsByNumeroEstudante: state => numeroEstudante => {
+      /* Get de todas as tools que já estão adicionadas no perfil de um estudante */
+      let userTools = state.usersTools.filter(
+        userTool =>
+          parseInt(userTool.numeroEstudante) === parseInt(numeroEstudante)
+      );
+      return userTools;
     },
     getUsersCursosHistoricoByNumeroEstudante: state => numeroEstudante => {
       /* Get de todos os cursos que já estão adicionadas no perfil de um estudante */
@@ -461,12 +472,24 @@ export default new Vuex.Store({
           context.commit("REGISTER_SKILLS", {
             /* Quando o utilizador se regista não tem nenhuma skill! */
             numeroEstudante: payload.numeroEstudante,
-            skills: [],
-            tools: []
+            skills: []
           });
+
           localStorage.setItem(
             "usersSkills",
             JSON.stringify(context.state.usersSkills)
+          );
+
+          /* User Tools */
+          context.commit("REGISTER_TOOLS", {
+            /* Quando o utilizador se regista não tem nenhuma tool! */
+            numeroEstudante: payload.numeroEstudante,
+            tools: []
+          });
+
+          localStorage.setItem(
+            "usersTools",
+            JSON.stringify(context.state.usersTools)
           );
 
           /* User Network */
@@ -515,10 +538,16 @@ export default new Vuex.Store({
       context.commit("EDITAR", payload);
       localStorage.setItem("users", JSON.stringify(context.state.users));
 
-      /* Actualizar as skills e as tools */
+      /* Actualizar as skills */
       localStorage.setItem(
         "usersSkills",
         JSON.stringify(context.state.usersSkills)
+      );
+
+      /* Actualizar as tools */
+      localStorage.setItem(
+        "usersTools",
+        JSON.stringify(context.state.usersTools)
       );
 
       /* Actualizar os cursos */
@@ -608,6 +637,9 @@ export default new Vuex.Store({
     REGISTER_SKILLS(state, userSkillData) {
       state.usersSkills.push(userSkillData);
     },
+    REGISTER_TOOLS(state, userToolData) {
+      state.usersTools.push(userToolData);
+    },
     REGISTER_CURSOS(state, userCursoHistoricoData) {
       state.usersCursosHistorico.push(userCursoHistoricoData);
     },
@@ -618,7 +650,7 @@ export default new Vuex.Store({
       state.usersNetwork.push(userNetworkData);
     },
     UNFOLLOW_ALUMNI(state, numeroEstudante) {
-      /* Actualizar tools e skills do utilizador */
+      /* Actualizar a network do utilizador */
       state.usersNetwork.map(function(userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking = userNetwork.networking.filter(
@@ -630,7 +662,7 @@ export default new Vuex.Store({
       });
     },
     FOLLOW_ALUMNI(state, numeroEstudante) {
-      /* Actualizar tools e skills do utilizador */
+      /* Actualizar a network do utilizador */
       state.usersNetwork.map(function(userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking.push(numeroEstudante);
@@ -650,16 +682,27 @@ export default new Vuex.Store({
         }
       });
 
-      /* Actualizar tools e skills do utilizador */
+      /* Actualizar skills do utilizador */
       state.usersSkills.map(function(userSkill) {
         if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
-            skills: editarPayload.editUsersSkills[0].skills,
-            tools: editarPayload.editUsersSkills[0].tools
+            skills: editarPayload.editUsersSkills[0].skills
           };
         } else {
           return userSkill;
+        }
+      });
+
+      /* Actualizar tools do utilizador */
+      state.usersTools.map(function(userTool) {
+        if (userTool.numeroEstudante === state.loggedUser.numeroEstudante) {
+          return {
+            numeroEstudante: state.loggedUser.numeroEstudante,
+            tools: editarPayload.editUsersTools[0].tools
+          };
+        } else {
+          return userTool;
         }
       });
 

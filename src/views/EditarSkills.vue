@@ -33,6 +33,7 @@
               </div>
             </div>
           </div>
+
           <div class="card mt-3">
             <div class="card-body">
               <div class="d-flex justify-content-between">
@@ -41,31 +42,8 @@
                     <i class="material-icons text-info mr-2">Portefolio</i>
                   </h6>
                 </div>
-                <div>
-                  <button
-                    v-if="getLinksAvailableForUser.length > 0"
-                    @click="modal.usersLinksModal = true"
-                    class="btn btn-outline-primary btn-sm"
-                  >
-                    Adicionar
-                  </button>
-
-                  <button
-                    style="margin-left:5px;"
-                    v-on:click="editar"
-                    class="btn btn-outline-primary btn-sm"
-                  >
-                    Guardar
-                  </button>
-                </div>
+                <div></div>
               </div>
-
-              <LinkModal
-                @close="modal.usersLinksModal = false"
-                :showModal="modal.usersLinksModal"
-                modalTitle="Adicionar Links"
-                :links="getLinksAvailableForUser"
-              ></LinkModal>
 
               <ul class="list-group list-group-flush">
                 <li
@@ -74,16 +52,9 @@
                   class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
                 >
                   <h6 class="mb-0">
-                    <button
-                      style="margin-top:-5px;margin-left:-25px;margin-right:20px;width:5px;"
-                      class="p-2 btn"
-                      v-on:click="RemoveLink(link.title)"
-                    >
-                      x
-                    </button>
                     {{ link.title }}
                   </h6>
-                  <a class="text-secondary" :href="link.href">
+                  <a class="text-secondary" target="_blank" :href="link.href">
                     {{ LimitNumberCharsLinkSize(link.href) }}
                   </a>
                 </li>
@@ -172,11 +143,40 @@
             <div class="col-sm-6 mb-3">
               <div class="card h-100">
                 <div class="card-body">
-                  <h6 class="d-flex align-items-center mb-3">
-                    <i class="material-icons text-info mr-2"
-                      >Experiência / Skills</i
-                    >
-                  </h6>
+                  <div class="d-flex justify-content-between">
+                    <div style="margin-top:7px;">
+                      <h6 class="d-flex align-items-center mb-3">
+                        <i class="material-icons text-info mr-2"
+                          >Experiência / Skills</i
+                        >
+                      </h6>
+                    </div>
+                    <div>
+                      <button
+                        v-if="getSkillsAvailableForUser.length > 0"
+                        @click="modal.userSkillsModal = true"
+                        class="btn btn-outline-primary btn-sm"
+                      >
+                        Adicionar
+                      </button>
+
+                      <button
+                        style="margin-left:5px;"
+                        v-on:click="editar"
+                        class="btn btn-outline-primary btn-sm"
+                      >
+                        Guardar
+                      </button>
+                    </div>
+                  </div>
+
+                  <CompetenceModal
+                    @close="modal.userSkillsModal = false"
+                    :showModal="modal.userSkillsModal"
+                    modalTitle="Adicionar Skills"
+                    type="skill"
+                    :competences="getSkillsAvailableForUser"
+                  ></CompetenceModal>
 
                   <div
                     v-for="(skill, index) in editarData.editUsersSkills[0]
@@ -187,7 +187,7 @@
                       :title="skill.title"
                       :originalPercentagem="skill.percentagem"
                       type="skill"
-                      v-bind:edit="false"
+                      v-bind:edit="true"
                     ></Competence>
                   </div>
                 </div>
@@ -225,13 +225,13 @@
 
 <script>
 import Competence from "../components/Competence";
-import LinkModal from "../components/LinkModal";
+import CompetenceModal from "../components/CompetenceModal";
 
 export default {
-  name: "EditarPortefolio",
+  name: "EditarSkills",
   components: {
     Competence,
-    LinkModal
+    CompetenceModal
   },
   data() {
     return {

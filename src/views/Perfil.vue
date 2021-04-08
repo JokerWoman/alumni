@@ -12,6 +12,7 @@
                   alt="Admin"
                   class="rounded-circle"
                   width="150"
+                  height="150"
                 />
                 <img
                   v-else
@@ -19,6 +20,7 @@
                   alt="Admin"
                   class="rounded-circle"
                   width="150"
+                  height="150"
                 />
                 <div class="mt-3">
                   <h4>{{ getUserInfomation.nome }}</h4>
@@ -32,7 +34,7 @@
                     "
                   >
                     <router-link
-                      class="btn btn-outline-primary"
+                      class="btn btn-outline-primary btn-sm"
                       style="margin-left:10px;"
                       :to="{ name: 'EditarPerfil' }"
                       >Editar Perfil</router-link
@@ -156,7 +158,7 @@
 
           <div class="card mb-3">
             <div class="card-body">
-          <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-between">
                 <div style="margin-top:7px;">
                   <h6 class="d-flex align-items-center mb-3">
                     <i class="material-icons text-info mr-2">Cursos</i>
@@ -194,11 +196,23 @@
             <div class="col-sm-6 mb-3">
               <div class="card h-100">
                 <div class="card-body">
-                  <h6 class="d-flex align-items-center mb-3">
-                    <i class="material-icons text-info mr-2"
-                      >Experiência / Skills</i
-                    >
-                  </h6>
+                  <div class="d-flex justify-content-between">
+                    <div style="margin-top:7px;">
+                      <h6 class="d-flex align-items-center mb-3">
+                        <i class="material-icons text-info mr-2"
+                          >Experiência / Skills</i
+                        >
+                      </h6>
+                    </div>
+                    <div>
+                      <router-link
+                        class="btn btn-outline-primary btn-sm"
+                        style="margin-left:10px;"
+                        :to="{ name: 'EditarSkills' }"
+                        >Editar</router-link
+                      >
+                    </div>
+                  </div>
 
                   <div
                     v-for="(skill, index) in getUserSkills[0].skills"
@@ -217,14 +231,26 @@
             <div class="col-sm-6 mb-3">
               <div class="card h-100">
                 <div class="card-body">
-                  <h6 class="d-flex align-items-center mb-3">
-                    <i class="material-icons text-info mr-2"
-                      >Dominio de Ferramentas</i
-                    >
-                  </h6>
+                  <div class="d-flex justify-content-between">
+                    <div style="margin-top:7px;">
+                      <h6 class="d-flex align-items-center mb-3">
+                        <i class="material-icons text-info mr-2"
+                          >Exp. de Ferramentas</i
+                        >
+                      </h6>
+                    </div>
+                    <div>
+                      <router-link
+                        class="btn btn-outline-primary btn-sm"
+                        style="margin-left:10px;"
+                        :to="{ name: 'EditarTools' }"
+                        >Editar</router-link
+                      >
+                    </div>
+                  </div>
 
                   <div
-                    v-for="(tool, index) in getUserSkills[0].tools"
+                    v-for="(tool, index) in getUserTools[0].tools"
                     :key="index"
                   >
                     <Competence
@@ -258,6 +284,10 @@ export default {
       return this.$store.getters.getUserSkillsByNumeroEstudante(
         numeroEstudante
       );
+    },
+    getUserTools() {
+      let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
+      return this.$store.getters.getUserToolsByNumeroEstudante(numeroEstudante);
     },
     getUsersCursosHistorico() {
       let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
