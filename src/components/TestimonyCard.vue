@@ -6,6 +6,7 @@
     :id="`cardTestimony${testimony.id}`"
     img-height="200px"
     style="width: 200px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
+    img-alt="Imagem do testimunha"
   >
     <b-card-text style="color:#FF7F61; margin-bottom: 5px; font-size: 20px "
       >{{ testimony.name }}
