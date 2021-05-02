@@ -147,7 +147,7 @@
             class="img-fluid"
             height="250px"
             width="250px"
-            alt=""
+            alt="Logotipo da pagina"
           />
         </div>
         <div class="col-md-4 footer-nav">
@@ -166,9 +166,13 @@
             <ul>
               <li>Escola Superior de Media Artes e Design</li>
               <li>Campus 2 P.Porto ESMAD, 981, R.Dom Sancho l, 4480.876</li>
-              <hr />
-              <li>252 291 700</li>
-              <hr />
+
+              <li
+                style="border-bottom: 1px solid rgba(0, 0, 0, 0.32);border-top: 1px solid rgba(0, 0, 0, 0.32);"
+              >
+                252 291 700
+              </li>
+
               <li>academicos-campus2@sc.ipp.pt</li>
             </ul>
           </div>

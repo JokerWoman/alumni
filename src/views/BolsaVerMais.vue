@@ -14,7 +14,7 @@
             >
               <img
                 :src="getBolsa.img"
-                alt="Indisponivel"
+                alt="foto da bolsa"
                 width="250"
                 height="250"
               />

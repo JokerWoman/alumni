@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-lg-5" style="padding-top:200px; padding-left:150px;">
           <h1>BEM-VINDOS AO PORTAL ALUMNI ESMAD</h1>
-          <h5>Faça Parte da Nossa Comunidade</h5>
+          <h2 style="font-size:15px">Faça Parte da Nossa Comunidade</h2>
           <div class="d-lg-flex">
             <b-button
               :to="{
@@ -30,7 +30,11 @@
           </div>
         </div>
         <div class="col-lg-7">
-          <img src="@/assets/img/home.png" class="img-fluid h-10" alt="" />
+          <img
+            src="@/assets/img/home.png"
+            alt="foto de um homem"
+            class="img-fluid h-10"
+          />
         </div>
       </div>
     </b-container>
@@ -62,7 +66,7 @@
             class="img-fluid"
             height="250px"
             width="250px"
-            alt=""
+            alt="logotipo da página"
           />
         </div>
         <div class="col-md-4 footer-nav">
@@ -81,9 +85,11 @@
             <ul>
               <li>Escola Superior de Media Artes e Design</li>
               <li>Campus 2 P.Porto ESMAD, 981, R.Dom Sancho l, 4480.876</li>
-              <hr />
-              <li>252 291 700</li>
-              <hr />
+              <li
+                style="border-bottom: 1px solid rgba(0, 0, 0, 0.32);border-top: 1px solid rgba(0, 0, 0, 0.32);"
+              >
+                252 291 700
+              </li>
               <li>academicos-campus2@sc.ipp.pt</li>
             </ul>
           </div>

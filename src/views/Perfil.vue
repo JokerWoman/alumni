@@ -9,7 +9,7 @@
                 <img
                   v-if="getUserInfomation.genero === 'Masculino'"
                   src="@/assets/img/usersFoto/homem.jpg"
-                  alt="Admin"
+                  alt="foto de um homem"
                   class="rounded-circle"
                   width="150"
                   height="150"
@@ -17,7 +17,7 @@
                 <img
                   v-else
                   src="@/assets/img/usersFoto/mulher.jpg"
-                  alt="Admin"
+                  alt="foto de uma mulher"
                   class="rounded-circle"
                   width="150"
                   height="150"
