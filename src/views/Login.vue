@@ -5,7 +5,11 @@
         <div class="col-lg-6">
           <div class="card1 pb-5">
             <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
-              <img src="@/assets/img/login.jpg" class="img-fluid" />
+              <img
+                src="@/assets/img/login.jpg"
+                alt="foto de estudantes a fazer login"
+                class="img-fluid"
+              />
             </div>
           </div>
         </div>

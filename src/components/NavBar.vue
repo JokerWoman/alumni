@@ -2,7 +2,7 @@
   <!-- o b-nav-item do vue bootstrap comporta-se como um router-link -->
 
   <b-navbar toggleable="lg" type="light">
-    <b-navbar-brand href="#"></b-navbar-brand>
+    <b-navbar-brand href="#" title="Logo da pagina"></b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>

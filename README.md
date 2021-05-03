@@ -48,7 +48,7 @@ npm install
 ```
 Abrir o Git Bash
 cd /c/Users/andre/Documents/
-rm --f jokerwoman.github.io
+rm --r jokerwoman.github.io
 git clone https://github.com/JokerWoman/jokerwoman.github.io.git
 cd /c/Users/andre/Documents/projeto_alumni/alumni
 npm run build
