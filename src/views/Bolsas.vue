@@ -1,16 +1,12 @@
 <template>
-  <b-container fluid>
-    <br />
-    <br />
+<div>
     <b-container fluid>
       <b-row class="justify-content-md-left">
         <b-col cols="2">
-          <p>Data</p>
           <b-form-select v-model="optionSortSelected" :options="optionsSort">
           </b-form-select>
         </b-col>
         <b-col cols="2" style="margin-top: 5px">
-          <p>Localidade</p>
           <b-form-input
             type="text"
             placeholder="Exemplo: Porto"
@@ -18,7 +14,6 @@
           ></b-form-input>
         </b-col>
         <b-col cols="2">
-          <p>Tipo</p>
           <b-form-select v-model="categorySelected" :options="getCategories">
             <template #first>
               <b-form-select-option value="all">TODAS</b-form-select-option>
@@ -175,7 +170,7 @@
         </div>
       </div>
     </footer>
-  </b-container>
+</div>
 </template>
 
 <script>

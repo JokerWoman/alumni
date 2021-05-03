@@ -172,7 +172,7 @@
     </b-container>
 
     <b-container style="background-color: #2B4C8C;" fluid>
-      <b-row>
+      <b-row style="margin-right:10%;margin-left:10%">
         <b-card-group style="margin:20px">
           <EventCard
             v-for="event in getEvents"

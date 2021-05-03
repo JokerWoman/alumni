@@ -1,7 +1,7 @@
 <template>
   <b-card
     align="center"
-    :img-src="testimony.img"
+    img-src= testimony.img
     img-top
     :id="`cardTestimony${testimony.id}`"
     img-height="200px"
@@ -25,6 +25,6 @@ export default {
   name: "TestimonyCard",
   props: {
     testimony: Object
-  }
+  },
 };
 </script>

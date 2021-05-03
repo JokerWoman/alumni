@@ -134,23 +134,20 @@ export default new Vuex.Store({
           {
             id: 1,
             name: "Marco Marques",
-            img:
-              "https://pbs.twimg.com/profile_images/1280492884555415564/NwD5J2HM_400x400.jpg",
+            img: '../assets/img/testemunhos/testemunho1.webp',
             description: "Adoro o Alumni Esmad! Sem duvida que recomendo."
           },
           {
             id: 2,
             name: "Tiago Mayan",
-            img:
-              "https://upload.wikimedia.org/wikipedia/commons/a/a9/Tiago_Mayan.png",
+            img:'../assets/img/testemunhos/testemunho1.webp',
             description:
               "Bastou umas horas para arranjar o meu emprego de sonho."
           },
           {
             id: 3,
             name: "Ana Gomes",
-            img:
-              "https://pbs.twimg.com/profile_images/1312889865055412225/BTC3W6t5_400x400.jpg",
+            img:'../assets/img/testemunhos/testemunho1.webp',
             description:
               "Graças ao Alumni Esmad consegui localizar os meus ex colegas!"
           }
