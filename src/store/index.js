@@ -134,22 +134,37 @@ export default new Vuex.Store({
           {
             id: 1,
             name: "Marco Marques",
-            img: '../assets/img/testemunhos/testemunho1.webp',
-            description: "Adoro o Alumni Esmad! Sem duvida que recomendo."
+            img: require('@/assets/img/testemunhos/testemunho1.webp'),
+            description: 
+              "Adoro o Alumni Esmad! Sem duvida que recomendo."
           },
           {
             id: 2,
-            name: "Tiago Mayan",
-            img:'../assets/img/testemunhos/testemunho1.webp',
+            name: "Andrea Fernandes",
+            img:require('@/assets/img/testemunhos/testemunho2.webp'),
             description:
-              "Bastou umas horas para arranjar o meu emprego de sonho."
+              "Várias ofertas de emprego incriveis na minha area. Recomendo."
           },
           {
             id: 3,
-            name: "Ana Gomes",
-            img:'../assets/img/testemunhos/testemunho1.webp',
+            name: "Carolina Medonsa",
+            img:require('@/assets/img/testemunhos/testemunho3.webp'),
             description:
-              "Graças ao Alumni Esmad consegui localizar os meus ex colegas!"
+              "Com esta plataforma voltei a ver os meus antigos colegas."
+          },
+          {
+            id: 3,
+            name: "João Santos",
+            img:require('@/assets/img/testemunhos/testemunho4.webp'),
+            description:
+              "Workshops fantásticos!"
+          },
+          {
+            id: 3,
+            name: "Ana Martins",
+            img:require('@/assets/img/testemunhos/testemunho5.webp'),
+            description:
+              "Incrivel! Encontrei aqui uma vaga para estágio profissional em breve estarei contratada!"
           }
         ],
 
