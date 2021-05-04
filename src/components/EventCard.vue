@@ -5,22 +5,23 @@
     img-top
     tag="article"
     :id="`cardEvent${event.id}`"
-    img-height="200px"
-    style="width: 280px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
+    img-height="250px"
+    style="width: 260px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
     img-alt="Imagem do evento"
   >
     <b-card-text> {{ getDescription(event.description) }}</b-card-text>
 
-    <router-link
-      v-if="event.state == 'active'"
-      :to="{ name: 'EventoVerMais', params: { eventId: event.id } }"
-      class="btn btn-primary"
-      variant="success"
-    >
-      Ver mais
-    </router-link>
+      <router-link
+        v-if="event.state == 'active'"
+        :to="{ name: 'EventoVerMais', params: { eventId: event.id } }"
+        class="btn btn-primary"
+        variant="success"
+      >
+        Ver mais
+      </router-link>
 
     <b-button v-else variant="danger" align-self disabled>Terminado</b-button>
+    
     <b-button
       v-if="getLoggedUserType()"
       @click="setActiveEvent(event)"

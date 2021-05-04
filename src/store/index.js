@@ -83,12 +83,11 @@ export default new Vuex.Store({
       : [
           {
             id: 1,
-            name: "Oferta Blip",
+            name: "Blip",
             category: 2,
             description:
               "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
-            img:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2wT80KxmAt4CeKITCbU05jwDyr-MDJbkz1Q&usqp=CAU",
+            img:require('@/assets/img/bolsas/bolsa1.webp'),
             locality: "Porto",
             date: "2021-01-20",
             phone: "932499526",
@@ -98,32 +97,30 @@ export default new Vuex.Store({
           },
           {
             id: 2,
-            name: "DesignMasters",
+            name: "Moxy",
             category: 1,
             description:
-              "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img:
-              "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
-            locality: "Braga",
+              "A Moxy Studio está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+            img:require('@/assets/img/bolsas/bolsa2.webp'),
+            locality: "Porto",
             date: "2021-01-22",
             phone: "913845397",
-            email: "communications@designmasters.pt",
-            linkBolsa: "https://blip.pt/contact-us/",
+            email: "communications@moxy.pt",
+            linkBolsa: "https://moxy.studio/",
             estado: "ativo"
           },
           {
             id: 3,
-            name: "DesignMasters (Estágio)",
+            name: "XD Software",
             category: 3,
             description:
-              "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img:
-              "https://knoow.net/wp-content/uploads/2016/04/presentation.design.jpg",
+              "A XDSoftware está a procurar jovens webdesigners. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+            img:require('@/assets/img/bolsas/bolsa3.webp'),
             locality: "Braga",
             date: "2021-01-24",
             phone: "913845397",
-            email: "communications@designmasters.pt",
-            linkBolsa: "https://blip.pt/contact-us/",
+            email: "communications@xdsoftware.pt",
+            linkBolsa: "https://www.xdsoftware.pt/",
             estado: "ativo"
           }
         ],
@@ -134,7 +131,7 @@ export default new Vuex.Store({
           {
             id: 1,
             name: "Marco Marques",
-            img: require('@/assets/img/testemunhos/testemunho1.webp'),
+            img:require('@/assets/img/testemunhos/testemunho1.webp'),
             description: 
               "Adoro o Alumni Esmad! Sem duvida que recomendo."
           },
@@ -179,7 +176,7 @@ export default new Vuex.Store({
             state: "active",
             date: "2021-06-25",
             hour: "13:56:00",
-            img: "https://www.esmad.ipp.pt/noticias/plug-in/image_large",
+            img:require('@/assets/img/eventos/evento1.webp'),
             description:
               "Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
           },
@@ -191,8 +188,7 @@ export default new Vuex.Store({
             state: "active",
             date: "2021-09-01",
             hour: "13:45:00",
-            img:
-              "https://web-summit-library.imgix.net/websummit/2018/10/staffgroup.jpg?auto=compress%2Cformat&ixlib=php-1.2.1&s=bbfafdcad5b85917ee9eca631113e96b",
+            img:require('@/assets/img/eventos/evento2.webp'),
             description:
               "A Web Summit é a maior conferência da Europa em tecnologias, realizada anualmente desde 2009. Aparece!"
           }

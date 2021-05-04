@@ -119,17 +119,18 @@
         </b-form>
       </b-modal>
     </b-container>
+
     <br><br>
+    
     <b-container style="background-color: #2b4c8c" fluid>
       <b-row style="margin-right:10%;margin-left:10%">
-        <b-card-group v-if="getBolsas.length > 0" style="margin:20px">
+        <b-card-group style="margin:20px" v-if="getBolsas.length > 0" >
           <BolsasCard
             v-for="myBolsa in getBolsas"
             :key="myBolsa.id"
             :bolsa="myBolsa"
           />
         </b-card-group>
-        <p v-else>Não há ofertas criadas!</p>
       </b-row>
     </b-container>
 

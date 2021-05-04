@@ -5,37 +5,27 @@
     img-top
     tag="article"
     :id="`cardEvent${bolsa.id}`"
-    img-height="200px"
-    style="width:280px; margin-left:50px; margin-right:50px; margin-bottom:50px; background-color:#DCEAFF"
+    img-height="250px"
+    style="width:260px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
     img-alt="Imagem da bolsa"
   >
   <b-card-text> {{ getDescription(bolsa.description) }}</b-card-text>
-    <span v-if="bolsaEstado()">
+
+
       <router-link
+        v-if="bolsa.estado == 'ativo'"
         :to="{ name: 'BolsaVerMais', params: { bolsaId: bolsa.id } }"
         class="btn btn-primary"
         variant="success"
       >
         VER MAIS
       </router-link>
-    </span>
-    <span v-else>
-      <b-button variant="danger" disabled>Terminado</b-button>
-    </span>
 
-    <span v-if="isLoggedProfessor()">
-      <span v-if="bolsaEstado()">
-        <b-button @click="finishBolsa" variant="danger" class="ml-1"
-          >Terminar</b-button
-        >
-      </span>
-    </span>
+      <b-button v-else variant="danger" disabled>Terminado</b-button>
 
-    <span v-if="isLoggedProfessor()">
-      <b-button @click="deleteBolsa" variant="danger" class="ml-3"
-        >Apagar</b-button
-      >
-    </span>
+      <b-button v-if="isLoggedProfessor() && bolsa.estado == 'ativo'" @click="finishBolsa" variant="danger" class="ml-1">Terminar</b-button>
+
+      <b-button v-if="isLoggedProfessor()" @click="deleteBolsa" variant="danger" class="ml-3">Apagar</b-button>
   </b-card>
 </template>
 
@@ -47,7 +37,10 @@ export default {
   },
   methods: {
     isLoggedProfessor() {
-      return this.$store.getters.isLoggedProfessor;
+      if(this.$store.getters.isLoggedProfessor!={}){
+        return false
+      }
+      return true
     },
 
     deleteBolsa() {
