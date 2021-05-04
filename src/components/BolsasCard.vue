@@ -1,15 +1,15 @@
 <template>
   <b-card
-    :img-src="getBolsaImg"
+    :img-src="bolsa.img"
+    :title="bolsa.name"
     img-top
-    img-height="250;"
     tag="article"
-    style="max-width: 20rem; margin-left:50px; margin-right:50px; margin-bottom:50px; background-color:#DCEAFF"
+    :id="`cardEvent${bolsa.id}`"
+    img-height="200px"
+    style="width:280px; margin-left:50px; margin-right:50px; margin-bottom:50px; background-color:#DCEAFF"
     img-alt="Imagem da bolsa"
   >
-    <b-card-img> {{ bolsa.img }}</b-card-img>
-    <b-card-title>{{ bolsa.title }}</b-card-title>
-    <b-card-text> {{ getDescription(bolsa.description) }}</b-card-text>
+  <b-card-text> {{ getDescription(bolsa.description) }}</b-card-text>
     <span v-if="bolsaEstado()">
       <router-link
         :to="{ name: 'BolsaVerMais', params: { bolsaId: bolsa.id } }"
@@ -45,11 +45,6 @@ export default {
   props: {
     bolsa: Object
   },
-  computed: {
-    getBolsaImg() {
-      return this.bolsa.img;
-    }
-  },
   methods: {
     isLoggedProfessor() {
       return this.$store.getters.isLoggedProfessor;
@@ -74,10 +69,10 @@ export default {
     },
 
     getDescription(desc) {
-      if (desc.length < 30) {
+      if (desc.length < 60) {
         return desc;
       } else {
-        return `${desc.substr(0, [30])}...`;
+        return `${desc.substr(0, [60])}...`;
       }
     }
   }

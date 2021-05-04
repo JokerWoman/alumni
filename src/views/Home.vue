@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col-lg-5" style="padding-top:200px; padding-left:150px;">
           <h1>BEM-VINDOS AO PORTAL ALUMNI ESMAD</h1>
-          <h2 style="font-size:15px" v-if="!checkLogin()">Faça Parte da Nossa Comunidade</h2>
-          <div class="d-lg-flex" v-if="!checkLogin()">
+          <h2 style="font-size:15px" v-if="checkLogin()">Faça Parte da Nossa Comunidade</h2>
+          <div class="d-lg-flex" v-if="checkLogin()">
             <b-button
               :to="{
                 name: 'Login'
@@ -110,9 +110,12 @@ export default {
   },
 
   methods: {
+    
     checkLogin(){
       if(this.$store.getters.isLoggedUser!={} && !this.$store.getters.isLoggedProfessor!={}){
         return false
+      }else{
+        return true
       }
     }
   },
@@ -120,7 +123,7 @@ export default {
   computed: {
     getTestimonys() {
       return this.$store.getters.getTestimonys;
-    }
+    },
   }
 };
 </script>

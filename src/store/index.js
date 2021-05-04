@@ -83,7 +83,7 @@ export default new Vuex.Store({
       : [
           {
             id: 1,
-            title: "Oferta Blip",
+            name: "Oferta Blip",
             category: 2,
             description:
               "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
@@ -98,7 +98,7 @@ export default new Vuex.Store({
           },
           {
             id: 2,
-            title: "DesignMasters",
+            name: "DesignMasters",
             category: 1,
             description:
               "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
@@ -113,7 +113,7 @@ export default new Vuex.Store({
           },
           {
             id: 3,
-            title: "DesignMasters (Estágio)",
+            name: "DesignMasters (Estágio)",
             category: 3,
             description:
               "A DesignMasters está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",

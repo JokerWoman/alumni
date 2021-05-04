@@ -2,15 +2,14 @@
   <b-card
     :img-src="event.img"
     :title="event.name"
-    :text="event.description"
     img-top
     tag="article"
     :id="`cardEvent${event.id}`"
-    img-height="150px"
-    style="width: 220px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
+    img-height="200px"
+    style="width: 280px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
     img-alt="Imagem do evento"
   >
-    <b-card-text> {{ event.description }}</b-card-text>
+    <b-card-text> {{ getDescription(event.description) }}</b-card-text>
 
     <router-link
       v-if="event.state == 'active'"
@@ -49,6 +48,14 @@ export default {
 
     setActiveEvent(event) {
       this.$store.dispatch("setActiveEvent", event);
+    },
+
+    getDescription(desc) {
+      if (desc.length < 60) {
+        return desc;
+      } else {
+        return `${desc.substr(0, [60])}...`;
+      }
     }
   }
 };

@@ -1,9 +1,16 @@
 <template>
-<div>
-    <b-container fluid>
+  <div>
+    <b-container>
       <b-row class="justify-content-md-left">
         <b-col cols="2">
           <b-form-select v-model="optionSortSelected" :options="optionsSort">
+          </b-form-select>
+        </b-col>
+        <b-col cols="2">
+          <b-form-select v-model="categorySelected" :options="getCategories">
+            <template #first>
+              <b-form-select-option value="all">TODAS</b-form-select-option>
+            </template>
           </b-form-select>
         </b-col>
         <b-col cols="2" style="margin-top: 5px">
@@ -13,13 +20,7 @@
             v-model="locality"
           ></b-form-input>
         </b-col>
-        <b-col cols="2">
-          <b-form-select v-model="categorySelected" :options="getCategories">
-            <template #first>
-              <b-form-select-option value="all">TODAS</b-form-select-option>
-            </template>
-          </b-form-select>
-        </b-col>
+        
         <b-col cols="2" style="margin-top: 40px" v-if="getLoggedUserType()">
           <b-button variant="primary" v-b-modal.createBolsaModal
             >Criar Bolsa</b-button
@@ -118,11 +119,10 @@
         </b-form>
       </b-modal>
     </b-container>
-    <br />
-    <br />
+    <br><br>
     <b-container style="background-color: #2b4c8c" fluid>
-      <b-row>
-        <b-card-group style="margin: 20px" columns v-if="getBolsas.length > 0">
+      <b-row style="margin-right:10%;margin-left:10%">
+        <b-card-group v-if="getBolsas.length > 0" style="margin:20px">
           <BolsasCard
             v-for="myBolsa in getBolsas"
             :key="myBolsa.id"
@@ -241,14 +241,13 @@ export default {
         estado: "ativo"
       };
       this.$store.dispatch("saveBolsa", bolsa);
+    },
+    clearForm(){
+
+      
     }
   },
   computed: {
-    /*
-    getBolsas() {
-      return this.$store.getters.getBolsas;
-    },*/
-
     getBolsas() {
       return this.$store.getters.getBolsasFiltered(
         this.categorySelected,

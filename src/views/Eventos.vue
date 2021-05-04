@@ -173,7 +173,7 @@
 
     <b-container style="background-color: #2B4C8C;" fluid>
       <b-row style="margin-right:10%;margin-left:10%">
-        <b-card-group style="margin:20px">
+        <b-card-group style="margin:20px" v-if="getEvents.length > 0">
           <EventCard
             v-for="event in getEvents"
             :key="event.id"
