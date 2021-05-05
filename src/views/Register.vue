@@ -6,7 +6,7 @@
           <div class="card1 pb-5">
             <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
               <img
-                src="@/assets/img/registo.jpg"
+                src="@/assets/img/registo.webp"
                 alt="foto de uma pessoa a fazer um registo"
                 class="img-fluid"
               />

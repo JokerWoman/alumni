@@ -31,7 +31,7 @@
         </div>
         <div class="col-lg-7">
           <img
-            src="@/assets/img/home.png"
+            src="@/assets/img/home.webp"
             alt="foto de um homem"
             class="img-fluid h-10"
           />
