@@ -76,7 +76,7 @@
               <div class="d-flex justify-content-between">
                 <div style="margin-top:7px;">
                   <h6 class="d-flex align-items-center mb-3">
-                    <i class="material-icons text-info mr-2">Portefolio</i>
+                    <i class="material-icons text-info mr-2">Portefólio</i>
                   </h6>
                 </div>
                 <div>
@@ -138,7 +138,7 @@
               <hr />
               <div class="row">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Data Nacimento</h6>
+                  <h6 class="mb-0">Data Nascimento</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   {{ getUserInfomation.data_Nasc }}

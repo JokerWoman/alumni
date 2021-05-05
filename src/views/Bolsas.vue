@@ -123,6 +123,7 @@
     <br><br>
     
     <b-container style="background-color: #2b4c8c" fluid>
+    <h1 v-if="!getBolsas.length">Não Foram Encontrados Eventos!</h1>
       <b-row style="margin-right:10%;margin-left:10%">
         <b-card-group style="margin:20px" v-if="getBolsas.length > 0" >
           <BolsasCard
