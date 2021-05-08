@@ -9,23 +9,34 @@
     style="width:260px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
     img-alt="Imagem da bolsa"
   >
-  <b-card-text> {{ getDescription(bolsa.description) }}</b-card-text>
+    <b-card-text> {{ getDescription(bolsa.description) }}</b-card-text>
 
+    <router-link
+      v-if="bolsa.estado == 'ativo'"
+      :to="{ name: 'BolsaVerMais', params: { bolsaId: bolsa.id } }"
+      class="btn btn-primary"
+      variant="success"
+    >
+      VER MAIS
+    </router-link>
 
-      <router-link
-        v-if="bolsa.estado == 'ativo'"
-        :to="{ name: 'BolsaVerMais', params: { bolsaId: bolsa.id } }"
-        class="btn btn-primary"
-        variant="success"
-      >
-        VER MAIS
-      </router-link>
+    <b-button v-else variant="danger" disabled>Terminado</b-button>
 
-      <b-button v-else variant="danger" disabled>Terminado</b-button>
+    <b-button
+      v-if="isLoggedProfessor() && bolsa.estado == 'ativo'"
+      @click="finishBolsa"
+      variant="danger"
+      class="ml-1"
+      >Terminar</b-button
+    >
 
-      <b-button v-if="isLoggedProfessor() && bolsa.estado == 'ativo'" @click="finishBolsa" variant="danger" class="ml-1">Terminar</b-button>
-
-      <b-button v-if="isLoggedProfessor()" @click="deleteBolsa" variant="danger" class="ml-3">Apagar</b-button>
+    <b-button
+      v-if="isLoggedProfessor()"
+      @click="deleteBolsa"
+      variant="danger"
+      class="ml-3"
+      >Apagar</b-button
+    >
   </b-card>
 </template>
 
@@ -37,10 +48,10 @@ export default {
   },
   methods: {
     isLoggedProfessor() {
-      if(this.$store.getters.isLoggedProfessor!={}){
-        return false
+      if (this.$store.getters.isLoggedProfessor != {}) {
+        return false;
       }
-      return true
+      return true;
     },
 
     deleteBolsa() {

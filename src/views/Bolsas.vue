@@ -20,7 +20,7 @@
             v-model="locality"
           ></b-form-input>
         </b-col>
-        
+
         <b-col cols="2" style="margin-top: 40px" v-if="getLoggedUserType()">
           <b-button variant="primary" v-b-modal.createBolsaModal
             >Criar Bolsa</b-button
@@ -120,12 +120,12 @@
       </b-modal>
     </b-container>
 
-    <br><br>
-    
+    <br /><br />
+
     <b-container style="background-color: #2b4c8c" fluid>
-    <h1 v-if="!getBolsas.length">Não Foram Encontrados Eventos!</h1>
+      <h1 v-if="!getBolsas.length">Não Foram Encontrados Eventos!</h1>
       <b-row style="margin-right:10%;margin-left:10%">
-        <b-card-group style="margin:20px" v-if="getBolsas.length > 0" >
+        <b-card-group style="margin:20px" v-if="getBolsas.length > 0">
           <BolsasCard
             v-for="myBolsa in getBolsas"
             :key="myBolsa.id"
@@ -176,7 +176,7 @@
         </div>
       </div>
     </footer>
-</div>
+  </div>
 </template>
 
 <script>
@@ -244,10 +244,7 @@ export default {
       };
       this.$store.dispatch("saveBolsa", bolsa);
     },
-    clearForm(){
-
-      
-    }
+    clearForm() {}
   },
   computed: {
     getBolsas() {

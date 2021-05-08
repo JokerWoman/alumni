@@ -11,17 +11,17 @@
   >
     <b-card-text> {{ getDescription(event.description) }}</b-card-text>
 
-      <router-link
-        v-if="event.state == 'active'"
-        :to="{ name: 'EventoVerMais', params: { eventId: event.id } }"
-        class="btn btn-primary"
-        variant="success"
-      >
-        Ver mais
-      </router-link>
+    <router-link
+      v-if="event.state == 'active'"
+      :to="{ name: 'EventoVerMais', params: { eventId: event.id } }"
+      class="btn btn-primary"
+      variant="success"
+    >
+      Ver mais
+    </router-link>
 
     <b-button v-else variant="danger" align-self disabled>Terminado</b-button>
-    
+
     <b-button
       v-if="getLoggedUserType()"
       @click="setActiveEvent(event)"

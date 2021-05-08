@@ -1,5 +1,7 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
+import VueMeta from "vue-meta";
+
+import Router from "vue-router";
 import Home from "../views/Home.vue";
 import Eventos from "../views/Eventos.vue";
 import Bolsas from "../views/Bolsas.vue";
@@ -18,7 +20,8 @@ import ProcurarAlumni from "../views/ProcurarAlumni.vue";
 import LoginProfessor from "../views/LoginProfessor.vue";
 import EventoVerMais from "../views/EventoVerMais.vue";
 
-Vue.use(VueRouter);
+Vue.use(Router);
+Vue.use(VueMeta);
 
 /*
   IMPORTANTE:
@@ -172,7 +175,7 @@ const routes = [
   }
 ];
 
-const router = new VueRouter({
+const router = new Router({
   mode: "hash",
   base: process.env.BASE_URL,
   routes
@@ -180,9 +183,9 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   /* Sempre que uma das routes seja pedida e o estudante não estiver logged in
-       ou o professor nao estiver logged in enviamos a route para o home caso contrário
-       deixamos ir para a route
-    */
+         ou o professor nao estiver logged in enviamos a route para o home caso contrário
+         deixamos ir para a route
+      */
 
   if (to.meta.requiresUserAuth === true) {
     if (store.getters.isLoggedUser || store.getters.isLoggedProfessor) {

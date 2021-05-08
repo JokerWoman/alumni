@@ -87,7 +87,7 @@ export default new Vuex.Store({
             category: 2,
             description:
               "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
-            img:require('@/assets/img/bolsas/bolsa1.webp'),
+            img: require("@/assets/img/bolsas/bolsa1.webp"),
             locality: "Porto",
             date: "2021-01-20",
             phone: "932499526",
@@ -101,7 +101,7 @@ export default new Vuex.Store({
             category: 1,
             description:
               "A Moxy Studio está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img:require('@/assets/img/bolsas/bolsa2.webp'),
+            img: require("@/assets/img/bolsas/bolsa2.webp"),
             locality: "Porto",
             date: "2021-01-22",
             phone: "913845397",
@@ -115,7 +115,7 @@ export default new Vuex.Store({
             category: 3,
             description:
               "A XDSoftware está a procurar jovens webdesigners. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img:require('@/assets/img/bolsas/bolsa3.webp'),
+            img: require("@/assets/img/bolsas/bolsa3.webp"),
             locality: "Braga",
             date: "2021-01-24",
             phone: "913845397",
@@ -131,35 +131,33 @@ export default new Vuex.Store({
           {
             id: 1,
             name: "Marco Marques",
-            img:require('@/assets/img/testemunhos/testemunho1.webp'),
-            description: 
-              "Adoro o Alumni Esmad! Sem duvida que recomendo."
+            img: require("@/assets/img/testemunhos/testemunho1.webp"),
+            description: "Adoro o Alumni Esmad! Sem duvida que recomendo."
           },
           {
             id: 2,
             name: "Andrea Fernandes",
-            img:require('@/assets/img/testemunhos/testemunho2.webp'),
+            img: require("@/assets/img/testemunhos/testemunho2.webp"),
             description:
               "Várias ofertas de emprego incriveis na minha area. Recomendo."
           },
           {
             id: 3,
             name: "Carolina Medonsa",
-            img:require('@/assets/img/testemunhos/testemunho3.webp'),
+            img: require("@/assets/img/testemunhos/testemunho3.webp"),
             description:
               "Com esta plataforma voltei a ver os meus antigos colegas."
           },
           {
-            id: 3,
+            id: 4,
             name: "João Santos",
-            img:require('@/assets/img/testemunhos/testemunho4.webp'),
-            description:
-              "Workshops fantásticos!"
+            img: require("@/assets/img/testemunhos/testemunho4.webp"),
+            description: "Workshops fantásticos!"
           },
           {
-            id: 3,
+            id: 5,
             name: "Ana Martins",
-            img:require('@/assets/img/testemunhos/testemunho5.webp'),
+            img: require("@/assets/img/testemunhos/testemunho5.webp"),
             description:
               "Incrivel! Encontrei aqui uma vaga para estágio profissional em breve estarei contratada!"
           }
@@ -176,7 +174,7 @@ export default new Vuex.Store({
             state: "active",
             date: "2021-06-25",
             hour: "13:56:00",
-            img:require('@/assets/img/eventos/evento1.webp'),
+            img: require("@/assets/img/eventos/evento1.webp"),
             description:
               "Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
           },
@@ -188,7 +186,7 @@ export default new Vuex.Store({
             state: "active",
             date: "2021-09-01",
             hour: "13:45:00",
-            img:require('@/assets/img/eventos/evento2.webp'),
+            img: require("@/assets/img/eventos/evento2.webp"),
             description:
               "A Web Summit é a maior conferência da Europa em tecnologias, realizada anualmente desde 2009. Aparece!"
           }
@@ -435,8 +433,8 @@ export default new Vuex.Store({
       );
       if (user != undefined) {
         /* numero de estudante e passord existem por isso
-                           login efectuado com sucesso 
-                        */
+                                   login efectuado com sucesso 
+                                */
         context.commit("LOGIN_USER", user);
         localStorage.setItem(
           "loggedUser",
@@ -471,8 +469,8 @@ export default new Vuex.Store({
       if (userWithSameEmail == undefined) {
         if (userWithSameNumeroEstudante == undefined) {
           /* numero de estudante não existe por isso
-                                podemos registar este novo numero de estudante 
-                              */
+                                          podemos registar este novo numero de estudante 
+                                        */
           context.commit("REGISTER", payload);
           localStorage.setItem("users", JSON.stringify(context.state.users));
 
