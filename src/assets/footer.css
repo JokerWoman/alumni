@@ -1,35 +1,38 @@
 .footer_custom {
-  margin-top:70px;
-  background-color: rgba(43, 76, 140, 1);
-  padding: 20px 40px;
-  color: rgba(255, 255, 255, 1);
+    margin-top: 70px;
+    background-color: #FFFFFF;
+    padding: 20px 40px;
+    color: #000000;
 }
 
 .footer_custom .footer-nav h4 {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  margin-bottom: 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
 }
 
 .footer_custom .footer-nav ul {
-  list-style: none;
-  padding: 0px;
+    list-style: none;
+    padding: 0px;
 }
+
 .footer_custom .footer-nav ul li {
-  padding: 5px 0px;
+    padding: 5px 0px;
 }
+
 .footer_custom .footer-nav ul a {
-  color: rgba(255, 255, 255, 0.8);
+    color: #000000;
 }
+
 .footer_custom .footer-nav ul a:hover {
-  color: rgba(255, 255, 255, 0.6);
-  text-decoration: none;
+    color: #000000;
+    text-decoration: none;
 }
 
 @media (min-width: 768px) {
-  .footer_custom .footer-nav,
-  .footer_custom {
-    border-left: solid 1px rgba(255, 255, 255, 0.1);
-  }
+    .footer_custom .footer-nav,
+    .footer_custom {
+        border-left: solid 1px rgba(255, 255, 255, 0.1);
+    }
 }

@@ -5,10 +5,10 @@
     img-top
     :id="`cardTestimony${testimony.id}`"
     img-height="200px"
-    style="width: 200px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
+    style="width: 200px; margin-left:50px; margin-right:50px; background-color:#8988E9"
     img-alt="Imagem do testimunha"
   >
-    <b-card-text style="color:#FF7F61; margin-bottom: 5px; font-size: 20px "
+    <b-card-text style="color:#FFCA1C; margin-bottom: 5px; font-size: 20px "
       >{{ testimony.name }}
     </b-card-text>
     <b-card-text>{{ testimony.description }}</b-card-text>

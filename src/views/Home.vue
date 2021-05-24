@@ -41,9 +41,9 @@
       </div>
     </b-container>
 
-    <b-container style="background-color: #2B4C8C; height:500px;" fluid>
+    <b-container style="background-color: #FFFFFF; height:500px;" fluid>
       <div
-        style="background-color: #FF7F61; margin-top: 0px; width: 160px; height: 41px; padding:7px"
+        style="background-color: #FFCA1C; margin-top: 0px; width: 160px; height: 41px; padding:7px"
       >
         <h4 style="color:white;">Testemunhas</h4>
       </div>

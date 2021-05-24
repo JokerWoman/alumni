@@ -12,10 +12,10 @@
     height: 0;
     left: 0;
     bottom: 0px;
-    border-bottom: 2px solid #106BEF;
+    border-bottom: 2px solid #6b52c5;
 }
 
 .navbar-nav .active a {
     /* Elemento navbar activo de momento e colocar a cor do texto */
-    color: #2B4C8C !important;
+    color: #352378 !important;
 }
