@@ -1,7 +1,7 @@
 <template>
   <b-card
     :img-src="bolsa.img"
-    :title="bolsa.name"
+    :title="getCompanyName(bolsa.id_company) "
     img-top
     tag="article"
     :id="`cardEvent${bolsa.id}`"
@@ -23,19 +23,12 @@
     <b-button v-else variant="danger" disabled>Terminado</b-button>
 
     <b-button
-      v-if="isLoggedProfessor() && bolsa.estado == 'ativo'"
-      @click="finishBolsa"
-      variant="danger"
-      class="ml-1"
-      >Terminar</b-button
-    >
-
-    <b-button
       v-if="isLoggedProfessor()"
-      @click="deleteBolsa"
+      @click="setActiveBolsa(bolsa)"
       variant="danger"
       class="ml-3"
-      >Apagar</b-button
+      v-b-modal.editBolsaModal
+      >Editar</b-button
     >
   </b-card>
 </template>
@@ -48,30 +41,15 @@ export default {
   },
   methods: {
     isLoggedProfessor() {
-      if (this.$store.getters.isLoggedProfessor != {}) {
-        return false;
-      }
-      return true;
+     return this.$store.getters.getLoggedProfessor ? true : false;
     },
-
-    deleteBolsa() {
-      if (confirm("Deseja apagar esta oferta")) {
-        this.$store.dispatch("deleteBolsa", this.bolsa.id);
-        console.log("apagado");
-      }
+     getCompanyName(id) {
+      var company = this.$store.getters.getCompanyById(id);
+      return company.name;
     },
-    bolsaEstado() {
-      if (this.bolsa.estado === "ativo") {
-        return true;
-      } else {
-        return false;
-      }
+     setActiveBolsa(bolsa) {
+      this.$store.dispatch("setActiveBolsa", bolsa);
     },
-    finishBolsa() {
-      this.$store.dispatch("finishBolsa", this.bolsa.id);
-      console.log("finished");
-    },
-
     getDescription(desc) {
       if (desc.length < 60) {
         return desc;

@@ -30,17 +30,11 @@
 
       <b-modal id="createBolsaModal" @show="clearForm" hide-footer>
         <b-form @submit.prevent="onSubmit()">
-          <b-form-input
-            type="text"
-            v-model="frm.title"
-            placeholder="Título"
-            required
-          ></b-form-input>
-
           <b-row>
             <b-col sm="12">
               <b-form-textarea
                 size="lg"
+                v-model="frm.description"
                 placeholder="Descrição"
                 required
               ></b-form-textarea>
@@ -80,34 +74,18 @@
             </b-col>
 
             <b-col cols="6">
-              <b-form-input
-                type="text"
-                v-model="frm.locality"
-                placeholder="Cidade"
+              <b-form-select
+                v-model="frm.company"
+                :options="$store.getters.getCompaniesForSelect"
                 required
               >
-              </b-form-input>
+                <option value="null" disabled>Empresa</option>
+              </b-form-select>
             </b-col>
           </b-row>
           <b-row>
-            <b-col cols="6">
-              <b-form-input
-                type="number"
-                v-model="frm.phone"
-                placeholder="Telefone"
-                required
-              >
-              </b-form-input>
-            </b-col>
-
-            <b-col cols="6">
-              <b-form-input
-                type="email"
-                v-model="frm.email"
-                placeholder="Email"
-                required
-              >
-              </b-form-input>
+            <b-col cols="12">
+              <b-form-input type="date" v-model="frm.date_start"></b-form-input>
             </b-col>
           </b-row>
 
@@ -118,14 +96,94 @@
           </b-row>
         </b-form>
       </b-modal>
+
+      <b-modal id="editBolsaModal" @show="getActiveBolsa" hide-footer>
+        <b-form @submit.prevent="editBolsa">
+          <b-row>
+            <b-col sm="12">
+              <b-form-textarea
+                size="lg"
+                v-model="frm.description"
+                placeholder="Descrição"
+                required
+              ></b-form-textarea>
+            </b-col>
+          </b-row>
+
+          <b-row>
+            <b-col cols="6">
+              <b-form-input
+                type="url"
+                v-model="frm.img"
+                placeholder="Imagem"
+                required
+              ></b-form-input>
+            </b-col>
+            <br />
+            <b-col cols="6">
+              <b-form-input
+                type="url"
+                v-model="frm.link"
+                placeholder="Link da Oferta"
+                required
+              ></b-form-input>
+            </b-col>
+            <br />
+          </b-row>
+
+          <b-row>
+            <b-col cols="6">
+              <b-form-select
+                v-model="frm.category"
+                :options="$store.getters.getCategoriesForSelect"
+                required
+              >
+                <option value="null" disabled>Tipo</option>
+              </b-form-select>
+            </b-col>
+
+            <b-col cols="6">
+              <b-form-select
+                v-model="frm.company"
+                :options="$store.getters.getCompaniesForSelect"
+                required
+              >
+                <option value="null" disabled>Empresa</option>
+              </b-form-select>
+            </b-col>
+          </b-row>
+          <b-row>
+            <b-col cols="6">
+              <b-form-input type="date" v-model="frm.date_start"></b-form-input>
+            </b-col>
+            <b-col cols="6">
+              <b-form-select v-model="frm.estado" :options="estado">
+              </b-form-select>
+            </b-col>
+          </b-row>
+
+          <b-row class="justify-content-md-center">
+            <b-button type="submit" style="margin-right: 10px"
+              >Submeter</b-button
+            >
+            <b-button
+              @click="deleteBolsa()"
+              data-mdb-dismiss="modal"
+              style="margin-left: 10px"
+              variant="danger"
+              >Eliminar</b-button
+            >
+          </b-row>
+        </b-form>
+      </b-modal>
     </b-container>
 
     <br /><br />
 
     <b-container style="background-color: #6d6cba" fluid>
-      <h1 v-if="!getBolsas.length">Não Foram Encontrados Eventos!</h1>
-      <b-row style="margin-right:10%;margin-left:10%">
-        <b-card-group style="margin:20px" v-if="getBolsas.length > 0">
+      <h1 v-if="!getBolsas.length">Não Foram Encontrados Bolsas!</h1>
+      <b-row style="margin-right: 10%; margin-left: 10%">
+        <b-card-group style="margin: 20px" v-if="getBolsas.length > 0">
           <BolsasCard
             v-for="myBolsa in getBolsas"
             :key="myBolsa.id"
@@ -165,7 +223,10 @@
               <li>Campus 2 P.Porto ESMAD, 981, R.Dom Sancho l, 4480.876</li>
 
               <li
-                style="border-bottom: 1px solid rgba(0, 0, 0, 0.32);border-top: 1px solid rgba(0, 0, 0, 0.32);"
+                style="
+                  border-bottom: 1px solid rgba(0, 0, 0, 0.32);
+                  border-top: 1px solid rgba(0, 0, 0, 0.32);
+                "
               >
                 252 291 700
               </li>
@@ -184,41 +245,51 @@ import BolsasCard from "../components/BolsasCard";
 export default {
   name: "Bolsas",
   components: {
-    BolsasCard
+    BolsasCard,
   },
 
   data() {
     return {
       frm: {
-        title: "",
+        id: "",
         img: "",
         description: "",
         link: "",
         category: null,
-        locality: "",
-        phone: "",
-        email: ""
+        company: null,
+        date_start: "",
+        estado: "",
+        id_professor: "",
+        date_pub: "",
       },
+      estado: [
+        { value: null, text: "Escolhe uma opção" },
+        { value: "ativo", text: "Ativo" },
+        { value: "terminado", text: "Terminado" },
+      ],
       categorySelected: "all",
       locality: "",
       optionSortSelected: 1,
       optionsSort: [
         {
           value: 1,
-          text: "Mais Recentes"
+          text: "Mais Recentes",
         },
         {
           value: -1,
-          text: "Mais Antigos"
-        }
+          text: "Mais Antigos",
+        },
       ],
 
-      filterCategorySelected: "all"
+      filterCategorySelected: "all",
     };
   },
   methods: {
     getLoggedUserType() {
       return this.$store.getters.getLoggedProfessor ? true : false;
+    },
+    getLoggedProfessorId() {
+      return this.$store.getters.getLoggedProfessor.id_professor;
     },
     onSubmit() {
       var today = new Date();
@@ -231,20 +302,74 @@ export default {
 
       const bolsa = {
         id: this.$store.getters.getNextBolsaId,
-        title: this.frm.title,
         category: this.frm.category,
         description: this.frm.description,
         img: this.frm.img,
-        locality: this.frm.locality,
-        date: date,
-        phone: this.frm.phone,
-        email: this.frm.email,
+        date_pub: date,
+        date_start:this.frm.date_start,
         linkBolsa: this.frm.link,
-        estado: "ativo"
+        estado: "ativo",
+        id_company:this.frm.company,
+        id_professor: this.getLoggedProfessorId()
       };
       this.$store.dispatch("saveBolsa", bolsa);
     },
-    clearForm() {}
+  clearForm() {
+      this.frm.img= "";
+      this.frm.description= "";
+      this.frm.link= "";
+      this.frm.category= null;
+      this.frm.company= null;
+      this.frm.date_start= "";
+      this.frm.date_pub="";
+      this.frm.id_professor="";
+      this.frm.estado="";
+      this.frm.id="";
+    },
+
+  editBolsa() {
+      let bolsa = {
+        id:this.frm.id,
+        img:this.frm.img,
+        description:this.frm.description ,
+        linkBolsa:this.frm.link,
+        category:this.frm.category,
+        id_company:this.frm.company,
+        date_start:this.frm.date_start,
+        estado:this.frm.estado,
+        id_professor:this.frm.date_pub,
+        date_pub:this.frm.date_pub
+
+      };
+      this.$store.dispatch("editBolsa", bolsa);
+      this.$bvModal.hide("editBolsaModal");
+      this.clearForm();
+    },
+  deleteBolsa() {
+      if (confirm("Deseja apagar esta oferta")) {
+        this.$store.dispatch("deleteBolsa", this.frm.id);
+        console.log("apagado");
+      }
+      this.clearForm();
+    },
+
+   getActiveBolsa() {
+      let bolsa = this.$store.getters.getActiveBolsa;
+      this.frm.id=bolsa.id;
+      this.frm.img= bolsa.img;
+      this.frm.description= bolsa.description;
+      this.frm.link=bolsa.linkBolsa;
+      this.frm.category=bolsa.category;
+      this.frm.company= bolsa.id_company;
+      this.frm.date_start=bolsa.date_start;
+      this.frm.estado=bolsa.estado;
+      this.frm.id_nroProfessor=bolsa.id_professor;
+      this.frm.date_pub=bolsa.date_pub;
+
+    },
+
+
+
   },
   computed: {
     getBolsas() {
@@ -256,7 +381,7 @@ export default {
     },
     getCategories() {
       return this.$store.getters.getCategoriesForSelect;
-    }
-  }
+    },
+  },
 };
 </script>

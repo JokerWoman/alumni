@@ -27,7 +27,7 @@
               <div class="row">
                 <div class="col-sm-3">
                   <h2 class="mb-0" style="margin-left: 220px">
-                    {{ getBolsa.title }}
+                    {{ getCompany(this.$route.params.bolsaId).name }}
                   </h2>
                 </div>
               </div>
@@ -37,8 +37,8 @@
                 <p style="width: 90%">{{ getBolsa.description }}</p>
 
                 <br />
-                <p>CTT: {{ getBolsa.phone }}</p>
-                <p>Email: {{ getBolsa.email }}</p>
+                <p>CTT: {{ getCompany().phone }}</p>
+                <p>Email: {{ getCompany().email }}</p>
               </div>
               <br />
               <br />
@@ -63,7 +63,13 @@ export default {
   methods: {
     openOferta() {
       window.open(this.getBolsa.linkBolsa);
-    }
+    },
+     getCompany() {
+      return this.$store.getters.getCompanyById(this.getBolsa.id_company);
+    },
+    getCategory() {
+      return this.$store.getters.getCategoryById(this.getBolsa.category);
+    },
   },
   computed: {
     getBolsa() {

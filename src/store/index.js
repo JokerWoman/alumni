@@ -8,14 +8,15 @@ export default new Vuex.Store({
     professors: localStorage.getItem("professors")
       ? JSON.parse(localStorage.getItem("professors"))
       : [
-          { username: "Admin", nome: "Mario Pinto", password: "Esmad_2021" },
-          {
-            username: "Admin2",
-            nome: "Ricardo Queirós",
-            password: "Esmad_2021"
-          },
-          { username: "Admin3", nome: "Jorge Lima", password: "Esmad_2021" }
-        ],
+        { username: "Admin", nome: "Mario Pinto", password: "Esmad_2021", id_professor: 1000000 },
+        {
+          username: "Admin2",
+          nome: "Ricardo Queirós",
+          password: "Esmad_2021",
+          id_professor: 1000001
+        },
+        { username: "Admin3", nome: "Jorge Lima", password: "Esmad_2021", id_professor: 1000002 }
+      ],
     users: localStorage.getItem("users")
       ? JSON.parse(localStorage.getItem("users"))
       : [],
@@ -37,41 +38,41 @@ export default new Vuex.Store({
     cursos: localStorage.getItem("cursos")
       ? JSON.parse(localStorage.getItem("cursos"))
       : [
-          { title: "Licenciatura em Fotografia" },
-          { title: "Licenciatura em Multimédia" },
-          {
-            title:
-              "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
-          },
-          { title: "Mestrado em Design" },
-          { title: "Mestrado em Sistemas e Media Interativos" }
-        ],
+        { title: "Licenciatura em Fotografia" },
+        { title: "Licenciatura em Multimédia" },
+        {
+          title:
+            "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
+        },
+        { title: "Mestrado em Design" },
+        { title: "Mestrado em Sistemas e Media Interativos" }
+      ],
     links: localStorage.getItem("links")
       ? JSON.parse(localStorage.getItem("links"))
       : [
-          { title: "Github" },
-          { title: "Website" },
-          { title: "LinkedIn" },
-          { title: "Behance" }
-        ],
+        { title: "Github" },
+        { title: "Website" },
+        { title: "LinkedIn" },
+        { title: "Behance" }
+      ],
     skills: localStorage.getItem("skills")
       ? JSON.parse(localStorage.getItem("skills"))
       : [
-          { title: "Web Design" },
-          { title: "Programação C#" },
-          { title: "Fotografia" },
-          { title: "UI/UX Development" },
-          { title: "Javascript" }
-        ],
+        { title: "Web Design" },
+        { title: "Programação C#" },
+        { title: "Fotografia" },
+        { title: "UI/UX Development" },
+        { title: "Javascript" }
+      ],
     tools: localStorage.getItem("tools")
       ? JSON.parse(localStorage.getItem("tools"))
       : [
-          { title: "Adobe Illustrator" },
-          { title: "Adobe Photoshop" },
-          { title: "Adobe After Effects" },
-          { title: "Adobe Premiere" },
-          { title: "Adobe XD" }
-        ],
+        { title: "Adobe Illustrator" },
+        { title: "Adobe Photoshop" },
+        { title: "Adobe After Effects" },
+        { title: "Adobe Premiere" },
+        { title: "Adobe XD" }
+      ],
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
       : "",
@@ -81,116 +82,143 @@ export default new Vuex.Store({
     bolsas: localStorage.getItem("bolsas")
       ? JSON.parse(localStorage.getItem("bolsas"))
       : [
-          {
-            id: 1,
-            name: "Blip",
-            category: 2,
-            description:
-              "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
-            img: require("@/assets/img/bolsas/bolsa1.webp"),
-            locality: "Porto",
-            date: "2021-01-20",
-            phone: "932499526",
-            email: "communications@blip.pt",
-            linkBolsa: "https://blip.pt/contact-us/",
-            estado: "ativo"
-          },
-          {
-            id: 2,
-            name: "Moxy",
-            category: 1,
-            description:
-              "A Moxy Studio está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img: require("@/assets/img/bolsas/bolsa2.webp"),
-            locality: "Porto",
-            date: "2021-01-22",
-            phone: "913845397",
-            email: "communications@moxy.pt",
-            linkBolsa: "https://moxy.studio/",
-            estado: "ativo"
-          },
-          {
-            id: 3,
-            name: "XD Software",
-            category: 3,
-            description:
-              "A XDSoftware está a procurar jovens webdesigners. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img: require("@/assets/img/bolsas/bolsa3.webp"),
-            locality: "Braga",
-            date: "2021-01-24",
-            phone: "913845397",
-            email: "communications@xdsoftware.pt",
-            linkBolsa: "https://www.xdsoftware.pt/",
-            estado: "ativo"
-          }
-        ],
+        {
+          id: 1,
+          category: 2,
+          description:
+            "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
+          img: require("@/assets/img/bolsas/bolsa1.webp"),
+          date_pub: "2021-01-20",
+          date_start: "2021-01-22",
+          linkBolsa: "https://blip.pt/contact-us/",
+          estado: "ativo",
+          id_company: 1,
+          id_professor: 1
+        },
+        {
+          id: 2,
+          category: 1,
+          description:
+            "A Moxy Studio está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+          img: require("@/assets/img/bolsas/bolsa2.webp"),
+          date_pub: "2021-01-22",
+          date_start: "2021-01-30",
+          linkBolsa: "https://moxy.studio/",
+          estado: "ativo",
+          id_company: 2,
+          id_professor: 1
+        },
+        {
+          id: 3,
+          category: 3,
+          description:
+            "A XDSoftware está a procurar jovens webdesigners. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
+          img: require("@/assets/img/bolsas/bolsa3.webp"),
+          date_pub: "2021-01-24",
+          date_start: "2021-01-30",
+          linkBolsa: "https://www.xdsoftware.pt/",
+          estado: "ativo",
+          id_company: 3,
+          id_professor: 1
+        }
+      ],
+
+    activeBolsa: [],
+
+    companies: localStorage.getItem("companies")
+      ? JSON.parse(localStorage.getItem("companies"))
+      : [
+        {
+          id_company: 1,
+          name: "Blip",
+          phone: "932499526",
+          email: "communications@blip.pt",
+          locality: "Porto"
+
+        },
+        {
+          id_company: 2,
+          name: "Moxy",
+          phone: "913845397",
+          email: "communications@moxy.pt",
+          locality: "Porto"
+
+        },
+        {
+          id_company: 3,
+          name: "XD Software",
+          phone: "913845397",
+          email: "communications@xdsoftware.pt",
+          locality: "Braga"
+        }
+      ],
 
     testimonys: localStorage.getItem("testimonys")
       ? JSON.parse(localStorage.getItem("testimonys"))
       : [
-          {
-            id: 1,
-            name: "Marco Marques",
-            img: require("@/assets/img/testemunhos/testemunho1.webp"),
-            description: "Adoro o Alumni Esmad! Sem duvida que recomendo."
-          },
-          {
-            id: 2,
-            name: "Andrea Fernandes",
-            img: require("@/assets/img/testemunhos/testemunho2.webp"),
-            description:
-              "Várias ofertas de emprego incriveis na minha area. Recomendo."
-          },
-          {
-            id: 3,
-            name: "Carolina Medonsa",
-            img: require("@/assets/img/testemunhos/testemunho3.webp"),
-            description:
-              "Com esta plataforma voltei a ver os meus antigos colegas."
-          },
-          {
-            id: 4,
-            name: "João Santos",
-            img: require("@/assets/img/testemunhos/testemunho4.webp"),
-            description: "Workshops fantásticos!"
-          },
-          {
-            id: 5,
-            name: "Ana Martins",
-            img: require("@/assets/img/testemunhos/testemunho5.webp"),
-            description:
-              "Incrivel! Encontrei aqui uma vaga para estágio profissional em breve estarei contratada!"
-          }
-        ],
+        {
+          id: 1,
+          name: "Marco Marques",
+          img: require("@/assets/img/testemunhos/testemunho1.webp"),
+          description: "Adoro o Alumni Esmad! Sem duvida que recomendo."
+        },
+        {
+          id: 2,
+          name: "Andrea Fernandes",
+          img: require("@/assets/img/testemunhos/testemunho2.webp"),
+          description:
+            "Várias ofertas de emprego incriveis na minha area. Recomendo."
+        },
+        {
+          id: 3,
+          name: "Carolina Medonsa",
+          img: require("@/assets/img/testemunhos/testemunho3.webp"),
+          description:
+            "Com esta plataforma voltei a ver os meus antigos colegas."
+        },
+        {
+          id: 4,
+          name: "João Santos",
+          img: require("@/assets/img/testemunhos/testemunho4.webp"),
+          description: "Workshops fantásticos!"
+        },
+        {
+          id: 5,
+          name: "Ana Martins",
+          img: require("@/assets/img/testemunhos/testemunho5.webp"),
+          description:
+            "Incrivel! Encontrei aqui uma vaga para estágio profissional em breve estarei contratada!"
+        }
+      ],
 
     events: localStorage.getItem("events")
       ? JSON.parse(localStorage.getItem("events"))
       : [
-          {
-            id: 1,
-            name: "Plug-IN",
-            type: "workshop",
-            location: { city: "Póvoa de Varzim" },
-            state: "active",
-            date: "2021-06-25",
-            hour: "13:56:00",
-            img: require("@/assets/img/eventos/evento1.webp"),
-            description:
-              "Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
-          },
-          {
-            id: 2,
-            name: "Web Summit",
-            type: "simeira",
-            location: { city: "Lisboa" },
-            state: "active",
-            date: "2021-09-01",
-            hour: "13:45:00",
-            img: require("@/assets/img/eventos/evento2.webp"),
-            description:
-              "A Web Summit é a maior conferência da Europa em tecnologias, realizada anualmente desde 2009. Aparece!"
-          }
-        ],
+        {
+          id: 1,
+          name: "Plug-IN",
+          type: "workshop",
+          location: { city: "Póvoa de Varzim" },
+          state: "active",
+          date: "2021-06-25",
+          hour: "13:56:00",
+          img: require("@/assets/img/eventos/evento1.webp"),
+          description:
+            "Participa no plug-in, o evento certo para encontrar o emprego certo. Inscreve-te já!"
+        },
+        {
+          id: 2,
+          name: "Web Summit",
+          type: "simeira",
+          location: { city: "Lisboa" },
+          state: "active",
+          date: "2021-09-01",
+          hour: "13:45:00",
+          img: require("@/assets/img/eventos/evento2.webp"),
+          description:
+            "A Web Summit é a maior conferência da Europa em tecnologias, realizada anualmente desde 2009. Aparece!"
+        }
+      ],
     activeEvent: [],
 
     categories: [
@@ -333,6 +361,12 @@ export default new Vuex.Store({
         text: category.name
       })),
 
+    getCompaniesForSelect: state =>
+      state.companies.map(company => ({
+        value: company.id_company,
+        text: company.name
+      })),
+
     getNextBolsaId: state => {
       return state.bolsas.length > 0
         ? state.bolsas[state.bolsas.length - 1].id + 1
@@ -345,6 +379,24 @@ export default new Vuex.Store({
 
     getBolsas: state => {
       return state.bolsas;
+    },
+
+    getActiveBolsa: state => {
+      return state.activeBolsa;
+    },
+
+    getCompanies: state => {
+      return state.companies;
+    },
+
+    getCategoryById: state => id => {
+      const categoryById = state.categories.find(category => category.id === id);
+      return categoryById;
+    },
+
+    getCompanyById: state => id => {
+      const companyById = state.companies.find(company => company.id_company === id);
+      return companyById;
     },
 
     getEvents: state => {
@@ -384,12 +436,19 @@ export default new Vuex.Store({
       const cards_filtered = state.bolsas.filter(
         bolsa => bolsa.category == category || category == "all"
       );
-      const cards_filter1 = cards_filtered.filter(bolsa =>
-        bolsa.locality.toUpperCase().includes(locality)
-      );
-      return cards_filter1.sort((a, b) => {
-        if (a.date > b.date) return -1 * _sort;
-        if (a.date < b.date) return 1 * _sort;
+      const companies = state.companies
+      var cards_filtered1 = [];
+      for (var bolsa in cards_filtered) {
+        for (var company in companies) {
+          if (cards_filtered[bolsa].id_company == companies[company].id_company && companies[company].locality.toUpperCase().includes(locality)) {
+            cards_filtered1.push(cards_filtered[bolsa])
+          }
+        }
+      }
+
+      return cards_filtered1.sort((a, b) => {
+        if (a.date_pub > b.date_pub) return -1 * _sort;
+        if (a.date_pub < b.date_pub) return 1 * _sort;
         return 0;
       });
     },
@@ -600,8 +659,11 @@ export default new Vuex.Store({
     saveBolsa(context, bolsa) {
       context.commit("SAVE_BOLSA", bolsa);
     },
-    finishBolsa(context, id) {
-      context.commit("FINISH_BOLSA", id);
+    setActiveBolsa(context, bolsa) {
+      context.commit("SET_ACTIVE_BOLSA", bolsa)
+    },
+    editBolsa(context, bolsa) {
+      context.commit("EDIT_BOLSA", bolsa);
     },
     deleteBolsa(context, id) {
       context.commit("REMOVE_BOLSA", id);
@@ -657,7 +719,7 @@ export default new Vuex.Store({
     },
     UNFOLLOW_ALUMNI(state, numeroEstudante) {
       /* Actualizar a network do utilizador */
-      state.usersNetwork.map(function(userNetwork) {
+      state.usersNetwork.map(function (userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking = userNetwork.networking.filter(
             networkingNumeroEstudante =>
@@ -669,7 +731,7 @@ export default new Vuex.Store({
     },
     FOLLOW_ALUMNI(state, numeroEstudante) {
       /* Actualizar a network do utilizador */
-      state.usersNetwork.map(function(userNetwork) {
+      state.usersNetwork.map(function (userNetwork) {
         if (userNetwork.numeroEstudante === state.loggedUser.numeroEstudante) {
           userNetwork.networking.push(numeroEstudante);
         }
@@ -678,7 +740,7 @@ export default new Vuex.Store({
     },
     EDITAR(state, editarPayload) {
       /* Atualizar os dados do utilizador que esta logado no array de utilizadores */
-      state.users.map(function(user) {
+      state.users.map(function (user) {
         if (user.numeroEstudante === state.loggedUser.numeroEstudante) {
           user.descricao = editarPayload.descricao;
           user.morada = editarPayload.morada;
@@ -689,7 +751,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar skills do utilizador */
-      state.usersSkills.map(function(userSkill) {
+      state.usersSkills.map(function (userSkill) {
         if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
@@ -701,7 +763,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar tools do utilizador */
-      state.usersTools.map(function(userTool) {
+      state.usersTools.map(function (userTool) {
         if (userTool.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
@@ -713,7 +775,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar os cursos do utilizador */
-      state.usersCursosHistorico.map(function(userCursoHistorico) {
+      state.usersCursosHistorico.map(function (userCursoHistorico) {
         if (
           userCursoHistorico.numeroEstudante ===
           state.loggedUser.numeroEstudante
@@ -728,7 +790,7 @@ export default new Vuex.Store({
       });
 
       /* Actualizar os links do utilizador */
-      state.usersLinks.map(function(userLink) {
+      state.usersLinks.map(function (userLink) {
         if (userLink.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
@@ -748,14 +810,15 @@ export default new Vuex.Store({
 
       localStorage.setItem("bolsas", JSON.stringify(state.bolsas));
     },
-    FINISH_BOLSA(state, id) {
-      state.bolsas.forEach(bolsa => {
-        if (bolsa.id == id) {
-          bolsa.estado = "inativo";
-        }
-      });
+    SET_ACTIVE_BOLSA(state, bolsa) {
+      state.activeBolsa = bolsa;
+    },
+    EDIT_BOLSA(state, bolsa) {
+      state.bolsas = state.bolsas.filter(b => b.id != bolsa.id);
+      state.bolsas.push(bolsa);
       localStorage.setItem("bolsas", JSON.stringify(state.bolsas));
     },
+    
     SAVE_TESTIMONY(state, testimony) {
       state.testimonys.push(testimony);
       localStorage.setItem("testimonys", JSON.stringify(state.testimonys));
