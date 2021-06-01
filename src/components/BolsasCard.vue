@@ -6,7 +6,7 @@
     tag="article"
     :id="`cardEvent${bolsa.id}`"
     img-height="250px"
-    style="width:260px; margin-left:50px; margin-right:50px; background-color:#DCEAFF"
+    style="width:260px; margin-left:50px; margin-right:50px; background-color:#f3f3fb"
     img-alt="Imagem da bolsa"
   >
     <b-card-text> {{ getDescription(bolsa.description) }}</b-card-text>
@@ -14,7 +14,7 @@
     <router-link
       v-if="bolsa.estado == 'ativo'"
       :to="{ name: 'BolsaVerMais', params: { bolsaId: bolsa.id } }"
-      class="btn btn-primary"
+      class="btn btn-warning"
       variant="success"
     >
       VER MAIS

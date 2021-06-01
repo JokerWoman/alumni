@@ -3,11 +3,22 @@
 
   <b-navbar toggleable="lg" type="light">
     <b-navbar-brand href="#" title="Logo da pagina"></b-navbar-brand>
+   
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+    
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <b-nav-item
+       
+        <img
+            src="@/assets/img/logo.webp"
+            class="img-fluid"
+            height="50px"
+            width="50px"
+            alt="logotipo da página"
+          />
+
+          <b-nav-item
           :to="{ name: 'Home' }"
           :class="{ active: $route.name === 'Home' }"
           >Alumni</b-nav-item

@@ -41,7 +41,7 @@
       </div>
     </b-container>
 
-    <b-container style="background-color: #FFFFFF; height:500px;" fluid>
+    <b-container style="background-color: #6d6cba; height:500px;" fluid>
       <div
         style="background-color: #FFCA1C; margin-top: 0px; width: 160px; height: 41px; padding:7px"
       >
@@ -64,7 +64,7 @@
       <div class="row">
         <div class="col-md-3 text-center">
           <img
-            src="@/assets/logo.png"
+            src="@/assets/img/logo.webp"
             class="img-fluid"
             height="250px"
             width="250px"

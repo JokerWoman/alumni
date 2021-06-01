@@ -44,8 +44,8 @@
               <br />
               <button
                 @click="openOferta()"
-                class="btn btn-primary"
-                style="margin-left: 200px; background-color: #2b4c8c"
+                class="btn btn-warning"
+                style="margin-left: 200px"
               >
                 Responder à Oferta
               </button>

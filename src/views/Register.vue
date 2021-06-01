@@ -9,6 +9,7 @@
                 src="@/assets/img/registo.webp"
                 alt="foto de uma pessoa a fazer um registo"
                 class="img-fluid"
+                style="padding-top: 64px;"
               />
             </div>
           </div>

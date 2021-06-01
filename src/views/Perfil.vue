@@ -34,7 +34,7 @@
                     "
                   >
                     <router-link
-                      class="btn btn-outline-primary btn-sm"
+                      class="btn btn-outline-warning btn-sm"
                       style="margin-left:10px;"
                       :to="{ name: 'EditarPerfil' }"
                       >Editar Perfil</router-link
@@ -49,7 +49,7 @@
                       "
                     >
                       <b-button
-                        class="btn btn-primary"
+                        class="btn btn-warning"
                         variant="danger"
                         style="width:180px;"
                         v-on:click="UnFollow(getUserInfomation.numeroEstudante)"
@@ -59,7 +59,7 @@
                     </template>
                     <template v-else>
                       <button
-                        class="btn btn-primary"
+                        class="btn btn-warning"
                         style="width:180px;"
                         v-on:click="Follow(getUserInfomation.numeroEstudante)"
                       >
@@ -81,7 +81,7 @@
                 </div>
                 <div>
                   <router-link
-                    class="btn btn-outline-primary btn-sm"
+                    class="btn btn-outline-warning btn-sm"
                     style="margin-left:10px;"
                     :to="{ name: 'EditarPortefolio' }"
                     >Editar</router-link
@@ -166,7 +166,7 @@
                 </div>
                 <div>
                   <router-link
-                    class="btn btn-outline-primary btn-sm"
+                    class="btn btn-outline-warning btn-sm"
                     style="margin-left:10px;"
                     :to="{ name: 'EditarCursos' }"
                     >Editar</router-link
@@ -206,7 +206,7 @@
                     </div>
                     <div>
                       <router-link
-                        class="btn btn-outline-primary btn-sm"
+                        class="btn btn-outline-warning btn-sm"
                         style="margin-left:10px;"
                         :to="{ name: 'EditarSkills' }"
                         >Editar</router-link
@@ -241,7 +241,7 @@
                     </div>
                     <div>
                       <router-link
-                        class="btn btn-outline-primary btn-sm"
+                        class="btn btn-outline-warning btn-sm"
                         style="margin-left:10px;"
                         :to="{ name: 'EditarTools' }"
                         >Editar</router-link

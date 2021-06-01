@@ -9,6 +9,7 @@
                 src="@/assets/img/login.webp"
                 alt="foto de estudantes a fazer login"
                 class="img-fluid"
+                style="padding-top: 30px;"
               />
             </div>
           </div>

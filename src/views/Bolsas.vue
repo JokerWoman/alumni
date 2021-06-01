@@ -122,7 +122,7 @@
 
     <br /><br />
 
-    <b-container style="background-color: #2b4c8c" fluid>
+    <b-container style="background-color: #6d6cba" fluid>
       <h1 v-if="!getBolsas.length">Não Foram Encontrados Eventos!</h1>
       <b-row style="margin-right:10%;margin-left:10%">
         <b-card-group style="margin:20px" v-if="getBolsas.length > 0">
@@ -140,7 +140,7 @@
       <div class="row">
         <div class="col-md-3 text-center">
           <img
-            src="@/assets/logo.png"
+            src="@/assets/img/logo.webp"
             class="img-fluid"
             height="250px"
             width="250px"
