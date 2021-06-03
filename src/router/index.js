@@ -14,11 +14,11 @@ import EditarCursos from "../views/EditarCursos.vue";
 import EditarTools from "../views/EditarTools.vue";
 import EditarSkills from "../views/EditarSkills.vue";
 import store from "../store";
-import AdicionarBolsa from "../views/AdicionarBolsa.vue";
 import BolsaVerMais from "../views/BolsaVerMais.vue";
 import ProcurarAlumni from "../views/ProcurarAlumni.vue";
 import LoginProfessor from "../views/LoginProfessor.vue";
 import EventoVerMais from "../views/EventoVerMais.vue";
+import Empresas from "../views/Empresas.vue";
 
 Vue.use(Router);
 Vue.use(VueMeta);
@@ -146,15 +146,7 @@ const routes = [
       requiresProfessorAuth: false
     }
   },
-  {
-    path: "/adicionarBolsa",
-    name: "AdicionarBolsa",
-    component: AdicionarBolsa,
-    meta: {
-      requiresUserAuth: false,
-      requiresProfessorAuth: true
-    }
-  },
+  
   {
     path: "/bolsas/:bolsaId",
     name: "BolsaVerMais",
@@ -172,6 +164,12 @@ const routes = [
       requiresUserAuth: true,
       requiresProfessorAuth: false
     }
+  },
+  {
+    path: "/empresas",
+    name: "Empresas",
+    component: Empresas,
+    
   }
 ];
 

@@ -152,6 +152,7 @@ export default new Vuex.Store({
           locality: "Braga"
         }
       ],
+    activeCompany: [],
 
     testimonys: localStorage.getItem("testimonys")
       ? JSON.parse(localStorage.getItem("testimonys"))
@@ -373,6 +374,12 @@ export default new Vuex.Store({
         : 1;
     },
 
+    getNextCompanyId: state => {
+      return state.companies.length > 0
+        ? state.companies[state.companies.length - 1].id_company + 1
+        : 1;
+    },
+
     getCategories(state) {
       return state.categories;
     },
@@ -387,6 +394,10 @@ export default new Vuex.Store({
 
     getCompanies: state => {
       return state.companies;
+    },
+
+    getActiveCompany: state => {
+      return state.activeCompany;
     },
 
     getCategoryById: state => id => {
@@ -668,6 +679,18 @@ export default new Vuex.Store({
     deleteBolsa(context, id) {
       context.commit("REMOVE_BOLSA", id);
     },
+    createCompany(context, company) {
+      context.commit("CREATE_COMPANY", company);
+    },
+    setActiveCompany(context, company) {
+      context.commit("SET_ACTIVE_COMPANY", company)
+    },
+    editCompany(context, company) {
+      context.commit("EDIT_COMPANY", company);
+    },
+    deleteCompany(context, id) {
+      context.commit("DELETE_COMPANY", id);
+    },
     saveTestimony(context, testimony) {
       context.commit("SAVE_TESTIMONY", testimony);
     },
@@ -818,7 +841,25 @@ export default new Vuex.Store({
       state.bolsas.push(bolsa);
       localStorage.setItem("bolsas", JSON.stringify(state.bolsas));
     },
-    
+
+    CREATE_COMPANY(state, company) {
+      state.companies.push(company);
+      localStorage.setItem("companies", JSON.stringify(state.companies));
+    },
+    DELETE_COMPANY(state, id) {
+      state.companies = state.companies.filter(company => company.id_company != id);
+
+      localStorage.setItem("companies", JSON.stringify(state.companies));
+    },
+    SET_ACTIVE_COMPANY(state, company) {
+      state.activeCompany = company;
+    },
+    EDIT_COMPANY(state, company) {
+      state.companies = state.companies.filter(c => c.id_company != company.id_company);
+      state.companies.push(company);
+      localStorage.setItem("companies", JSON.stringify(state.companies));
+    },
+
     SAVE_TESTIMONY(state, testimony) {
       state.testimonys.push(testimony);
       localStorage.setItem("testimonys", JSON.stringify(state.testimonys));

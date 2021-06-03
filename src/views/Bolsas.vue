@@ -211,6 +211,8 @@
             <ul>
               <li><a href="">Cartão Alumni</a></li>
               <li><a href="">FAQ's</a></li>
+              <li><router-link :to="{ name: 'Empresas' }"
+            :class="{ active: $route.name === 'Empresas' }">Empresas Parceiras</router-link></li>
             </ul>
           </div>
         </div>
@@ -221,6 +223,7 @@
             <ul>
               <li>Escola Superior de Media Artes e Design</li>
               <li>Campus 2 P.Porto ESMAD, 981, R.Dom Sancho l, 4480.876</li>
+              
 
               <li
                 style="
