@@ -36,6 +36,7 @@
                     <router-link
                       class="btn btn-outline-warning btn-sm"
                       style="margin-left:10px;"
+                      id="editarPerfil"
                       :to="{ name: 'EditarPerfil' }"
                       >Editar Perfil</router-link
                     >
@@ -83,6 +84,7 @@
                   <router-link
                     class="btn btn-outline-warning btn-sm"
                     style="margin-left:10px;"
+                    id="editarPortefolio"
                     :to="{ name: 'EditarPortefolio' }"
                     >Editar</router-link
                   >
@@ -208,6 +210,7 @@
                       <router-link
                         class="btn btn-outline-warning btn-sm"
                         style="margin-left:10px;"
+                        id="editarSkill"
                         :to="{ name: 'EditarSkills' }"
                         >Editar</router-link
                       >

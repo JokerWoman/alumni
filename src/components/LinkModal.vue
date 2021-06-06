@@ -23,7 +23,7 @@
         {{ link.title }}
       </option>
     </select>
-    <input type="url" v-model="url" placeholder="link .." required />
+    <input id ="link" type="url" v-model="url" placeholder="link .." required />
 
     <template #modal-footer>
       <b-button class="mt-1" variant="outline-info" block @click="save"

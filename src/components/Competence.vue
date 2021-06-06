@@ -6,10 +6,10 @@
       </div>
       <div>
         <template v-if="edit === true">
-          <button class="btn" v-on:click="decrease">
+          <button class="btn" id="menos" v-on:click="decrease">
             -
           </button>
-          <button class="btn" v-on:click="increase">
+          <button class="btn" id="mais" v-on:click="increase">
             +
           </button>
         </template>
@@ -28,7 +28,7 @@
       <div class="p-2 flex-fill">
         <div class="progress mb-3" style="height: 5px;">
           <div
-            class="progress-bar bg-primary"
+            class="progress-bar bg-warning"
             role="progressbar"
             :style="{ width: percentagem + '%' }"
             :aria-valuenow="percentagem"

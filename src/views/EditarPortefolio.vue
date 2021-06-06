@@ -46,6 +46,7 @@
                     v-if="getLinksAvailableForUser.length > 0"
                     @click="modal.usersLinksModal = true"
                     class="btn btn-outline-primary btn-sm"
+                    id="addPortfolio"
                   >
                     Adicionar
                   </button>
