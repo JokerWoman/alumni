@@ -13,7 +13,7 @@
               "
             >
               <img
-                :src="this.getEvent.img"
+                :src= getEvent.img
                 alt="foto de um evento"
                 width="250"
                 height="250"
@@ -25,16 +25,14 @@
           <div class="container">
             <div>
               <div class="row">
-                <div class="col-sm-3">
                   <h2 class="mb-0" style="margin-left: 220px">
-                    {{ this.getEvent.title }}
+                    {{getEvent.name }}
                   </h2>
-                </div>
               </div>
               <br />
 
               <div style="height: 200px">
-                <p style="width: 90%">{{ this.getEvent.description }}</p>
+                <p style="width: 90%">{{ getEvent.description }}</p>
               </div>
               <br />
               <br />
@@ -49,19 +47,15 @@
 <script>
 export default {
   name: "EventoVerMais",
-  data() {
-    return {
-      getEvent: ""
-    };
-  },
 
-  methods: {},
-  created() {
-    this.getEvent = this.$store.state.events.filter(
-      event => event.id == this.$route.params.eventId
-    );
+  methods: {
   },
-  computed: {}
+  computed:{
+    getEvent() {
+      const event = this.$store.getters.getEventById(this.$route.params.eventId)
+      return event
+    }
+  }
 };
 </script>
 
