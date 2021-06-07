@@ -14,13 +14,13 @@
       </button>
     </template>
 
-    <select v-model="linkSelected">
+    <select v-model="linkIdSelected">
       <option
-        v-for="(link, index) in links"
-        v-bind:value="link.title"
-        v-bind:key="index"
+        v-for="link in links"
+        v-bind:value="link.id_links"
+        v-bind:key="link.id_links"
       >
-        {{ link.title }}
+        {{ link.tipoLink }}
       </option>
     </select>
     <input id="link" type="url" v-model="url" placeholder="link .." required />
@@ -48,7 +48,7 @@ export default {
   data: function() {
     return {
       url: "",
-      linkSelected: null
+      linkIdSelected: null
     };
   },
   created: function() {
@@ -56,14 +56,14 @@ export default {
   },
   methods: {
     save() {
-      if (this.linkSelected !== null) {
-        this.$parent.AddLink(this.linkSelected, this.url);
+      if (this.linkIdSelected !== null) {
+        this.$parent.AddLink(this.linkIdSelected, this.url);
         this.close();
       }
     },
     close() {
       this.url = "";
-      this.linkSelected = null;
+      this.linkIdSelected = null;
       this.$emit("close");
     }
   }

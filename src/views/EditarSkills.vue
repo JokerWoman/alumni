@@ -41,7 +41,7 @@
               <div class="d-flex justify-content-between">
                 <div style="margin-top:7px;">
                   <h6 class="d-flex align-items-center mb-3">
-                    <i class="material-icons text-info mr-2">Portefólio</i>
+                    <i class="material-icons text-info mr-2">Portefolio</i>
                   </h6>
                 </div>
                 <div></div>

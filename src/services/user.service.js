@@ -1,18 +1,6 @@
 import API_URL from "./config.js";
 
-function authHeader(user) {
-  // if there is a logged in user with accessToken (JWT)
-  if (user.accessToken && user.userType) {
-    // return HTTP authorization header for Node.js Express back-end
-    return {
-      "Content-Type": "application/json",
-      "x-access-token": user.accessToken,
-      "user-type": user.userType
-    };
-  } else {
-    return { "Content-Type": "application/json" }; //otherwise, return an empty object
-  }
-}
+import { authHeader } from "./auth.service.js";
 
 export const UserService = {
   async fetchAllAlumni(user, filtros) {
@@ -81,6 +69,47 @@ export const UserService = {
 
       if (response.ok) {
         let data = await response.json();
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async addAlumniLinkById(user, linkId, linkUrl) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/links/${linkId}`,
+        {
+          method: "POST",
+          headers: authHeader(user),
+          body: JSON.stringify({ link: linkUrl })
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async removeAlumniLinkById(user, linkId) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/links/${linkId}`,
+        {
+          method: "DELETE",
+          headers: authHeader(user)
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
         return data.message;
       } else {
         return null;

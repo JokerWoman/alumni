@@ -1,5 +1,19 @@
 import API_URL from "./config.js";
 
+export function authHeader(user) {
+  // if there is a logged in user with accessToken (JWT)
+  if (user.accessToken && user.userType) {
+    // return HTTP authorization header for Node.js Express back-end
+    return {
+      "Content-Type": "application/json",
+      "x-access-token": user.accessToken,
+      "user-type": user.userType
+    };
+  } else {
+    return { "Content-Type": "application/json" }; //otherwise, return an empty object
+  }
+}
+
 export const AuthService = {
   async loginAlumni(alumniCredentials) {
     const response = await fetch(`${API_URL}/auth/signin/alumni`, {
