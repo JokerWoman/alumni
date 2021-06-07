@@ -6,9 +6,9 @@
     hide-header-close
   >
     <template #modal-header>
-      <h4 class="modal-title">
+      <h1 style="font-size: 25px" class="modal-title">
         {{ modalTitle }}
-      </h4>
+      </h1>
       <button type="button" @click="close" class="close">
         <span>&times;</span>
       </button>

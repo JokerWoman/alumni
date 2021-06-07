@@ -28,13 +28,13 @@
           />
         </div>
         <div class="col-md-4 footer-nav">
-          <h4>Outros Links —</h4>
+          <h1 style="font-size: 25px">Outros Links —</h1>
           <div class="col-md-6">
             <ul></ul>
           </div>
         </div>
         <div class="col-md-5 footer-nav">
-          <h4>Localização —</h4>
+          <h1 style="font-size: 25px">Localização —</h1>
 
           <div class="col-md-6">
             <ul>

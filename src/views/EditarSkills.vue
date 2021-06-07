@@ -25,7 +25,7 @@
                   height="150"
                 />
                 <div class="mt-3">
-                  <h4>{{ this.$store.getters.getLoggedUser.nome }}</h4>
+                  <h1 style="font-size: 25px">{{ this.$store.getters.getLoggedUser.nome }}</h1>
                   <div class="col-sm-12 text-secondary text-justify">
                     {{ this.$store.getters.getLoggedUser.descricao }}
                   </div>
