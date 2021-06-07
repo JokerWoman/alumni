@@ -19,24 +19,11 @@ function GetLoggedUser(state) {
 
 export default new Vuex.Store({
   state: {
-    alumnis: localStorage.getItem("alumnis")
-      ? JSON.parse(localStorage.getItem("alumnis"))
-      : [],
-    usersSkills: localStorage.getItem("usersSkills")
-      ? JSON.parse(localStorage.getItem("usersSkills"))
-      : [],
-    usersTools: localStorage.getItem("usersTools")
-      ? JSON.parse(localStorage.getItem("usersTools"))
-      : [],
-    usersCursosHistorico: localStorage.getItem("usersCursosHistorico")
-      ? JSON.parse(localStorage.getItem("usersCursosHistorico"))
-      : [],
-    usersLinks: localStorage.getItem("usersLinks")
-      ? JSON.parse(localStorage.getItem("usersLinks"))
-      : [],
-    usersNetwork: localStorage.getItem("usersNetwork")
-      ? JSON.parse(localStorage.getItem("usersNetwork"))
-      : [],
+    alumnis: [],
+    userSkills: [],
+    userTools: [],
+    userCursos: [],
+    userLinks: [],
     cursos: localStorage.getItem("cursos")
       ? JSON.parse(localStorage.getItem("cursos"))
       : [
@@ -268,15 +255,13 @@ export default new Vuex.Store({
       state.cursos /* Get de todos os cursos que podem ser adicionados no perfil de um utilizador */,
 
     AlumniHasCursoByTitle: state => (numeroEstudante, title) => {
-      let usersCursosHistorico = state.usersCursosHistorico.filter(
+      let userCursos = state.userCursos.filter(
         cursosHistorico =>
           parseInt(cursosHistorico.numeroEstudante) ===
           parseInt(numeroEstudante)
       );
 
-      return usersCursosHistorico[0].cursos.some(
-        curso => curso.title === title
-      );
+      return userCursos[0].cursos.some(curso => curso.title === title);
     },
     getLinksAvailable: state => state.links,
 
@@ -308,63 +293,13 @@ export default new Vuex.Store({
         return [];
       }
     },
-    getUserInformationByNumeroEstudante: state => {
-      return state.userInformationByNumeroEstudante;
-    },
-    getUserSkillsByNumeroEstudante: state => numeroEstudante => {
-      /* Get de todas as skills que já estão adicionadas no perfil de um estudante */
-      let userSkills = state.usersSkills.filter(
-        userSkill =>
-          parseInt(userSkill.numeroEstudante) === parseInt(numeroEstudante)
-      );
-      return userSkills;
-    },
-    getUserToolsByNumeroEstudante: state => numeroEstudante => {
-      /* Get de todas as tools que já estão adicionadas no perfil de um estudante */
-      let userTools = state.usersTools.filter(
-        userTool =>
-          parseInt(userTool.numeroEstudante) === parseInt(numeroEstudante)
-      );
-      return userTools;
-    },
-    getUsersCursosHistoricoByNumeroEstudante: state => numeroEstudante => {
-      /* Get de todos os cursos que já estão adicionadas no perfil de um estudante */
-      let usersCursosHistorico = state.usersCursosHistorico.filter(
-        cursosHistorico =>
-          parseInt(cursosHistorico.numeroEstudante) ===
-          parseInt(numeroEstudante)
-      );
-      return usersCursosHistorico;
-    },
-    getUsersLinksByNumeroEstudante: state => numeroEstudante => {
-      /* Get de todos os cursos que já estão adicionadas no perfil de um estudante */
-      let usersLinks = state.usersLinks.filter(
-        userLink =>
-          parseInt(userLink.numeroEstudante) === parseInt(numeroEstudante)
-      );
-      return usersLinks;
-    },
-    isAlumniInLoggedUserNetwork: state => numeroEstudante => {
-      let alumniInLoggedUsedNetwork = false;
 
-      let loggedUserNetwork = state.usersNetwork.find(
-        userNetwork =>
-          parseInt(userNetwork.numeroEstudante) ===
-          parseInt(state.loggedUser.numeroEstudante)
-      );
-
-      if (loggedUserNetwork !== undefined) {
-        let result = loggedUserNetwork.networking.find(
-          network => parseInt(network) === parseInt(numeroEstudante)
-        );
-
-        if (result !== undefined) {
-          alumniInLoggedUsedNetwork = true;
-        }
-      }
-
-      return alumniInLoggedUsedNetwork;
-    },
+    getUserInformationByNumeroEstudante: state =>
+      state.userInformationByNumeroEstudante,
+    getUserSkillsByNumeroEstudante: state => state.userSkills,
+    getUserToolsByNumeroEstudante: state => state.userTools,
+    getUserLinksByNumeroEstudante: state => state.userLinks,
+    getUserCursosByNumeroEstudante: state => state.userCursos,
 
     getCategoriesForSelect: state =>
       state.categories.map(category => ({
@@ -514,6 +449,38 @@ export default new Vuex.Store({
         context.commit("LOGGED_ALUMNI_INFORMATION", JSON.parse(data));
       }
     },
+    async RetrieveUserLinksByNumeroEstudante(context, numeroEstudante) {
+      let data = await UserService.fetchAlumniLinksById(
+        context.state.loggedUser,
+        numeroEstudante
+      );
+
+      context.commit("USER_LINKS_BY_ID", JSON.parse(data));
+    },
+    async RetrieveUserCursosByNumeroEstudante(context, numeroEstudante) {
+      let data = await UserService.fetchAlumniCursosById(
+        context.state.loggedUser,
+        numeroEstudante
+      );
+
+      context.commit("USER_CURSOS_BY_ID", JSON.parse(data));
+    },
+    async RetrieveUserToolsByNumeroEstudante(context, numeroEstudante) {
+      let data = await UserService.fetchAlumniToolsById(
+        context.state.loggedUser,
+        numeroEstudante
+      );
+
+      context.commit("USER_TOOLS_BY_ID", JSON.parse(data));
+    },
+    async RetrieveUserSkillsByNumeroEstudante(context, numeroEstudante) {
+      let data = await UserService.fetchAlumniSkillsById(
+        context.state.loggedUser,
+        numeroEstudante
+      );
+
+      context.commit("USER_SKILLS_BY_ID", JSON.parse(data));
+    },
     async RetrieveLoggedProfessorInformation(context) {
       if (context.state.loggedProfessor !== null) {
         let data = await UserService.fetchProfessorById(
@@ -565,14 +532,14 @@ export default new Vuex.Store({
 
       /* Actualizar as skills */
       localStorage.setItem(
-        "usersSkills",
-        JSON.stringify(context.state.usersSkills)
+        "userSkills",
+        JSON.stringify(context.state.userSkills)
       );
 
       /* Actualizar as tools */
       localStorage.setItem(
-        "usersTools",
-        JSON.stringify(context.state.usersTools)
+        "userTools",
+        JSON.stringify(context.state.userTools)
       );
 
       /* Actualizar os cursos */
@@ -647,6 +614,18 @@ export default new Vuex.Store({
     USER_INFORMATION_BY_ID(state, data) {
       state.userInformationByNumeroEstudante = data;
     },
+    USER_LINKS_BY_ID(state, data) {
+      state.userLinks = data;
+    },
+    USER_CURSOS_BY_ID(state, data) {
+      state.userCursos = data;
+    },
+    USER_TOOLS_BY_ID(state, data) {
+      state.userTools = data;
+    },
+    USER_SKILLS_BY_ID(state, data) {
+      state.userSkills = data;
+    },
     LOGGED_ALUMNI_INFORMATION(state, data) {
       state.loggedAlumniInformation = data;
     },
@@ -669,16 +648,16 @@ export default new Vuex.Store({
       state.users.push(user);
     },
     REGISTER_SKILLS(state, userSkillData) {
-      state.usersSkills.push(userSkillData);
+      state.userSkills.push(userSkillData);
     },
     REGISTER_TOOLS(state, userToolData) {
-      state.usersTools.push(userToolData);
+      state.userTools.push(userToolData);
     },
     REGISTER_CURSOS(state, userCursoHistoricoData) {
-      state.usersCursosHistorico.push(userCursoHistoricoData);
+      state.userCursos.push(userCursoHistoricoData);
     },
     REGISTER_LINKS(state, userLinksData) {
-      state.usersLinks.push(userLinksData);
+      state.userLinks.push(userLinksData);
     },
     EDITAR(state, editarPayload) {
       /* Atualizar os dados do utilizador que esta logado no array de utilizadores */
@@ -693,11 +672,11 @@ export default new Vuex.Store({
       });
 
       /* Actualizar skills do utilizador */
-      state.usersSkills.map(function(userSkill) {
+      state.userSkills.map(function(userSkill) {
         if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
-            skills: editarPayload.editUsersSkills[0].skills
+            skills: editarPayload.edituserSkills[0].skills
           };
         } else {
           return userSkill;
@@ -705,11 +684,11 @@ export default new Vuex.Store({
       });
 
       /* Actualizar tools do utilizador */
-      state.usersTools.map(function(userTool) {
+      state.userTools.map(function(userTool) {
         if (userTool.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
-            tools: editarPayload.editUsersTools[0].tools
+            tools: editarPayload.edituserTools[0].tools
           };
         } else {
           return userTool;
@@ -717,14 +696,14 @@ export default new Vuex.Store({
       });
 
       /* Actualizar os cursos do utilizador */
-      state.usersCursosHistorico.map(function(userCursoHistorico) {
+      state.userCursos.map(function(userCursoHistorico) {
         if (
           userCursoHistorico.numeroEstudante ===
           state.loggedUser.numeroEstudante
         ) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
-            cursos: editarPayload.editUsersCursosHistorico[0].cursos
+            cursos: editarPayload.edituserCursos[0].cursos
           };
         } else {
           return userCursoHistorico;
@@ -732,11 +711,11 @@ export default new Vuex.Store({
       });
 
       /* Actualizar os links do utilizador */
-      state.usersLinks.map(function(userLink) {
+      state.userLinks.map(function(userLink) {
         if (userLink.numeroEstudante === state.loggedUser.numeroEstudante) {
           return {
             numeroEstudante: state.loggedUser.numeroEstudante,
-            cursos: editarPayload.editUsersLinks[0].links
+            cursos: editarPayload.edituserLinks[0].links
           };
         } else {
           return userLink;

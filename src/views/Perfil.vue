@@ -67,21 +67,21 @@
                 </div>
 
                 <ul class="list-group list-group-flush">
-                  <template v-if="getUsersLinks !== null">
+                  <template v-if="userLinksByNumeroEstudante !== null">
                     <li
-                      v-for="(link, index) in getUsersLinks[0].links"
+                      v-for="(link, index) in userLinksByNumeroEstudante"
                       v-bind:key="index"
                       class="list-group-item d-flex justify-content-between align-items-center flex-wrap"
                     >
                       <h6 class="mb-0">
-                        {{ link.title }}
+                        {{ link.tipoLink }}
                       </h6>
                       <a
                         class="text-secondary"
                         target="_blank"
-                        :href="link.href"
+                        :href="link.link"
                       >
-                        {{ LimitNumberCharsLinkSize(link.href) }}
+                        {{ LimitNumberCharsLinkSize(link.link) }}
                       </a>
                     </li>
                   </template>
@@ -161,18 +161,17 @@
                   </div>
                 </div>
 
-                <template v-if="getUsersCursosHistorico !== null">
+                <template v-if="userCursosByNumeroEstudante !== null">
                   <div
-                    v-for="(cursoHistorico, index) in getUsersCursosHistorico[0]
-                      .cursos"
+                    v-for="(curso, index) in userCursosByNumeroEstudante"
                     v-bind:key="index"
                   >
                     <div class="row">
                       <div class="col-sm-10">
-                        <h6 class="mb-0">{{ cursoHistorico.title }}</h6>
+                        <h6 class="mb-0">{{ curso.tipoCurso }}</h6>
                       </div>
                       <div class="col-sm-2 text-secondary">
-                        {{ cursoHistorico.year }}
+                        {{ curso.anoCurso }}
                       </div>
                     </div>
                     <hr />
@@ -208,13 +207,13 @@
                       </div>
                     </div>
 
-                    <template v-if="getUserSkills !== null">
+                    <template v-if="userSkillsByNumeroEstudante !== null">
                       <div
-                        v-for="(skill, index) in getUserSkills[0].skills"
+                        v-for="(skill, index) in userSkillsByNumeroEstudante"
                         :key="index"
                       >
                         <Competence
-                          :title="skill.title"
+                          :title="skill.tipoSkill"
                           :originalPercentagem="skill.percentagem"
                           type="skill"
                           v-bind:edit="false"
@@ -249,13 +248,13 @@
                       </div>
                     </div>
 
-                    <template v-if="getUserTools !== null">
+                    <template v-if="userToolsByNumeroEstudante !== null">
                       <div
-                        v-for="(tool, index) in getUserTools[0].tools"
+                        v-for="(tool, index) in userToolsByNumeroEstudante"
                         :key="index"
                       >
                         <Competence
-                          :title="tool.title"
+                          :title="tool.tipoTool"
                           :originalPercentagem="tool.percentagem"
                           type="tool"
                           v-bind:edit="false"
@@ -294,27 +293,12 @@ export default {
     ...mapGetters({
       loggedAlumniInformation: "getLoggedAlumniInformation",
       userInformationByNumeroEstudante: "getUserInformationByNumeroEstudante",
+      userSkillsByNumeroEstudante: "getUserSkillsByNumeroEstudante",
+      userToolsByNumeroEstudante: "getUserToolsByNumeroEstudante",
+      userLinksByNumeroEstudante: "getUserLinksByNumeroEstudante",
+      userCursosByNumeroEstudante: "getUserCursosByNumeroEstudante",
       isLoggedUser: "isLoggedUser"
-    }),
-
-    getUserSkills() {
-      //let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
-      return null; // this.$store.getters.getUserSkillsByNumeroEstudante(numeroEstudante);
-    },
-    getUserTools() {
-      //let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
-      return null; //this.$store.getters.getUserToolsByNumeroEstudante(numeroEstudante);
-    },
-    getUsersCursosHistorico() {
-      // todo
-      //let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
-      return null; //this.$store.getters.getUsersCursosHistoricoByNumeroEstudante(numeroEstudante);
-    },
-    getUsersLinks() {
-      // todo
-      //let numeroEstudante = parseInt(this.$route.params.numeroEstudante);
-      return null; //this.$store.getters.getUsersLinksByNumeroEstudante(numeroEstudante);
-    }
+    })
   },
   methods: {
     async PrepareAsyncData(numeroEstudante) {
@@ -323,6 +307,22 @@ export default {
         parseInt(numeroEstudante)
       );
       await this.$store.dispatch("RetrieveLoggedAlumniInformation");
+      await this.$store.dispatch(
+        "RetrieveUserSkillsByNumeroEstudante",
+        parseInt(numeroEstudante)
+      );
+      await this.$store.dispatch(
+        "RetrieveUserToolsByNumeroEstudante",
+        parseInt(numeroEstudante)
+      );
+      await this.$store.dispatch(
+        "RetrieveUserLinksByNumeroEstudante",
+        parseInt(numeroEstudante)
+      );
+      await this.$store.dispatch(
+        "RetrieveUserCursosByNumeroEstudante",
+        parseInt(numeroEstudante)
+      );
     },
     LimitNumberCharsLinkSize(link) {
       if (link.length > 15) {

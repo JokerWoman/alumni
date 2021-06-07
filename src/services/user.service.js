@@ -49,6 +49,86 @@ export const UserService = {
       return null;
     }
   },
+  async fetchAlumniSkillsById(user, numeroEstudante) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${numeroEstudante}/skills`,
+        {
+          method: "GET",
+          headers: authHeader(user)
+        }
+      );
+
+      if (response.ok) {
+        let data = await response.json();
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async fetchAlumniLinksById(user, numeroEstudante) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${numeroEstudante}/links`,
+        {
+          method: "GET",
+          headers: authHeader(user)
+        }
+      );
+
+      if (response.ok) {
+        let data = await response.json();
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async fetchAlumniCursosById(user, numeroEstudante) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${numeroEstudante}/cursos`,
+        {
+          method: "GET",
+          headers: authHeader(user)
+        }
+      );
+
+      if (response.ok) {
+        let data = await response.json();
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async fetchAlumniToolsById(user, numeroEstudante) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${numeroEstudante}/tools`,
+        {
+          method: "GET",
+          headers: authHeader(user)
+        }
+      );
+
+      if (response.ok) {
+        let data = await response.json();
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
   async fetchAlumniById(user, numeroEstudante) {
     if (user !== null) {
       const response = await fetch(`${API_URL}/alumni/${numeroEstudante}`, {

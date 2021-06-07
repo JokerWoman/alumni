@@ -30,9 +30,7 @@
         <div class="col-md-4 footer-nav">
           <h4>Outros Links —</h4>
           <div class="col-md-6">
-            <ul>
-              
-            </ul>
+            <ul></ul>
           </div>
         </div>
         <div class="col-md-5 footer-nav">
