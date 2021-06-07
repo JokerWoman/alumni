@@ -24,12 +24,7 @@
           >Alumni</b-nav-item
         >
 
-        <template
-          v-if="
-            this.$store.getters.isLoggedProfessor ||
-              this.$store.getters.isLoggedUser
-          "
-        >
+        <template v-if="isLoggedProfessor || isLoggedUser === true">
           <b-nav-item
             :to="{ name: 'Eventos' }"
             :class="{ active: $route.name === 'Eventos' }"
@@ -43,10 +38,16 @@
           >
         </template>
       </b-navbar-nav>
-      <template v-if="this.$store.getters.isLoggedUser">
+      <template
+        v-if="
+          isLoggedUser === true &&
+            loggedAlumniInformation !== null &&
+            loggedAlumniInformation.id_nroEstudante != null
+        "
+      >
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-            :text="this.$store.getters.getLoggedUser.nome"
+            :text="loggedAlumniInformation.nome"
             right
             :class="{
               active: $route.name === 'Perfil' || $route.name === 'EditarPerfil'
@@ -56,8 +57,7 @@
               :to="{
                 name: 'Perfil',
                 params: {
-                  numeroEstudante: this.$store.getters.getLoggedUser
-                    .numeroEstudante
+                  numeroEstudante: loggedAlumniInformation.id_nroEstudante
                 }
               }"
               >Perfil</b-dropdown-item
@@ -68,17 +68,18 @@
               }"
               >Procurar Alumnis</b-dropdown-item
             >
-            <b-dropdown-item @click="logoutUser()">Sair</b-dropdown-item>
+            <b-dropdown-item @click="logout()">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </template>
-      <template v-else-if="this.$store.getters.isLoggedProfessor">
+      <template
+        v-else-if="
+          isLoggedProfessor === true && loggedProfessorInformation !== null
+        "
+      >
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown
-            :text="this.$store.getters.getLoggedProfessor.nome"
-            right
-          >
-            <b-dropdown-item @click="logoutProfessor()">Sair</b-dropdown-item>
+          <b-nav-item-dropdown :text="loggedProfessorInformation.nome" right>
+            <b-dropdown-item @click="logout()">Sair</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </template>
@@ -101,24 +102,35 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "NavBar",
+  created() {
+    this.PrepareAsyncData();
+  },
+  computed: {
+    ...mapGetters({
+      loggedProfessorInformation: "getLoggedProfessorInformation",
+      loggedAlumniInformation: "getLoggedAlumniInformation",
+      isLoggedUser: "isLoggedUser",
+      isLoggedProfessor: "isLoggedProfessor"
+    })
+  },
   methods: {
-    logoutUser() {
-      /* Chamar a ação disponivel no store */
-      this.$store.dispatch("logoutUser", this.$data);
-
-      /* O logout foi feito redirecionamos 
-            para o home*/
-      this.$router.push({ name: "Home" });
+    async PrepareAsyncData() {
+      await this.$store.dispatch("RetrieveLoggedAlumniInformation");
+      await this.$store.dispatch("RetrieveLoggedProfessorInformation");
     },
-    logoutProfessor() {
+    logout() {
       /* Chamar a ação disponivel no store */
-      this.$store.dispatch("logoutProfessor", this.$data);
+      this.$store.dispatch("logout", this.$data);
 
       /* O logout foi feito redirecionamos 
             para o home*/
-      this.$router.push({ name: "Home" });
+      if (this.$route.name != "Home") {
+        this.$router.push({ name: "Home" });
+      }
     }
   }
 };

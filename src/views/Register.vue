@@ -222,7 +222,7 @@ export default {
     };
   },
   methods: {
-    register() {
+    async register() {
       try {
         /* Limpar erros do formulário registo */
         this.$data.formErros = "";
@@ -238,8 +238,22 @@ export default {
           throw "O número de estudante só pode conter numeros.";
         }
 
+        /* Remover o cartão de cidadão */
+        const alumni = {
+          id_nroEstudante: this.registo.numeroEstudante,
+          nome: this.registo.nome,
+          dataNascimento: this.registo.data_Nasc,
+          morada: this.registo.morada,
+          email: this.registo.email,
+          descricao: " " /* Space intencional para guardar a vazio */,
+          telemovel: this.registo.telemovel,
+          password: this.registo.password,
+          id_role: "3", // Alumni Normal
+          id_genero: this.registo.genero === "Masculino" ? 1 : 2
+        };
+
         /* Chamar a ação disponivel no store */
-        this.$store.dispatch("register", this.$data.registo);
+        await this.$store.dispatch("register", alumni);
 
         /* Se o registo falhar por alguma razão um trow vai ser lançado e o redirect
            da route para o login não vai ser executado */

@@ -15,7 +15,7 @@
         </div>
         <div class="col-lg-6">
           <div class="card2 card border-0 px-4 py-5">
-            <form @submit.prevent="login">
+            <form @submit.prevent="loginProfessor">
               <div class="row px-3">
                 <label class="mb-1">
                   <h6 class="mb-0 text-sm">Professor Username</h6>
@@ -59,12 +59,16 @@ export default {
     };
   },
   methods: {
-    login() {
+    async loginProfessor() {
       try {
         this.formErros = "";
 
         /* Chamar a ação disponivel no store */
-        this.$store.dispatch("loginProfessor", this.$data.loginData);
+        const professorCredentials = {
+          id_nroProfessor: this.loginData.username,
+          password: this.loginData.password
+        };
+        await this.$store.dispatch("loginProfessor", professorCredentials);
 
         /* Se o login falhar por alguma razão um trow vai ser lançado e o redirect
            da route para o home não vai ser executado */

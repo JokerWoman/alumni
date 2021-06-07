@@ -16,21 +16,17 @@
               />
             </div>
 
-            <div class="text-secondary">
-              <select v-model="filterSelectedCurso">
-                <option value="TODOS">TODOS</option>
-                <option
-                  v-for="(curso, index) in this.$store.getters
-                    .getCursosAvailable"
-                  v-bind:value="curso.title"
-                  v-bind:key="index"
-                >
-                  {{ curso.title }}
-                </option>
-              </select>
+            <div class="col-sm-3 text-secondary">
+              <input
+                class="mb-4"
+                type="text"
+                v-model="filterEmail"
+                placeholder="Email Alumni"
+              />
             </div>
           </div>
-          <AlumniList :alumnis="AlumnisInformation"> </AlumniList>
+
+            <AlumniList :alumnis="allAlumniInformations"> </AlumniList>
         </div>
       </div>
     </div>
@@ -39,6 +35,7 @@
 
 <script>
 import AlumniList from "../components/AlumniList";
+import { mapGetters } from "vuex";
 
 export default {
   name: "ProcurarAlumni",
@@ -48,35 +45,41 @@ export default {
   data() {
     return {
       filterName: "",
-      filterSelectedCurso: null
+      filterEmail: ""
     };
   },
-  created: function() {},
-  // todo falta aqui um watcher
+  created: function() {
+    this.PrepareAsyncData();
+  },
+  watch: {
+    filterName: function(val) {
+      this.filterName = val;
+      this.PrepareAsyncData();
+    },
+    filterEmail: function(val) {
+      this.filterEmail = val;
+      this.PrepareAsyncData();
+    }
+  },
   computed: {
-    AlumnisInformation() {
-      let allAlumni = this.$store.getters
-        .getAllAlumnisInformationExceptLoggedUser;
+    ...mapGetters({
+      allAlumniInformations: "getAllAlumniInformation",
+      isLoggedUser: "isLoggedUser",
+      isLoggedProfessor: "isLoggedProfessor",
+      getLoggedUser: "getLoggedUser"
+    })
+  },
+  methods: {
+    async PrepareAsyncData() {
+      const filtros = {
+        nome: this.filterName,
+        email: this.filterEmail
+      };
 
-      if (this.filterName !== "") {
-        allAlumni = allAlumni.filter(alumni =>
-          alumni.nome.toUpperCase().includes(this.filterName.toUpperCase())
-        );
-      }
-
-      if (
-        this.filterSelectedCurso != null &&
-        this.filterSelectedCurso != "TODOS"
-      ) {
-        allAlumni = allAlumni.filter(alumni =>
-          this.$store.getters.AlumniHasCursoByTitle(
-            alumni.numeroEstudante,
-            this.filterSelectedCurso
-          )
-        );
-      }
-
-      return allAlumni;
+    await this.$store.dispatch(
+        "RetrieveAllAlumniInformation",
+        filtros
+      );
     }
   }
 };
