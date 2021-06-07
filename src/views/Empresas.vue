@@ -149,7 +149,7 @@
           />
         </div>
         <div class="col-md-4 footer-nav">
-          <h1 style="font-size: 25px">Outros Links </h1>
+          <h1 style="font-size: 25px">Outros Links</h1>
           <div class="col-md-6">
             <ul>
               <li>

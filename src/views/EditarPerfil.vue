@@ -24,7 +24,9 @@
                     height="150"
                   />
                   <div class="mt-3">
-                    <h1 style="font-size: 25px">{{ this.$store.getters.getLoggedUser.nome }}</h1>
+                    <h1 style="font-size: 25px">
+                      {{ this.$store.getters.getLoggedUser.nome }}
+                    </h1>
                     <textarea
                       class="form-control"
                       v-model="editarData.descricao"
@@ -48,7 +50,7 @@
                 <div class="d-flex justify-content-between">
                   <div style="margin-top:7px;">
                     <h6 class="d-flex align-items-center mb-3">
-                      <i class="material-icons text-info mr-2">Portefolio</i>
+                      <i class="material-icons text-info mr-2">Portefólio</i>
                     </h6>
                   </div>
                 </div>

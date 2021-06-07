@@ -8,14 +8,18 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
-        <img
-          src="@/assets/img/logonavbar.webp"
-          class="img-fluid"
-          height="50px"
-          width="50px"
-          alt="logotipo da página"
-        />
+        <b-nav-item :to="{ name: 'Home' }">
+          <img
+            src="@/assets/img/logonavbar.webp"
+            class="img-fluid"
+            height="50px"
+            width="50px"
+            alt="logotipo da página"
+          />
+        </b-nav-item>
+      </b-navbar-nav>
 
+      <b-navbar-nav>
         <b-nav-item
           :to="{ name: 'Home' }"
           :class="{ active: $route.name === 'Home' }"
