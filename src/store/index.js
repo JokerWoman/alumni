@@ -480,7 +480,7 @@ export default new Vuex.Store({
         return 0;
       });
     },
-    getEventById: state => (id) => {
+    getEventById: state => id => {
       return state.events.find(e => e.id == id);
     },
     getActiveEvent: state => {

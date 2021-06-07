@@ -46,7 +46,7 @@
       <div
         style="background-color: #FFCA1C; margin-top: 0px; width: 160px; height: 41px; padding:7px"
       >
-        <h4 style="color:white;">Testemunhas</h4>
+        <h1 style="color:white; font-size: 25px">Testemunhas</h1>
       </div>
 
       <b-row>
@@ -76,8 +76,7 @@
           <h4>Outros Links —</h4>
           <div class="col-md-6">
             <ul>
-              <li><a href="">Cartão Alumni</a></li>
-              <li><a href="">FAQ's</a></li>
+              
               <li>
                 <router-link
                   :to="{ name: 'Empresas' }"

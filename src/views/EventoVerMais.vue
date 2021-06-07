@@ -13,7 +13,7 @@
               "
             >
               <img
-                :src= getEvent.img
+                :src="getEvent.img"
                 alt="foto de um evento"
                 width="250"
                 height="250"
@@ -25,9 +25,9 @@
           <div class="container">
             <div>
               <div class="row">
-                  <h2 class="mb-0" style="margin-left: 220px">
-                    {{getEvent.name }}
-                  </h2>
+                <h2 class="mb-0" style="margin-left: 220px">
+                  {{ getEvent.name }}
+                </h2>
               </div>
               <br />
 
@@ -48,12 +48,13 @@
 export default {
   name: "EventoVerMais",
 
-  methods: {
-  },
-  computed:{
+  methods: {},
+  computed: {
     getEvent() {
-      const event = this.$store.getters.getEventById(this.$route.params.eventId)
-      return event
+      const event = this.$store.getters.getEventById(
+        this.$route.params.eventId
+      );
+      return event;
     }
   }
 };
