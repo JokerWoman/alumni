@@ -30,192 +30,192 @@ Vue.use(VueMeta);
   estar os dois a true numa das routes! Apenas um a true!
 */
 
-const routes = [{
-        path: "/login",
-        name: "Login",
-        component: Login,
-        meta: {
-            requiresUserAuth: false,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/loginProfessor",
-        name: "LoginProfessor",
-        component: LoginProfessor,
-        meta: {
-            requiresUserAuth: false,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/editarPerfil",
-        name: "EditarPerfil",
-        component: EditarPerfil,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/editarTools",
-        name: "EditarTools",
-        component: EditarTools,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/editarSkills",
-        name: "EditarSkills",
-        component: EditarSkills,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/editarPortefolio",
-        name: "EditarPortefolio",
-        component: EditarPortefolio,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/editarCursos",
-        name: "EditarCursos",
-        component: EditarCursos,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/register",
-        name: "Register",
-        component: Register,
-        meta: {
-            requiresUserAuth: false,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/eventos",
-        name: "Eventos",
-        component: Eventos,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: true
-        }
-    },
-    {
-        path: "/bolsas",
-        name: "Bolsas",
-        component: Bolsas,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: true
-        }
-    },
-    {
-        path: "/perfil/:numeroEstudante",
-        name: "Perfil",
-        component: Perfil,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/procurarAlumni/",
-        name: "ProcurarAlumni",
-        component: ProcurarAlumni,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: false
-        }
-    },
-
-    {
-        path: "/bolsas/:bolsaId",
-        name: "BolsaVerMais",
-        component: BolsaVerMais,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: true
-        }
-    },
-    {
-        path: "/events/:eventId",
-        name: "EventoVerMais",
-        component: EventoVerMais,
-        meta: {
-            requiresUserAuth: true,
-            requiresProfessorAuth: true
-        }
-    },
-    {
-        path: "/",
-        name: "Home",
-        component: Home,
-        meta: {
-            requiresAlumniAuth: false,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "*",
-        name: "PageNotFound",
-        component: PageNotFound,
-        meta: {
-            requiresAlumniAuth: false,
-            requiresProfessorAuth: false
-        }
-    },
-    {
-        path: "/empresas",
-        name: "Empresas",
-        component: Empresas,
-
+const routes = [
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+    meta: {
+      requiresUserAuth: false,
+      requiresProfessorAuth: false
     }
+  },
+  {
+    path: "/loginProfessor",
+    name: "LoginProfessor",
+    component: LoginProfessor,
+    meta: {
+      requiresUserAuth: false,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/editarPerfil",
+    name: "EditarPerfil",
+    component: EditarPerfil,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/editarTools",
+    name: "EditarTools",
+    component: EditarTools,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/editarSkills",
+    name: "EditarSkills",
+    component: EditarSkills,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/editarPortefolio",
+    name: "EditarPortefolio",
+    component: EditarPortefolio,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/editarCursos",
+    name: "EditarCursos",
+    component: EditarCursos,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
+    meta: {
+      requiresUserAuth: false,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/eventos",
+    name: "Eventos",
+    component: Eventos,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: true
+    }
+  },
+  {
+    path: "/bolsas",
+    name: "Bolsas",
+    component: Bolsas,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: true
+    }
+  },
+  {
+    path: "/perfil/:numeroEstudante",
+    name: "Perfil",
+    component: Perfil,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/procurarAlumni/",
+    name: "ProcurarAlumni",
+    component: ProcurarAlumni,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: false
+    }
+  },
+
+  {
+    path: "/bolsas/:bolsaId",
+    name: "BolsaVerMais",
+    component: BolsaVerMais,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: true
+    }
+  },
+  {
+    path: "/events/:eventId",
+    name: "EventoVerMais",
+    component: EventoVerMais,
+    meta: {
+      requiresUserAuth: true,
+      requiresProfessorAuth: true
+    }
+  },
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
+    meta: {
+      requiresAlumniAuth: false,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "*",
+    name: "PageNotFound",
+    component: PageNotFound,
+    meta: {
+      requiresAlumniAuth: false,
+      requiresProfessorAuth: false
+    }
+  },
+  {
+    path: "/empresas",
+    name: "Empresas",
+    component: Empresas
+  }
 ];
 
 const router = new Router({
-    mode: "hash",
-    base: process.env.BASE_URL,
-    routes
+  mode: "hash",
+  base: process.env.BASE_URL,
+  routes
 });
 
 router.beforeEach((to, from, next) => {
-    if (
-        to.meta.requiresUserAuth === true &&
-        to.meta.requiresProfessorAuth === true
-    ) {
-        if (store.getters.isLoggedUser || store.getters.isLoggedProfessor) {
-            next();
-        } else {
-            next("/");
-        }
-    } else if (to.meta.requiresUserAuth === true) {
-        if (store.getters.isLoggedUser) {
-            next();
-        } else {
-            next("/");
-            return;
-        }
-    } else if (to.meta.requiresProfessorAuth === true) {
-        if (store.getters.isLoggedProfessor) {
-            next();
-        } else {
-            next("/");
-            return;
-        }
+  if (
+    to.meta.requiresUserAuth === true &&
+    to.meta.requiresProfessorAuth === true
+  ) {
+    if (store.getters.isLoggedUser || store.getters.isLoggedProfessor) {
+      next();
     } else {
-        next();
+      next("/");
     }
+  } else if (to.meta.requiresUserAuth === true) {
+    if (store.getters.isLoggedUser) {
+      next();
+    } else {
+      next("/");
+      return;
+    }
+  } else if (to.meta.requiresProfessorAuth === true) {
+    if (store.getters.isLoggedProfessor) {
+      next();
+    } else {
+      next("/");
+      return;
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

@@ -64,12 +64,12 @@ export default {
     openOferta() {
       window.open(this.getBolsa.linkBolsa);
     },
-     getCompany() {
+    getCompany() {
       return this.$store.getters.getCompanyById(this.getBolsa.id_company);
     },
     getCategory() {
       return this.$store.getters.getCategoryById(this.getBolsa.category);
-    },
+    }
   },
   computed: {
     getBolsa() {

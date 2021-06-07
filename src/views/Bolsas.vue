@@ -211,8 +211,13 @@
             <ul>
               <li><a href="">Cartão Alumni</a></li>
               <li><a href="">FAQ's</a></li>
-              <li><router-link :to="{ name: 'Empresas' }"
-            :class="{ active: $route.name === 'Empresas' }">Empresas Parceiras</router-link></li>
+              <li>
+                <router-link
+                  :to="{ name: 'Empresas' }"
+                  :class="{ active: $route.name === 'Empresas' }"
+                  >Empresas Parceiras</router-link
+                >
+              </li>
             </ul>
           </div>
         </div>
@@ -223,7 +228,6 @@
             <ul>
               <li>Escola Superior de Media Artes e Design</li>
               <li>Campus 2 P.Porto ESMAD, 981, R.Dom Sancho l, 4480.876</li>
-              
 
               <li
                 style="
@@ -248,7 +252,7 @@ import BolsasCard from "../components/BolsasCard";
 export default {
   name: "Bolsas",
   components: {
-    BolsasCard,
+    BolsasCard
   },
 
   data() {
@@ -263,12 +267,12 @@ export default {
         date_start: "",
         estado: "",
         id_professor: "",
-        date_pub: "",
+        date_pub: ""
       },
       estado: [
         { value: null, text: "Escolhe uma opção" },
         { value: "ativo", text: "Ativo" },
-        { value: "terminado", text: "Terminado" },
+        { value: "terminado", text: "Terminado" }
       ],
       categorySelected: "all",
       locality: "",
@@ -276,15 +280,15 @@ export default {
       optionsSort: [
         {
           value: 1,
-          text: "Mais Recentes",
+          text: "Mais Recentes"
         },
         {
           value: -1,
-          text: "Mais Antigos",
-        },
+          text: "Mais Antigos"
+        }
       ],
 
-      filterCategorySelected: "all",
+      filterCategorySelected: "all"
     };
   },
   methods: {
@@ -309,46 +313,45 @@ export default {
         description: this.frm.description,
         img: this.frm.img,
         date_pub: date,
-        date_start:this.frm.date_start,
+        date_start: this.frm.date_start,
         linkBolsa: this.frm.link,
         estado: "ativo",
-        id_company:this.frm.company,
+        id_company: this.frm.company,
         id_professor: this.getLoggedProfessorId()
       };
       this.$store.dispatch("saveBolsa", bolsa);
     },
-  clearForm() {
-      this.frm.img= "";
-      this.frm.description= "";
-      this.frm.link= "";
-      this.frm.category= null;
-      this.frm.company= null;
-      this.frm.date_start= "";
-      this.frm.date_pub="";
-      this.frm.id_professor="";
-      this.frm.estado="";
-      this.frm.id="";
+    clearForm() {
+      this.frm.img = "";
+      this.frm.description = "";
+      this.frm.link = "";
+      this.frm.category = null;
+      this.frm.company = null;
+      this.frm.date_start = "";
+      this.frm.date_pub = "";
+      this.frm.id_professor = "";
+      this.frm.estado = "";
+      this.frm.id = "";
     },
 
-  editBolsa() {
+    editBolsa() {
       let bolsa = {
-        id:this.frm.id,
-        img:this.frm.img,
-        description:this.frm.description ,
-        linkBolsa:this.frm.link,
-        category:this.frm.category,
-        id_company:this.frm.company,
-        date_start:this.frm.date_start,
-        estado:this.frm.estado,
-        id_professor:this.frm.date_pub,
-        date_pub:this.frm.date_pub
-
+        id: this.frm.id,
+        img: this.frm.img,
+        description: this.frm.description,
+        linkBolsa: this.frm.link,
+        category: this.frm.category,
+        id_company: this.frm.company,
+        date_start: this.frm.date_start,
+        estado: this.frm.estado,
+        id_professor: this.frm.date_pub,
+        date_pub: this.frm.date_pub
       };
       this.$store.dispatch("editBolsa", bolsa);
       this.$bvModal.hide("editBolsaModal");
       this.clearForm();
     },
-  deleteBolsa() {
+    deleteBolsa() {
       if (confirm("Deseja apagar esta oferta")) {
         this.$store.dispatch("deleteBolsa", this.frm.id);
         console.log("apagado");
@@ -356,23 +359,19 @@ export default {
       this.clearForm();
     },
 
-   getActiveBolsa() {
+    getActiveBolsa() {
       let bolsa = this.$store.getters.getActiveBolsa;
-      this.frm.id=bolsa.id;
-      this.frm.img= bolsa.img;
-      this.frm.description= bolsa.description;
-      this.frm.link=bolsa.linkBolsa;
-      this.frm.category=bolsa.category;
-      this.frm.company= bolsa.id_company;
-      this.frm.date_start=bolsa.date_start;
-      this.frm.estado=bolsa.estado;
-      this.frm.id_nroProfessor=bolsa.id_professor;
-      this.frm.date_pub=bolsa.date_pub;
-
-    },
-
-
-
+      this.frm.id = bolsa.id;
+      this.frm.img = bolsa.img;
+      this.frm.description = bolsa.description;
+      this.frm.link = bolsa.linkBolsa;
+      this.frm.category = bolsa.category;
+      this.frm.company = bolsa.id_company;
+      this.frm.date_start = bolsa.date_start;
+      this.frm.estado = bolsa.estado;
+      this.frm.id_nroProfessor = bolsa.id_professor;
+      this.frm.date_pub = bolsa.date_pub;
+    }
   },
   computed: {
     getBolsas() {
@@ -384,7 +383,7 @@ export default {
     },
     getCategories() {
       return this.$store.getters.getCategoriesForSelect;
-    },
-  },
+    }
+  }
 };
 </script>

@@ -21,9 +21,12 @@
               ></b-form-input>
             </b-col>
             <b-col cols="6">
-              <b-form-input v-model="frm.phone" type="number"
-              placeholder="Telefone"
-               required>
+              <b-form-input
+                v-model="frm.phone"
+                type="number"
+                placeholder="Telefone"
+                required
+              >
               </b-form-input>
             </b-col>
           </b-row>
@@ -40,9 +43,12 @@
             </b-col>
 
             <b-col cols="6">
-              <b-form-input v-model="frm.email" type="email"
-              placeholder="Email"
-               required>
+              <b-form-input
+                v-model="frm.email"
+                type="email"
+                placeholder="Email"
+                required
+              >
               </b-form-input>
             </b-col>
           </b-row>
@@ -66,9 +72,12 @@
               ></b-form-input>
             </b-col>
             <b-col cols="6">
-              <b-form-input v-model="frm.phone" type="number"
-              placeholder="Telefone"
-               required>
+              <b-form-input
+                v-model="frm.phone"
+                type="number"
+                placeholder="Telefone"
+                required
+              >
               </b-form-input>
             </b-col>
           </b-row>
@@ -85,9 +94,12 @@
             </b-col>
 
             <b-col cols="6">
-              <b-form-input v-model="frm.email" type="email"
-              placeholder="Email"
-               required>
+              <b-form-input
+                v-model="frm.email"
+                type="email"
+                placeholder="Email"
+                required
+              >
               </b-form-input>
             </b-col>
           </b-row>
@@ -107,14 +119,7 @@
           </b-row>
         </b-form>
       </b-modal>
-
-
-
-
-
     </b-container>
-
-
 
     <br /><br />
 
@@ -190,53 +195,49 @@ import CompanyCard from "../components/CompanyCard";
 export default {
   name: "Company",
   components: {
-    CompanyCard,
+    CompanyCard
   },
-  data(){
-    return{
-      frm:{
+  data() {
+    return {
+      frm: {
         id_company: "",
         name: "",
-        phone:"",
-        email:"",
-        locality:"",
-
+        phone: "",
+        email: "",
+        locality: ""
       }
-    }
-   
+    };
   },
 
   methods: {
     getLoggedUserType() {
-     return this.$store.getters.getLoggedProfessor ? true : false;
+      return this.$store.getters.getLoggedProfessor ? true : false;
     },
-    createCompany(){
-      const company={
+    createCompany() {
+      const company = {
         id_company: this.$store.getters.getNextCompanyId,
         name: this.frm.name,
         phone: this.frm.phone,
-        email:this.frm.email,
-        locality:this.frm.locality
-      }
-       this.$store.dispatch("createCompany", company);
+        email: this.frm.email,
+        locality: this.frm.locality
+      };
+      this.$store.dispatch("createCompany", company);
     },
     clearForm() {
-      this.frm.id_company= "";
-      this.frm.name= "";
-      this.frm.phone= "";
-      this.frm.email= "";
-      this.frm.locality="";
-      
+      this.frm.id_company = "";
+      this.frm.name = "";
+      this.frm.phone = "";
+      this.frm.email = "";
+      this.frm.locality = "";
     },
 
     editCompany() {
       let company = {
-        id_company:this.frm.id_company,
-        name:this.frm.name,
-        phone:this.frm.phone ,
-        email:this.frm.email,
-        locality:this.frm.locality,
-
+        id_company: this.frm.id_company,
+        name: this.frm.name,
+        phone: this.frm.phone,
+        email: this.frm.email,
+        locality: this.frm.locality
       };
       this.$store.dispatch("editCompany", company);
       this.$bvModal.hide("editCompanyModal");
@@ -253,19 +254,17 @@ export default {
 
     getActiveCompany() {
       let company = this.$store.getters.getActiveCompany;
-      this.frm.id_company=company.id_company;
-      this.frm.name= company.name;
-      this.frm.phone= company.phone;
-      this.frm.email=company.email;
-      this.frm.locality=company.locality;
-      
-
-    },
+      this.frm.id_company = company.id_company;
+      this.frm.name = company.name;
+      this.frm.phone = company.phone;
+      this.frm.email = company.email;
+      this.frm.locality = company.locality;
+    }
   },
   computed: {
     getCompanies() {
       return this.$store.getters.getCompanies;
-    },
-  },
+    }
+  }
 };
 </script>

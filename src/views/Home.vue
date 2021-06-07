@@ -17,7 +17,6 @@
               style="margin-top:20px; width:180px;"
               id="login"
             >
-              
               Login
             </b-button>
 
@@ -79,9 +78,13 @@
             <ul>
               <li><a href="">Cartão Alumni</a></li>
               <li><a href="">FAQ's</a></li>
-              <li><router-link :to="{ name: 'Empresas' }"
-            :class="{ active: $route.name === 'Empresas' }">Empresas Parceiras</router-link></li>
-              
+              <li>
+                <router-link
+                  :to="{ name: 'Empresas' }"
+                  :class="{ active: $route.name === 'Empresas' }"
+                  >Empresas Parceiras</router-link
+                >
+              </li>
             </ul>
           </div>
         </div>
@@ -128,8 +131,6 @@ export default {
       }
     }
   },
- 
-      
 
   computed: {
     getTestimonys() {

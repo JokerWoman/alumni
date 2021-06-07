@@ -20,7 +20,7 @@
       <div class="row">
         <div class="col-md-3 text-center">
           <img
-            src="@/assets/logo.png"
+            src="@/assets/img/logo.webp"
             class="img-fluid"
             height="250px"
             width="250px"

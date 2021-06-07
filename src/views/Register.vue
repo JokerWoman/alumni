@@ -35,10 +35,11 @@
                   <label class="mb-1">
                     <h6 class="mb-0 text-sm">Email</h6>
                   </label>
-                  <input type="email" 
-                  v-model="registo.email" 
-                  name="email"
-                  id="email" 
+                  <input
+                    type="email"
+                    v-model="registo.email"
+                    name="email"
+                    id="email"
                   />
                 </div>
               </div>
@@ -48,22 +49,25 @@
                   <label class="mb-1">
                     <h6 class="mb-0 text-sm">Nome Completo</h6>
                   </label>
-                  <input class="mb-4" type="text"
-                   v-model="registo.nome" 
-                   name="nome"
-                   id="nome" 
-                   />
+                  <input
+                    class="mb-4"
+                    type="text"
+                    v-model="registo.nome"
+                    name="nome"
+                    id="nome"
+                  />
                 </div>
 
                 <div class="col-lg-6">
                   <label class="mb-1">
                     <h6 class="mb-0 text-sm">Morada</h6>
                   </label>
-                  <input type="text"
-                   v-model="registo.morada" 
-                   name="morada"
-                   id="morada" 
-                   />
+                  <input
+                    type="text"
+                    v-model="registo.morada"
+                    name="morada"
+                    id="morada"
+                  />
                 </div>
               </div>
 
@@ -78,7 +82,7 @@
                     v-model="registo.password"
                     required
                     name="password"
-                    id="password" 
+                    id="password"
                   />
                 </div>
 
@@ -86,11 +90,12 @@
                   <label class="mb-1">
                     <h6 class="mb-0 text-sm">Nacionalidade</h6>
                   </label>
-                  <input type="text" 
-                  v-model="registo.nacionalidade" 
-                  disabled 
-                  name="nacionalidade"
-                  id="nacionalidade"
+                  <input
+                    type="text"
+                    v-model="registo.nacionalidade"
+                    disabled
+                    name="nacionalidade"
+                    id="nacionalidade"
                   />
                 </div>
               </div>
@@ -114,11 +119,7 @@
                   <label class="mb-1">
                     <h6 class="mb-0 text-sm">Numero Cartão Cidadão</h6>
                   </label>
-                  <input type="text" 
-                  v-model="registo.CC"
-                  name="cc"
-                  id="cc"
-                   />
+                  <input type="text" v-model="registo.CC" name="cc" id="cc" />
                 </div>
               </div>
 
@@ -141,10 +142,12 @@
                   <label class="mb-1">
                     <h6 class="mb-0 text-sm">Numero de Telemovel</h6>
                   </label>
-                  <input class="mb-4" type="text" 
-                  v-model="registo.telemovel" 
-                  name="numero"
-                  id="numero"
+                  <input
+                    class="mb-4"
+                    type="text"
+                    v-model="registo.telemovel"
+                    name="numero"
+                    id="numero"
                   />
                 </div>
               </div>
@@ -187,7 +190,11 @@
               </div>
 
               <div class="row mb-3 px-3">
-                <button type="submit" id="registar" class="btn btn-blue text-center">
+                <button
+                  type="submit"
+                  id="registar"
+                  class="btn btn-blue text-center"
+                >
                   REGISTAR
                 </button>
               </div>

@@ -1,7 +1,7 @@
 <template>
   <b-card
     :img-src="bolsa.img"
-    :title="getCompanyName(bolsa.id_company) "
+    :title="getCompanyName(bolsa.id_company)"
     img-top
     tag="article"
     :id="`cardEvent${bolsa.id}`"
@@ -41,13 +41,13 @@ export default {
   },
   methods: {
     isLoggedProfessor() {
-     return this.$store.getters.getLoggedProfessor ? true : false;
+      return this.$store.getters.getLoggedProfessor ? true : false;
     },
-     getCompanyName(id) {
+    getCompanyName(id) {
       var company = this.$store.getters.getCompanyById(id);
       return company.name;
     },
-     setActiveBolsa(bolsa) {
+    setActiveBolsa(bolsa) {
       this.$store.dispatch("setActiveBolsa", bolsa);
     },
     getDescription(desc) {

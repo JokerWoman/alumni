@@ -29,7 +29,7 @@
                   <textarea
                     class="form-control"
                     v-model="editarData.descricao"
-                    id='textArea'
+                    id="textArea"
                     rows="3"
                   ></textarea>
 

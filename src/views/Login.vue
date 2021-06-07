@@ -33,10 +33,11 @@
                 <label class="mb-1">
                   <h6 class="mb-0 text-sm">Palavra passe</h6>
                 </label>
-                <input type="password" 
-                v-model="loginData.password" 
-                name="password"
-                id="password"
+                <input
+                  type="password"
+                  v-model="loginData.password"
+                  name="password"
+                  id="password"
                 />
               </div>
 
@@ -45,7 +46,11 @@
               </div>
 
               <div class="row mb-3 px-3">
-                <button type="submit" id="login" class="btn btn-blue text-center">
+                <button
+                  type="submit"
+                  id="login"
+                  class="btn btn-blue text-center"
+                >
                   LOGIN
                 </button>
               </div>

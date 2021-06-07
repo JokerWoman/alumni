@@ -26,7 +26,7 @@
             </div>
           </div>
 
-            <AlumniList :alumnis="allAlumniInformations"> </AlumniList>
+          <AlumniList :alumnis="allAlumniInformations"> </AlumniList>
         </div>
       </div>
     </div>
@@ -76,10 +76,7 @@ export default {
         email: this.filterEmail
       };
 
-    await this.$store.dispatch(
-        "RetrieveAllAlumniInformation",
-        filtros
-      );
+      await this.$store.dispatch("RetrieveAllAlumniInformation", filtros);
     }
   }
 };
