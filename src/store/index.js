@@ -24,6 +24,15 @@ export default new Vuex.Store({
     userTools: [],
     userCursos: [],
     userLinks: [],
+    loggedAlumniInformation: "",
+    loggedProfessorInformation: "",
+    userInformationByNumeroEstudante: "",
+    loggedUser: localStorage.getItem("loggedUser")
+      ? JSON.parse(localStorage.getItem("loggedUser"))
+      : null,
+    loggedProfessor: localStorage.getItem("loggedProfessor")
+      ? JSON.parse(localStorage.getItem("loggedProfessor"))
+      : null,
     cursos: localStorage.getItem("cursos")
       ? JSON.parse(localStorage.getItem("cursos"))
       : [
@@ -62,15 +71,6 @@ export default new Vuex.Store({
           { title: "Adobe Premiere" },
           { title: "Adobe XD" }
         ],
-    loggedAlumniInformation: "",
-    loggedProfessorInformation: "",
-    userInformationByNumeroEstudante: "",
-    loggedUser: localStorage.getItem("loggedUser")
-      ? JSON.parse(localStorage.getItem("loggedUser"))
-      : null,
-    loggedProfessor: localStorage.getItem("loggedProfessor")
-      ? JSON.parse(localStorage.getItem("loggedProfessor"))
-      : null,
     bolsas: localStorage.getItem("bolsas")
       ? JSON.parse(localStorage.getItem("bolsas"))
       : [
@@ -114,9 +114,7 @@ export default new Vuex.Store({
             id_professor: 1
           }
         ],
-
     activeBolsa: [],
-
     companies: localStorage.getItem("companies")
       ? JSON.parse(localStorage.getItem("companies"))
       : [
@@ -143,7 +141,6 @@ export default new Vuex.Store({
           }
         ],
     activeCompany: [],
-
     testimonys: localStorage.getItem("testimonys")
       ? JSON.parse(localStorage.getItem("testimonys"))
       : [
@@ -181,7 +178,6 @@ export default new Vuex.Store({
               "Incrivel! Encontrei aqui uma vaga para estágio profissional em breve estarei contratada!"
           }
         ],
-
     events: localStorage.getItem("events")
       ? JSON.parse(localStorage.getItem("events"))
       : [
@@ -211,7 +207,6 @@ export default new Vuex.Store({
           }
         ],
     activeEvent: [],
-
     categories: [
       {
         id: 1,
@@ -248,35 +243,12 @@ export default new Vuex.Store({
     ]
   },
   getters: {
-    getToolsAvailable: state =>
-      state.tools /* Get de todas as tools que podem ser adicionadas no perfil de um utilizador */,
-
-    getCursosAvailable: state =>
-      state.cursos /* Get de todos os cursos que podem ser adicionados no perfil de um utilizador */,
-
-    AlumniHasCursoByTitle: state => (numeroEstudante, title) => {
-      let userCursos = state.userCursos.filter(
-        cursosHistorico =>
-          parseInt(cursosHistorico.numeroEstudante) ===
-          parseInt(numeroEstudante)
-      );
-
-      return userCursos[0].cursos.some(curso => curso.title === title);
-    },
-    getLinksAvailable: state => state.links,
-
-    getSkillsAvailable: state =>
-      state.skills /* Get de todas as skills que podem ser adicionadas no perfil de um utilizador */,
-
     getLoggedUser: state => state.loggedUser,
-
     isLoggedUser: state => (state.loggedUser === null ? false : true),
-
     getLoggedAlumniInformation: state => state.loggedAlumniInformation,
     getLoggedProfessorInformation: state => state.loggedProfessorInformation,
     getLoggedProfessor: state => state.loggedProfessor,
     isLoggedProfessor: state => (state.loggedProfessor == null ? false : true),
-
     getAllAlumniInformation: state => {
       /* Quando for o professor dar todos, quando alumni filtrar o seu */
       if (state.alumnis !== null) {
@@ -300,6 +272,26 @@ export default new Vuex.Store({
     getUserToolsByNumeroEstudante: state => state.userTools,
     getUserLinksByNumeroEstudante: state => state.userLinks,
     getUserCursosByNumeroEstudante: state => state.userCursos,
+
+    getToolsAvailable: state =>
+      state.tools /* Get de todas as tools que podem ser adicionadas no perfil de um utilizador */,
+
+    getCursosAvailable: state =>
+      state.cursos /* Get de todos os cursos que podem ser adicionados no perfil de um utilizador */,
+
+    AlumniHasCursoByTitle: state => (numeroEstudante, title) => {
+      let userCursos = state.userCursos.filter(
+        cursosHistorico =>
+          parseInt(cursosHistorico.numeroEstudante) ===
+          parseInt(numeroEstudante)
+      );
+
+      return userCursos[0].cursos.some(curso => curso.title === title);
+    },
+    getLinksAvailable: state => state.links,
+
+    getSkillsAvailable: state =>
+      state.skills /* Get de todas as skills que podem ser adicionadas no perfil de um utilizador */,
 
     getCategoriesForSelect: state =>
       state.categories.map(category => ({
@@ -525,47 +517,8 @@ export default new Vuex.Store({
     async register(context, payload) {
       await AuthService.register(payload);
     },
-    editar(context, payload) {
-      /* Editar os dados  */
-      context.commit("EDITAR", payload);
-      localStorage.setItem("users", JSON.stringify(context.state.users));
-
-      /* Actualizar as skills */
-      localStorage.setItem(
-        "userSkills",
-        JSON.stringify(context.state.userSkills)
-      );
-
-      /* Actualizar as tools */
-      localStorage.setItem(
-        "userTools",
-        JSON.stringify(context.state.userTools)
-      );
-
-      /* Actualizar os cursos */
-      localStorage.setItem(
-        "usersCursosHistorico",
-        JSON.stringify(context.state.usersCursosHistorico)
-      );
-
-      /* Actualizar os cursos */
-      localStorage.setItem(
-        "usersLinks",
-        JSON.stringify(context.state.usersLinks)
-      );
-
-      /* Atualizar o logged user com os novos dados no loggedUser*/
-      const user = context.state.users.find(
-        user =>
-          user.numeroEstudante === context.state.loggedUser.numeroEstudante
-      );
-      if (user != undefined) {
-        //context.commit("LOGIN_USER", user);
-        //localStorage.setItem(
-        //  "loggedUser",
-        //  JSON.stringify(context.state.loggedUser)
-        //);
-      }
+    async EditarLoggedAlumni(context, alumni) {
+      await UserService.updateAlumniById(GetLoggedUser(context.state), alumni);
     },
     saveBolsa(context, bolsa) {
       context.commit("SAVE_BOLSA", bolsa);
@@ -643,84 +596,6 @@ export default new Vuex.Store({
     LOGOUT(state) {
       state.loggedUser = null;
       state.loggedProfessor = null;
-    },
-    REGISTER(state, user) {
-      state.users.push(user);
-    },
-    REGISTER_SKILLS(state, userSkillData) {
-      state.userSkills.push(userSkillData);
-    },
-    REGISTER_TOOLS(state, userToolData) {
-      state.userTools.push(userToolData);
-    },
-    REGISTER_CURSOS(state, userCursoHistoricoData) {
-      state.userCursos.push(userCursoHistoricoData);
-    },
-    REGISTER_LINKS(state, userLinksData) {
-      state.userLinks.push(userLinksData);
-    },
-    EDITAR(state, editarPayload) {
-      /* Atualizar os dados do utilizador que esta logado no array de utilizadores */
-      state.users.map(function(user) {
-        if (user.numeroEstudante === state.loggedUser.numeroEstudante) {
-          user.descricao = editarPayload.descricao;
-          user.morada = editarPayload.morada;
-          user.telemovel = editarPayload.telemovel;
-        } else {
-          return user;
-        }
-      });
-
-      /* Actualizar skills do utilizador */
-      state.userSkills.map(function(userSkill) {
-        if (userSkill.numeroEstudante === state.loggedUser.numeroEstudante) {
-          return {
-            numeroEstudante: state.loggedUser.numeroEstudante,
-            skills: editarPayload.edituserSkills[0].skills
-          };
-        } else {
-          return userSkill;
-        }
-      });
-
-      /* Actualizar tools do utilizador */
-      state.userTools.map(function(userTool) {
-        if (userTool.numeroEstudante === state.loggedUser.numeroEstudante) {
-          return {
-            numeroEstudante: state.loggedUser.numeroEstudante,
-            tools: editarPayload.edituserTools[0].tools
-          };
-        } else {
-          return userTool;
-        }
-      });
-
-      /* Actualizar os cursos do utilizador */
-      state.userCursos.map(function(userCursoHistorico) {
-        if (
-          userCursoHistorico.numeroEstudante ===
-          state.loggedUser.numeroEstudante
-        ) {
-          return {
-            numeroEstudante: state.loggedUser.numeroEstudante,
-            cursos: editarPayload.edituserCursos[0].cursos
-          };
-        } else {
-          return userCursoHistorico;
-        }
-      });
-
-      /* Actualizar os links do utilizador */
-      state.userLinks.map(function(userLink) {
-        if (userLink.numeroEstudante === state.loggedUser.numeroEstudante) {
-          return {
-            numeroEstudante: state.loggedUser.numeroEstudante,
-            cursos: editarPayload.edituserLinks[0].links
-          };
-        } else {
-          return userLink;
-        }
-      });
     },
     SAVE_BOLSA(state, bolsa) {
       state.bolsas.push(bolsa);

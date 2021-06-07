@@ -89,6 +89,24 @@ export const UserService = {
       return null;
     }
   },
+  async updateAlumniById(user, alumni) {
+    if (user !== null) {
+      const response = await fetch(`${API_URL}/alumni/${user.id}/`, {
+        method: "PUT",
+        body: JSON.stringify(alumni),
+        headers: authHeader(user)
+      });
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
   async fetchAlumniCursosById(user, numeroEstudante) {
     if (user !== null) {
       const response = await fetch(
