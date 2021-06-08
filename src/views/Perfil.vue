@@ -2,7 +2,9 @@
   <div class="container">
     <div class="main-body">
       <div class="row gutters-sm">
-        <template v-if="isLoggedUser === true">
+        <template
+          v-if="isLoggedUser === true && loggedAlumniInformation !== null"
+        >
           <div class="col-lg-4 mb-3">
             <div class="card">
               <div class="card-body">

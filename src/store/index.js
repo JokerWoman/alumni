@@ -5,6 +5,7 @@ import Vuex from "vuex";
 import { AuthService } from "@/services/auth.service";
 import { UserService } from "@/services/user.service";
 import { LinkService } from "@/services/link.service";
+import { CursoService } from "@/services/curso.service";
 
 Vue.use(Vuex);
 
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     userCursos: [],
     userLinks: [],
     userAvailableLinks: [],
+    userAvailableCursos: [],
     loggedAlumniInformation: null,
     loggedProfessorInformation: null,
     userInformationByNumeroEstudante: "",
@@ -35,18 +37,6 @@ export default new Vuex.Store({
     loggedProfessor: localStorage.getItem("loggedProfessor")
       ? JSON.parse(localStorage.getItem("loggedProfessor"))
       : null,
-    cursos: localStorage.getItem("cursos")
-      ? JSON.parse(localStorage.getItem("cursos"))
-      : [
-          { title: "Licenciatura em Fotografia" },
-          { title: "Licenciatura em Multimédia" },
-          {
-            title:
-              "Licenciatura em Tecnologia e Sistemas de Informação para a Web"
-          },
-          { title: "Mestrado em Design" },
-          { title: "Mestrado em Sistemas e Media Interativos" }
-        ],
     skills: localStorage.getItem("skills")
       ? JSON.parse(localStorage.getItem("skills"))
       : [
@@ -267,6 +257,7 @@ export default new Vuex.Store({
     getUserLinksByNumeroEstudante: state => state.userLinks,
     getUserCursosByNumeroEstudante: state => state.userCursos,
     getUserAvailableLinksByNumeroEstudante: state => state.userAvailableLinks,
+    getUserAvailableCursosByNumeroEstudante: state => state.userAvailableCursos,
 
     getToolsAvailable: state =>
       state.tools /* Get de todas as tools que podem ser adicionadas no perfil de um utilizador */,
@@ -409,6 +400,39 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async RemoveAlumniLoggedCursoById(context, cursoId) {
+      await UserService.removeAlumniCursoById(
+        context.state.loggedUser,
+        cursoId
+      );
+
+      /* Trigar o update dos user cursos e dos available cursos. */
+      context.dispatch(
+        "RetrieveUserCursosByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+      context.dispatch(
+        "RetrieveUserAvailableCursosByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+    },
+    async AdicionarAlumniLoggedCursoById(context, curso) {
+      await UserService.addAlumniCursoById(
+        context.state.loggedUser,
+        curso.id_cursos,
+        curso.anoCurso
+      );
+
+      /* Trigar o update dos user cursos e dos available cursos. */
+      context.dispatch(
+        "RetrieveUserCursosByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+      context.dispatch(
+        "RetrieveUserAvailableCursosByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+    },
     async RemoveAlumniLoggedLinkById(context, linkId) {
       await UserService.removeAlumniLinkById(context.state.loggedUser, linkId);
 
@@ -464,6 +488,17 @@ export default new Vuex.Store({
 
         context.commit("LOGGED_ALUMNI_INFORMATION", JSON.parse(data));
       }
+    },
+    async RetrieveUserAvailableCursosByNumeroEstudante(
+      context,
+      numeroEstudante
+    ) {
+      let data = await CursoService.fetchAlumniAvailableCursosById(
+        context.state.loggedUser,
+        numeroEstudante
+      );
+
+      context.commit("USER_AVAILABLE_CURSOS_BY_ID", JSON.parse(data));
     },
     async RetrieveUserAvailableLinksByNumeroEstudante(
       context,
@@ -603,6 +638,9 @@ export default new Vuex.Store({
     },
     USER_INFORMATION_BY_ID(state, data) {
       state.userInformationByNumeroEstudante = data;
+    },
+    USER_AVAILABLE_CURSOS_BY_ID(state, data) {
+      state.userAvailableCursos = data;
     },
     USER_AVAILABLE_LINKS_BY_ID(state, data) {
       state.userAvailableLinks = data;

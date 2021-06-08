@@ -118,6 +118,47 @@ export const UserService = {
       return null;
     }
   },
+  async addAlumniCursoById(user, cursoId, cursoAno) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/cursos/${cursoId}`,
+        {
+          method: "POST",
+          headers: authHeader(user),
+          body: JSON.stringify({ anoCurso: cursoAno })
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async removeAlumniCursoById(user, cursoId) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/cursos/${cursoId}`,
+        {
+          method: "DELETE",
+          headers: authHeader(user)
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
   async updateAlumniById(user, alumni) {
     if (user !== null) {
       const response = await fetch(`${API_URL}/alumni/${user.id}/`, {

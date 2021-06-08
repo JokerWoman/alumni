@@ -14,13 +14,13 @@
       </button>
     </template>
 
-    <select v-model="cursoSelected">
+    <select v-model="cursoIdSelected">
       <option
-        v-for="(curso, index) in cursos"
-        v-bind:value="curso.title"
-        v-bind:key="index"
+        v-for="curso in cursos"
+        v-bind:value="curso.id_cursos"
+        v-bind:key="curso.id_cursos"
       >
-        {{ curso.title }}
+        {{ curso.tipoCurso }}
       </option>
     </select>
     <input
@@ -29,6 +29,7 @@
       step="1"
       min="2015"
       max="2021"
+      required
       onKeyDown="return false"
     />
 
@@ -55,20 +56,23 @@ export default {
   data: function() {
     return {
       ano: 2020,
-      cursoSelected: null
+      cursoIdSelected: null
     };
   },
   created: function() {},
   methods: {
     save() {
-      if (this.cursoSelected !== null) {
-        this.$parent.AddCurso(this.cursoSelected, parseInt(this.ano));
+      console.log("save!!");
+
+      if (this.cursoIdSelected !== null) {
+        console.log("aaaaa");
+        this.$parent.AddCurso(this.cursoIdSelected, parseInt(this.ano));
         this.close();
       }
     },
     close() {
       this.ano = 2020;
-      this.cursoSelected = null;
+      this.cursoIdSelected = null;
       this.$emit("close");
     }
   }
