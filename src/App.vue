@@ -1,16 +1,40 @@
 <template>
   <div id="app">
-    <NavBar></NavBar>
+    <NavBar
+      :isLoggedProfessor="isLoggedProfessor"
+      :isLoggedUser="isLoggedUser"
+      :loggedProfessorInformation="loggedProfessorInformation"
+      :loggedAlumniInformation="loggedAlumniInformation"
+    ></NavBar>
     <router-view />
   </div>
 </template>
 
 <script>
 import NavBar from "./components/NavBar";
+import { mapGetters } from "vuex";
+
 export default {
   name: "App",
   components: {
     NavBar
+  },
+  created() {
+    this.PrepareAsyncData();
+  },
+  computed: {
+    ...mapGetters({
+      isLoggedProfessor: "isLoggedProfessor",
+      isLoggedUser: "isLoggedUser",
+      loggedProfessorInformation: "getLoggedProfessorInformation",
+      loggedAlumniInformation: "getLoggedAlumniInformation"
+    })
+  },
+  methods: {
+    async PrepareAsyncData() {
+      await this.$store.dispatch("RetrieveLoggedAlumniInformation");
+      await this.$store.dispatch("RetrieveLoggedProfessorInformation");
+    }
   },
   metaInfo: {
     title: "Alumni ESMAD",

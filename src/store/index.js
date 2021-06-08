@@ -26,8 +26,8 @@ export default new Vuex.Store({
     userCursos: [],
     userLinks: [],
     userAvailableLinks: [],
-    loggedAlumniInformation: "",
-    loggedProfessorInformation: "",
+    loggedAlumniInformation: null,
+    loggedProfessorInformation: null,
     userInformationByNumeroEstudante: "",
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
@@ -529,6 +529,7 @@ export default new Vuex.Store({
           JSON.stringify(context.state.loggedUser)
         );
         localStorage.removeItem("loggedProfessor");
+        context.dispatch("RetrieveLoggedAlumniInformation");
       }
     },
     async loginProfessor(context, professorCredentials) {
@@ -542,6 +543,7 @@ export default new Vuex.Store({
           JSON.stringify(context.state.loggedProfessor)
         );
         localStorage.removeItem("loggedUser");
+        context.dispatch("RetrieveLoggedProfessorInformation");
       }
     },
     async logout(context) {

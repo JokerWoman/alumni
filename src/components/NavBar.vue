@@ -3,7 +3,6 @@
 
   <b-navbar toggleable="lg" type="light">
     <b-navbar-brand href="#" title="Logo da pagina"></b-navbar-brand>
-
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
@@ -22,7 +21,7 @@
           >Alumni</b-nav-item
         >
 
-        <template v-if="isLoggedProfessor || isLoggedUser === true">
+        <template v-if="isLoggedProfessor === true || isLoggedUser === true">
           <b-nav-item
             :to="{ name: 'Eventos' }"
             :class="{ active: $route.name === 'Eventos' }"
@@ -100,26 +99,39 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
   name: "NavBar",
-  created() {
-    this.PrepareAsyncData();
+  props: {
+    isLoggedProfessor: Boolean,
+    isLoggedUser: Boolean,
+    loggedProfessorInformation: Object,
+    loggedAlumniInformation: Object
   },
-  computed: {
-    ...mapGetters({
-      loggedProfessorInformation: "getLoggedProfessorInformation",
-      loggedAlumniInformation: "getLoggedAlumniInformation",
-      isLoggedUser: "isLoggedUser",
-      isLoggedProfessor: "isLoggedProfessor"
-    })
+  watch: {
+    isLoggedProfessor: function(newVal, oldVal) {
+      console.log("Prop mudou isLoggedProfessor: ", newVal, " | era: ", oldVal);
+    },
+    isLoggedUser: function(newVal, oldVal) {
+      console.log("Prop mudou isLoggedUser: ", newVal, " | era: ", oldVal);
+    },
+    loggedAlumniInformation: function(newVal, oldVal) {
+      console.log(
+        "Prop mudou loggedAlumniInformation: ",
+        newVal,
+        " | era: ",
+        oldVal
+      );
+    },
+    loggedProfessorInformation: function(newVal, oldVal) {
+      console.log(
+        "Prop mudou loggedProfessorInformation: ",
+        newVal,
+        " | era: ",
+        oldVal
+      );
+    }
   },
   methods: {
-    async PrepareAsyncData() {
-      await this.$store.dispatch("RetrieveLoggedAlumniInformation");
-      await this.$store.dispatch("RetrieveLoggedProfessorInformation");
-    },
     logout() {
       /* Chamar a ação disponivel no store */
       this.$store.dispatch("logout", this.$data);
