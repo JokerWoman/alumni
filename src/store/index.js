@@ -6,6 +6,7 @@ import { AuthService } from "@/services/auth.service";
 import { UserService } from "@/services/user.service";
 import { LinkService } from "@/services/link.service";
 import { CursoService } from "@/services/curso.service";
+import { TestimonyService } from "@/services/testemunha.service.js"
 
 Vue.use(Vuex);
 
@@ -125,43 +126,7 @@ export default new Vuex.Store({
           }
         ],
     activeCompany: [],
-    testimonys: localStorage.getItem("testimonys")
-      ? JSON.parse(localStorage.getItem("testimonys"))
-      : [
-          {
-            id: 1,
-            name: "Marco Marques",
-            img: require("@/assets/img/testemunhos/testemunho1.webp"),
-            description: "Adoro o Alumni Esmad! Sem duvida que recomendo."
-          },
-          {
-            id: 2,
-            name: "Andrea Fernandes",
-            img: require("@/assets/img/testemunhos/testemunho2.webp"),
-            description:
-              "Várias ofertas de emprego incriveis na minha area. Recomendo."
-          },
-          {
-            id: 3,
-            name: "Carolina Medonsa",
-            img: require("@/assets/img/testemunhos/testemunho3.webp"),
-            description:
-              "Com esta plataforma voltei a ver os meus antigos colegas."
-          },
-          {
-            id: 4,
-            name: "João Santos",
-            img: require("@/assets/img/testemunhos/testemunho4.webp"),
-            description: "Workshops fantásticos!"
-          },
-          {
-            id: 5,
-            name: "Ana Martins",
-            img: require("@/assets/img/testemunhos/testemunho5.webp"),
-            description:
-              "Incrivel! Encontrei aqui uma vaga para estágio profissional em breve estarei contratada!"
-          }
-        ],
+    testimonies: [],
     events: localStorage.getItem("events")
       ? JSON.parse(localStorage.getItem("events"))
       : [
@@ -361,8 +326,8 @@ export default new Vuex.Store({
         : {};
     },
 
-    getTestimonys: state => {
-      return state.testimonys;
+    getTestimonies: state => {
+      return state.testimonies
     },
 
     getBolsaById: state => id => {
@@ -592,6 +557,12 @@ export default new Vuex.Store({
     async EditarLoggedAlumni(context, alumni) {
       await UserService.updateAlumniById(GetLoggedUser(context.state), alumni);
     },
+
+    async fetchAllTestimonies(context){
+      let data = await TestimonyService.getAllTestimonies();
+      context.commit("SET_TESTIMONIES", JSON.parse(data))
+    },
+
     saveBolsa(context, bolsa) {
       context.commit("SAVE_BOLSA", bolsa);
     },
@@ -715,10 +686,10 @@ export default new Vuex.Store({
       localStorage.setItem("companies", JSON.stringify(state.companies));
     },
 
-    SAVE_TESTIMONY(state, testimony) {
-      state.testimonys.push(testimony);
-      localStorage.setItem("testimonys", JSON.stringify(state.testimonys));
+    SET_TESTIMONIES(state,testimonies){
+      state.testimonies = (testimonies)
     },
+
     SAVE_EVENT(state, event) {
       state.events.push(event);
       localStorage.setItem("events", JSON.stringify(state.events));

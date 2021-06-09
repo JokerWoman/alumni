@@ -52,7 +52,7 @@
       <b-row>
         <b-card-group style="margin:20px">
           <TestimonyCard
-            v-for="testimony in getTestimonys"
+            v-for="testimony in testimonies"
             :key="testimony.id"
             :testimony="testimony"
           />
@@ -109,15 +109,25 @@
 
 <script>
 import TestimonyCard from "../components/TestimonyCard";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Home",
+
+  created() {
+    this.PrepareAsyncData();
+  },
 
   components: {
     TestimonyCard
   },
 
   methods: {
+
+    PrepareAsyncData(){
+      this.$store.dispatch("fetchAllTestimonies");
+    },
+
     checkLogin() {
       if (
         this.$store.getters.isLoggedUser != {} &&
@@ -131,9 +141,9 @@ export default {
   },
 
   computed: {
-    getTestimonys() {
-      return this.$store.getters.getTestimonys;
-    }
+    ...mapGetters({
+      testimonies : "getTestimonies"
+    })
   }
 };
 </script>
