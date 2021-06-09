@@ -118,6 +118,68 @@ export const UserService = {
       return null;
     }
   },
+  async addAlumniToolById(user, toolId, percentagem) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/tools/${toolId}`,
+        {
+          method: "POST",
+          headers: authHeader(user),
+          body: JSON.stringify({ percentagem: percentagem })
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async updateAlumniToolById(user, toolId, percentagem) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/tools/${toolId}`,
+        {
+          method: "PUT",
+          headers: authHeader(user),
+          body: JSON.stringify({ percentagem: percentagem })
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async removeAlumniToolById(user, toolId) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/tools/${toolId}`,
+        {
+          method: "DELETE",
+          headers: authHeader(user)
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
   async addAlumniSkillById(user, skillId, percentagem) {
     if (user !== null) {
       const response = await fetch(

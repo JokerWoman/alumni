@@ -7,6 +7,7 @@ import { UserService } from "@/services/user.service";
 import { LinkService } from "@/services/link.service";
 import { CursoService } from "@/services/curso.service";
 import { SkillService } from "@/services/skill.service";
+import { ToolService } from "@/services/tool.service";
 import { TestimonyService } from "@/services/testemunha.service.js";
 
 Vue.use(Vuex);
@@ -29,6 +30,7 @@ export default new Vuex.Store({
     userCursos: [],
     userLinks: [],
     userAvailableSkills: [],
+    userAvailableTools: [],
     userAvailableLinks: [],
     userAvailableCursos: [],
     loggedAlumniInformation: null,
@@ -40,15 +42,6 @@ export default new Vuex.Store({
     loggedProfessor: localStorage.getItem("loggedProfessor")
       ? JSON.parse(localStorage.getItem("loggedProfessor"))
       : null,
-    tools: localStorage.getItem("tools")
-      ? JSON.parse(localStorage.getItem("tools"))
-      : [
-          { title: "Adobe Illustrator" },
-          { title: "Adobe Photoshop" },
-          { title: "Adobe After Effects" },
-          { title: "Adobe Premiere" },
-          { title: "Adobe XD" }
-        ],
     bolsas: localStorage.getItem("bolsas")
       ? JSON.parse(localStorage.getItem("bolsas"))
       : [
@@ -217,6 +210,7 @@ export default new Vuex.Store({
     getUserAvailableLinksByNumeroEstudante: state => state.userAvailableLinks,
     getUserAvailableCursosByNumeroEstudante: state => state.userAvailableCursos,
     getUserAvailableSkillsByNumeroEstudante: state => state.userAvailableSkills,
+    getUserAvailableToolsByNumeroEstudante: state => state.userAvailableTools,
 
     getToolsAvailable: state =>
       state.tools /* Get de todas as tools que podem ser adicionadas no perfil de um utilizador */,
@@ -389,6 +383,53 @@ export default new Vuex.Store({
         context.state.loggedUser.id
       );
     },
+    async AdicionarAlumniLoggedToolById(context, tool) {
+      await UserService.addAlumniToolById(
+        context.state.loggedUser,
+        tool.id_tools,
+        tool.percentagem
+      );
+
+      /* Trigar o update dos user tools e dos available tools. */
+      context.dispatch(
+        "RetrieveUserToolsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+      context.dispatch(
+        "RetrieveUserAvailableToolsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+    },
+    async UpdateAlumniLoggedToolById(context, tool) {
+      await UserService.updateAlumniToolById(
+        context.state.loggedUser,
+        tool.id_tools,
+        tool.percentagem
+      );
+
+      /* Trigar o update dos user tools e dos available tools. */
+      context.dispatch(
+        "RetrieveUserToolsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+      context.dispatch(
+        "RetrieveUserAvailableToolsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+    },
+    async RemoveAlumniLoggedToolById(context, toolId) {
+      await UserService.removeAlumniToolById(context.state.loggedUser, toolId);
+
+      /* Trigar o update dos user links e dos available links. */
+      context.dispatch(
+        "RetrieveUserToolsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+      context.dispatch(
+        "RetrieveUserAvailableToolsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+    },
     async AdicionarAlumniLoggedSkillById(context, skill) {
       await UserService.addAlumniSkillById(
         context.state.loggedUser,
@@ -489,6 +530,17 @@ export default new Vuex.Store({
       );
 
       context.commit("USER_AVAILABLE_SKILLS_BY_ID", JSON.parse(data));
+    },
+    async RetrieveUserAvailableToolsByNumeroEstudante(
+      context,
+      numeroEstudante
+    ) {
+      let data = await ToolService.fetchAlumniAvailableToolsById(
+        context.state.loggedUser,
+        numeroEstudante
+      );
+
+      context.commit("USER_AVAILABLE_TOOLS_BY_ID", JSON.parse(data));
     },
     async RetrieveUserAvailableCursosByNumeroEstudante(
       context,
@@ -645,6 +697,9 @@ export default new Vuex.Store({
     },
     USER_INFORMATION_BY_ID(state, data) {
       state.userInformationByNumeroEstudante = data;
+    },
+    USER_AVAILABLE_TOOLS_BY_ID(state, data) {
+      state.userAvailableTools = data;
     },
     USER_AVAILABLE_SKILLS_BY_ID(state, data) {
       state.userAvailableSkills = data;

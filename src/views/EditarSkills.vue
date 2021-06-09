@@ -127,20 +127,22 @@
                     </h6>
                   </div>
                 </div>
-                <div
-                  v-for="(curso, index) in userCursosByNumeroEstudante"
-                  v-bind:key="index"
-                >
-                  <div class="row">
-                    <div class="col-sm-10">
-                      <h6 class="mb-0">{{ curso.tipoCurso }}</h6>
+                <template v-if="userCursosByNumeroEstudante !== null">
+                  <div
+                    v-for="(curso, index) in userCursosByNumeroEstudante"
+                    v-bind:key="index"
+                  >
+                    <div class="row">
+                      <div class="col-sm-10">
+                        <h6 class="mb-0">{{ curso.tipoCurso }}</h6>
+                      </div>
+                      <div class="col-sm-2 text-secondary">
+                        {{ curso.anoCurso }}
+                      </div>
                     </div>
-                    <div class="col-sm-2 text-secondary">
-                      {{ curso.anoCurso }}
-                    </div>
+                    <hr />
                   </div>
-                  <hr />
-                </div>
+                </template>
               </div>
             </div>
 
