@@ -13,7 +13,7 @@
               "
             >
               <img
-                :src="this.getEvent.img"
+                :src="getEvent.img"
                 alt="foto de um evento"
                 width="250"
                 height="250"
