@@ -45,6 +45,7 @@
 export default {
   name: "Competence",
   props: {
+    id: Number,
     title: String,
     originalPercentagem: Number,
     type: String,
@@ -70,7 +71,7 @@ export default {
       } else {
         this.percentagem = 100;
       }
-      this.$parent.competenceChanged(this.title, this.type, this.percentagem);
+      this.$parent.competenceChanged(this.id, this.type, this.percentagem);
     },
     decrease() {
       if (this.percentagem - 10 > 0) {
@@ -78,10 +79,10 @@ export default {
       } else {
         this.percentagem = 0;
       }
-      this.$parent.competenceChanged(this.title, this.type, this.percentagem);
+      this.$parent.competenceChanged(this.id, this.type, this.percentagem);
     },
     remove() {
-      this.$parent.competenceDeleted(this.title, this.type);
+      this.$parent.competenceDeleted(this.id, this.type);
     }
   }
 };

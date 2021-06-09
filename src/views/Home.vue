@@ -123,8 +123,7 @@ export default {
   },
 
   methods: {
-
-    PrepareAsyncData(){
+    PrepareAsyncData() {
       this.$store.dispatch("fetchAllTestimonies");
     },
 
@@ -142,7 +141,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      testimonies : "getTestimonies"
+      testimonies: "getTestimonies"
     })
   }
 };

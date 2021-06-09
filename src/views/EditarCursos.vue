@@ -308,8 +308,6 @@ export default {
       console.log("Remove Curso: " + cursoId);
     },
     async AddCurso(cursoId, anoCurso) {
-      console.log("Add Curso: " + cursoId + "  " + anoCurso);
-
       await this.$store.dispatch("AdicionarAlumniLoggedCursoById", {
         id_cursos: cursoId,
         anoCurso: anoCurso

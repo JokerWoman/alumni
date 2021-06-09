@@ -6,7 +6,8 @@ import { AuthService } from "@/services/auth.service";
 import { UserService } from "@/services/user.service";
 import { LinkService } from "@/services/link.service";
 import { CursoService } from "@/services/curso.service";
-import { TestimonyService } from "@/services/testemunha.service.js"
+import { SkillService } from "@/services/skill.service";
+import { TestimonyService } from "@/services/testemunha.service.js";
 
 Vue.use(Vuex);
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     userTools: [],
     userCursos: [],
     userLinks: [],
+    userAvailableSkills: [],
     userAvailableLinks: [],
     userAvailableCursos: [],
     loggedAlumniInformation: null,
@@ -38,15 +40,6 @@ export default new Vuex.Store({
     loggedProfessor: localStorage.getItem("loggedProfessor")
       ? JSON.parse(localStorage.getItem("loggedProfessor"))
       : null,
-    skills: localStorage.getItem("skills")
-      ? JSON.parse(localStorage.getItem("skills"))
-      : [
-          { title: "Web Design" },
-          { title: "Programação C#" },
-          { title: "Fotografia" },
-          { title: "UI/UX Development" },
-          { title: "Javascript" }
-        ],
     tools: localStorage.getItem("tools")
       ? JSON.parse(localStorage.getItem("tools"))
       : [
@@ -217,31 +210,16 @@ export default new Vuex.Store({
 
     getUserInformationByNumeroEstudante: state =>
       state.userInformationByNumeroEstudante,
-    getUserSkillsByNumeroEstudante: state => state.userSkills,
     getUserToolsByNumeroEstudante: state => state.userTools,
     getUserLinksByNumeroEstudante: state => state.userLinks,
+    getUserSkillsByNumeroEstudante: state => state.userSkills,
     getUserCursosByNumeroEstudante: state => state.userCursos,
     getUserAvailableLinksByNumeroEstudante: state => state.userAvailableLinks,
     getUserAvailableCursosByNumeroEstudante: state => state.userAvailableCursos,
+    getUserAvailableSkillsByNumeroEstudante: state => state.userAvailableSkills,
 
     getToolsAvailable: state =>
       state.tools /* Get de todas as tools que podem ser adicionadas no perfil de um utilizador */,
-
-    getCursosAvailable: state =>
-      state.cursos /* Get de todos os cursos que podem ser adicionados no perfil de um utilizador */,
-
-    AlumniHasCursoByTitle: state => (numeroEstudante, title) => {
-      let userCursos = state.userCursos.filter(
-        cursosHistorico =>
-          parseInt(cursosHistorico.numeroEstudante) ===
-          parseInt(numeroEstudante)
-      );
-
-      return userCursos[0].cursos.some(curso => curso.title === title);
-    },
-
-    getSkillsAvailable: state =>
-      state.skills /* Get de todas as skills que podem ser adicionadas no perfil de um utilizador */,
 
     getCategoriesForSelect: state =>
       state.categories.map(category => ({
@@ -327,7 +305,7 @@ export default new Vuex.Store({
     },
 
     getTestimonies: state => {
-      return state.testimonies
+      return state.testimonies;
     },
 
     getBolsaById: state => id => {
@@ -398,6 +376,53 @@ export default new Vuex.Store({
         context.state.loggedUser.id
       );
     },
+    async RemoveAlumniLoggedSkillById(context, linkId) {
+      await UserService.removeAlumniSkillById(context.state.loggedUser, linkId);
+
+      /* Trigar o update dos user skills e dos available skills. */
+      context.dispatch(
+        "RetrieveUserSkillsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+      context.dispatch(
+        "RetrieveUserAvailableSkillsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+    },
+    async AdicionarAlumniLoggedSkillById(context, skill) {
+      await UserService.addAlumniSkillById(
+        context.state.loggedUser,
+        skill.id_skills,
+        skill.percentagem
+      );
+
+      /* Trigar o update dos user skills e dos available skills. */
+      context.dispatch(
+        "RetrieveUserSkillsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+      context.dispatch(
+        "RetrieveUserAvailableSkillsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+    },
+    async UpdateAlumniLoggedSkillById(context, skill) {
+      await UserService.updateAlumniSkillById(
+        context.state.loggedUser,
+        skill.id_skills,
+        skill.percentagem
+      );
+
+      /* Trigar o update dos user skills e dos available skills. */
+      context.dispatch(
+        "RetrieveUserSkillsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+      context.dispatch(
+        "RetrieveUserAvailableSkillsByNumeroEstudante",
+        context.state.loggedUser.id
+      );
+    },
     async RemoveAlumniLoggedLinkById(context, linkId) {
       await UserService.removeAlumniLinkById(context.state.loggedUser, linkId);
 
@@ -454,6 +479,17 @@ export default new Vuex.Store({
         context.commit("LOGGED_ALUMNI_INFORMATION", JSON.parse(data));
       }
     },
+    async RetrieveUserAvailableSkillsByNumeroEstudante(
+      context,
+      numeroEstudante
+    ) {
+      let data = await SkillService.fetchAlumniAvailableSkillsById(
+        context.state.loggedUser,
+        numeroEstudante
+      );
+
+      context.commit("USER_AVAILABLE_SKILLS_BY_ID", JSON.parse(data));
+    },
     async RetrieveUserAvailableCursosByNumeroEstudante(
       context,
       numeroEstudante
@@ -484,6 +520,14 @@ export default new Vuex.Store({
 
       context.commit("USER_LINKS_BY_ID", JSON.parse(data));
     },
+    async RetrieveUserSkillsByNumeroEstudante(context, numeroEstudante) {
+      let data = await UserService.fetchAlumniSkillsById(
+        context.state.loggedUser,
+        numeroEstudante
+      );
+
+      context.commit("USER_SKILLS_BY_ID", JSON.parse(data));
+    },
     async RetrieveUserCursosByNumeroEstudante(context, numeroEstudante) {
       let data = await UserService.fetchAlumniCursosById(
         context.state.loggedUser,
@@ -499,14 +543,6 @@ export default new Vuex.Store({
       );
 
       context.commit("USER_TOOLS_BY_ID", JSON.parse(data));
-    },
-    async RetrieveUserSkillsByNumeroEstudante(context, numeroEstudante) {
-      let data = await UserService.fetchAlumniSkillsById(
-        context.state.loggedUser,
-        numeroEstudante
-      );
-
-      context.commit("USER_SKILLS_BY_ID", JSON.parse(data));
     },
     async RetrieveLoggedProfessorInformation(context) {
       if (context.state.loggedProfessor !== null) {
@@ -558,9 +594,9 @@ export default new Vuex.Store({
       await UserService.updateAlumniById(GetLoggedUser(context.state), alumni);
     },
 
-    async fetchAllTestimonies(context){
+    async fetchAllTestimonies(context) {
       let data = await TestimonyService.getAllTestimonies();
-      context.commit("SET_TESTIMONIES", JSON.parse(data))
+      context.commit("SET_TESTIMONIES", JSON.parse(data));
     },
 
     saveBolsa(context, bolsa) {
@@ -610,11 +646,17 @@ export default new Vuex.Store({
     USER_INFORMATION_BY_ID(state, data) {
       state.userInformationByNumeroEstudante = data;
     },
+    USER_AVAILABLE_SKILLS_BY_ID(state, data) {
+      state.userAvailableSkills = data;
+    },
     USER_AVAILABLE_CURSOS_BY_ID(state, data) {
       state.userAvailableCursos = data;
     },
     USER_AVAILABLE_LINKS_BY_ID(state, data) {
       state.userAvailableLinks = data;
+    },
+    USER_SKILLS_BY_ID(state, data) {
+      state.userSkills = data;
     },
     USER_LINKS_BY_ID(state, data) {
       state.userLinks = data;
@@ -624,9 +666,6 @@ export default new Vuex.Store({
     },
     USER_TOOLS_BY_ID(state, data) {
       state.userTools = data;
-    },
-    USER_SKILLS_BY_ID(state, data) {
-      state.userSkills = data;
     },
     LOGGED_ALUMNI_INFORMATION(state, data) {
       state.loggedAlumniInformation = data;
@@ -686,8 +725,8 @@ export default new Vuex.Store({
       localStorage.setItem("companies", JSON.stringify(state.companies));
     },
 
-    SET_TESTIMONIES(state,testimonies){
-      state.testimonies = (testimonies)
+    SET_TESTIMONIES(state, testimonies) {
+      state.testimonies = testimonies;
     },
 
     SAVE_EVENT(state, event) {

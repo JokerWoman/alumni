@@ -27,7 +27,6 @@ export default {
   props: {
     testimony: Object
   },
-  methods:{
-  }
+  methods: {}
 };
 </script>
