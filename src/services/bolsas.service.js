@@ -1,15 +1,18 @@
 import API_URL from "./config.js";
 
+import { authHeader } from "./auth.service.js";
+
 
 export const BolsaService = {
-  async fetchAllBolsas(filtros) {
+  async fetchAllBolsas(user, filtros) {
+    if (user != null) {
       var params = "";
       var url = new URL(`${API_URL}/bolsas`);
 
 
-      if (filtros.id_tipoEmprego !== "" ) {
-        params = { id_tipoEmprego: filtros.id_tipoEmprego};
-      } 
+      if (filtros.id_tipoEmprego !== "") {
+        params = { id_tipoEmprego: filtros.id_tipoEmprego };
+      }
 
       if (params !== "") {
         Object.keys(params).forEach(key =>
@@ -19,43 +22,46 @@ export const BolsaService = {
 
       const response = await fetch(url, {
         method: "GET",
-       
+        headers: authHeader(user)
+
       });
 
       if (response.ok) {
         let data = await response.json();
-        console.log(data)
+        console.log(user)
         return data;
       } else {
         return null;
       }
-      
-    
+    }
+
+
   },
-  async fetchBolsaById(id_bolsas){
-    var url = new URL(`${API_URL}/bolsas/${id_bolsas}`)
+  async fetchBolsaById(user, id_bolsas) {
+    if (user != null) {
+      var url = new URL(`${API_URL}/bolsas/${id_bolsas}`)
 
-    const response = await fetch(url, {
-      method: "GET",
-     
-    });
+      const response = await fetch(url, {
+        method: "GET",
+        headers: authHeader(user)
+      });
 
-    if (response.ok) {
-      let data = await response.json();
-      console.log(data.message)
-      return data.message;
-    } else {
-      return null;
+      if (response.ok) {
+        let data = await response.json();
+        console.log(data.message)
+        return data.message;
+      } else {
+        return null;
+      }
     }
 
   },
 
-  async createBolsa(bolsa){
-    const response = await fetch(`${API_URL}/bolsas`, {
+  async createBolsa(user, bolsa) {
+    if (user.userType == "professor") {
+      const response = await fetch(`${API_URL}/bolsas`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8"
-        },
+        headers: authHeader(user),
         body: JSON.stringify(bolsa)
       });
 
@@ -64,14 +70,14 @@ export const BolsaService = {
       if (!response.ok) {
         throw Error(data.message);
       }
-    },
+    }
+  },
 
-  async editBolsa(id_bolsas, bolsa){
-    const response = await fetch(`${API_URL}/bolsas/${id_bolsas}`, {
+  async editBolsa(user, id_bolsas, bolsa) {
+    if (user.userType == "professor") {
+      const response = await fetch(`${API_URL}/bolsas/${id_bolsas}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8"
-        },
+        headers: authHeader(user),
         body: JSON.stringify(bolsa)
       });
 
@@ -80,25 +86,29 @@ export const BolsaService = {
       if (!response.ok) {
         throw Error(data.message);
       }
+    }
 
   },
 
-  async deleteBolsa(id_bolsas){
-    const response = await fetch(
-      `${API_URL}/bolsas/${id_bolsas}`,
-      {
-        method: "DELETE",
-        
-      }
-    );
-    if (response.ok) {
-      let data = await response.json();
+  async deleteBolsa(user, id_bolsas) {
+    if (user.userType == "professor") {
+      const response = await fetch(
+        `${API_URL}/bolsas/${id_bolsas}`,
+        {
+          method: "DELETE",
+          headers: authHeader(user),
 
-      return data.message;
-    }else {
-      return null;
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
     }
-    
+
 
   }
 
