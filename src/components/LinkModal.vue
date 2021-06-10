@@ -42,7 +42,6 @@ export default {
   props: {
     modalTitle: String,
     showModal: Boolean,
-    type: String,
     links: Array
   },
   data: function() {

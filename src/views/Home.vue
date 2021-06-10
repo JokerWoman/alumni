@@ -12,8 +12,8 @@
               :to="{
                 name: 'Login'
               }"
-              class="btn btn-primary"
-              variant="primary"
+              class="btn btn-warning"
+              variant="warning"
               style="margin-top:20px; width:180px;"
               id="login"
             >
@@ -24,8 +24,8 @@
               :to="{
                 name: 'Register'
               }"
-              class="btn btn-primary"
-              variant="primary"
+              class="btn btn-warning"
+              variant="warning"
               style="margin-left:15px; margin-top:20px;width:180px;"
             >
               Registar
@@ -129,8 +129,8 @@ export default {
 
     checkLogin() {
       if (
-        this.$store.getters.isLoggedUser != {} &&
-        !this.$store.getters.isLoggedProfessor != {}
+        this.$store.getters.isLoggedAlumni == true ||
+        this.$store.getters.isLoggedProfessor == true
       ) {
         return false;
       } else {

@@ -9,18 +9,9 @@ import { CursoService } from "@/services/curso.service";
 import { SkillService } from "@/services/skill.service";
 import { ToolService } from "@/services/tool.service";
 import { TestimonyService } from "@/services/testemunha.service.js";
+import { BolsaService } from "@/services/bolsas.service";
 
 Vue.use(Vuex);
-
-function GetLoggedUser(state) {
-  if (state.loggedUser !== null) {
-    return state.loggedUser;
-  } else if (state.loggedProfessor !== null) {
-    return state.loggedProfessor;
-  } else {
-    return null;
-  }
-}
 
 export default new Vuex.Store({
   state: {
@@ -39,52 +30,7 @@ export default new Vuex.Store({
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
       : null,
-    loggedProfessor: localStorage.getItem("loggedProfessor")
-      ? JSON.parse(localStorage.getItem("loggedProfessor"))
-      : null,
-    bolsas: localStorage.getItem("bolsas")
-      ? JSON.parse(localStorage.getItem("bolsas"))
-      : [
-          {
-            id: 1,
-            category: 2,
-            description:
-              "Excelente oportunidade de emprego e de enriquecer o vosso CV. Para mais informações, contactar a Blip.",
-            img: require("@/assets/img/bolsas/bolsa1.webp"),
-            date_pub: "2021-01-20",
-            date_start: "2021-01-22",
-            linkBolsa: "https://blip.pt/contact-us/",
-            estado: "ativo",
-            id_company: 1,
-            id_professor: 1
-          },
-          {
-            id: 2,
-            category: 1,
-            description:
-              "A Moxy Studio está a procurar jovens talentos que queiram ingressar no mercado de trabalho. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img: require("@/assets/img/bolsas/bolsa2.webp"),
-            date_pub: "2021-01-22",
-            date_start: "2021-01-30",
-            linkBolsa: "https://moxy.studio/",
-            estado: "ativo",
-            id_company: 2,
-            id_professor: 1
-          },
-          {
-            id: 3,
-            category: 3,
-            description:
-              "A XDSoftware está a procurar jovens webdesigners. Se fores um deles só tens que responder a esta oferta e nós tratamos do resto!",
-            img: require("@/assets/img/bolsas/bolsa3.webp"),
-            date_pub: "2021-01-24",
-            date_start: "2021-01-30",
-            linkBolsa: "https://www.xdsoftware.pt/",
-            estado: "ativo",
-            id_company: 3,
-            id_professor: 1
-          }
-        ],
+    bolsas: [],
     activeBolsa: [],
     companies: localStorage.getItem("companies")
       ? JSON.parse(localStorage.getItem("companies"))
@@ -179,22 +125,34 @@ export default new Vuex.Store({
   },
   getters: {
     getLoggedUser: state => state.loggedUser,
-    isLoggedUser: state => (state.loggedUser === null ? false : true),
+    isLoggedAlumni: state =>
+      state.loggedUser === null
+        ? false
+        : state.loggedUser.userType === "alumni"
+        ? true
+        : false,
+    isLoggedProfessor: state =>
+      state.loggedUser === null
+        ? false
+        : state.loggedUser.userType === "professor"
+        ? true
+        : false,
     getLoggedAlumniInformation: state => state.loggedAlumniInformation,
     getLoggedProfessorInformation: state => state.loggedProfessorInformation,
-    getLoggedProfessor: state => state.loggedProfessor,
-    isLoggedProfessor: state => (state.loggedProfessor == null ? false : true),
     getAllAlumniInformation: state => {
-      /* Quando for o professor dar todos, quando alumni filtrar o seu */
       if (state.alumnis !== null) {
         return state.alumnis.filter(alumni => {
           if (state.loggedUser !== null) {
-            /* Quando é o alumnoi então remover o próprio*/ return (
-              parseInt(alumni.id_nroEstudante) !== parseInt(state.loggedUser.id)
-            );
-          } else {
-            return true;
+            if (state.loggedUser.userType === "alumni") {
+              /* Quando é o alumni não retornar o própio */
+              return (
+                parseInt(alumni.id_nroEstudante) !==
+                parseInt(state.loggedUser.id)
+              );
+            }
           }
+          /* Quando não há user logged in ou é professor não há filtro. */
+          return true;
         });
       } else {
         return [];
@@ -227,16 +185,14 @@ export default new Vuex.Store({
         text: company.name
       })),
 
-    getNextBolsaId: state => {
-      return state.bolsas.length > 0
-        ? state.bolsas[state.bolsas.length - 1].id + 1
-        : 1;
-    },
-
     getNextCompanyId: state => {
       return state.companies.length > 0
         ? state.companies[state.companies.length - 1].id_company + 1
         : 1;
+    },
+
+    getAllBolsaInformation: state => {
+      return state.bolsas;
     },
 
     getCategories(state) {
@@ -306,16 +262,16 @@ export default new Vuex.Store({
       const bolsaById = state.bolsas.find(bolsa => bolsa.id === id);
       return bolsaById;
     },
-    getBolsasFiltered: state => (category, locality, _sort) => {
+    getBolsasFiltered: state => (id_tipoEmprego, locality, _sort) => {
       const cards_filtered = state.bolsas.filter(
-        bolsa => bolsa.category == category || category == "all"
+        bolsa => bolsa.id_tipoEmprego == id_tipoEmprego || id_tipoEmprego == ""
       );
       const companies = state.companies;
       var cards_filtered1 = [];
       for (var bolsa in cards_filtered) {
         for (var company in companies) {
           if (
-            cards_filtered[bolsa].id_company == companies[company].id_company &&
+            cards_filtered[bolsa].id_empresa == companies[company].id_company &&
             companies[company].locality.toUpperCase().includes(locality)
           ) {
             cards_filtered1.push(cards_filtered[bolsa]);
@@ -324,8 +280,8 @@ export default new Vuex.Store({
       }
 
       return cards_filtered1.sort((a, b) => {
-        if (a.date_pub > b.date_pub) return -1 * _sort;
-        if (a.date_pub < b.date_pub) return 1 * _sort;
+        if (a.data_publicacao > b.data_publicacao) return -1 * _sort;
+        if (a.data_publicacao < b.data_publicacao) return 1 * _sort;
         return 0;
       });
     },
@@ -496,28 +452,41 @@ export default new Vuex.Store({
     },
     async RetrieveAllAlumniInformation(context, filtros) {
       let data = await UserService.fetchAllAlumni(
-        GetLoggedUser(context.state),
+        context.state.loggedUser,
         filtros
       );
 
       context.commit("ALL_ALUMNI_INFORMATION", JSON.parse(data));
     },
     async RetrieveUserInformationByNumeroEstudante(context, numeroEstudante) {
-      let data = await UserService.fetchAlumniById(
-        context.state.loggedUser,
-        numeroEstudante
-      );
-
-      context.commit("USER_INFORMATION_BY_ID", JSON.parse(data));
-    },
-    async RetrieveLoggedAlumniInformation(context) {
       if (context.state.loggedUser !== null) {
-        let data = await UserService.fetchAlumniById(
-          context.state.loggedUser,
-          context.state.loggedUser.id
-        );
+        if (context.state.loggedUser.userType === "alumni") {
+          let data = await UserService.fetchAlumniById(
+            context.state.loggedUser,
+            numeroEstudante
+          );
 
-        context.commit("LOGGED_ALUMNI_INFORMATION", JSON.parse(data));
+          context.commit("USER_INFORMATION_BY_ID", JSON.parse(data));
+        }
+      }
+    },
+    async RetrieveLoggedUserInformation(context) {
+      if (context.state.loggedUser !== null) {
+        if (context.state.loggedUser.userType === "alumni") {
+          let data = await UserService.fetchAlumniById(
+            context.state.loggedUser,
+            context.state.loggedUser.id
+          );
+
+          context.commit("LOGGED_ALUMNI_INFORMATION", JSON.parse(data));
+        } else if (context.state.loggedUser.userType === "professor") {
+          let data = await UserService.fetchProfessorById(
+            context.state.loggedUser,
+            context.state.loggedUser.id
+          );
+
+          context.commit("LOGGED_PROFESSOR_INFORMATION", JSON.parse(data));
+        }
       }
     },
     async RetrieveUserAvailableSkillsByNumeroEstudante(
@@ -596,54 +565,61 @@ export default new Vuex.Store({
 
       context.commit("USER_TOOLS_BY_ID", JSON.parse(data));
     },
-    async RetrieveLoggedProfessorInformation(context) {
-      if (context.state.loggedProfessor !== null) {
-        let data = await UserService.fetchProfessorById(
-          context.state.loggedProfessor,
-          context.state.loggedProfessor.id
-        );
+    async login(context, loginData) {
+      let data = null;
 
-        context.commit("LOGGED_PROFESSOR_INFORMATION", JSON.parse(data));
+      if (loginData.userType === "alumni") {
+        data = await AuthService.loginAlumni(loginData.credentials);
+      } else if (loginData.userType === "professor") {
+        data = await AuthService.loginProfessor(loginData.credentials);
       }
-    },
-    async loginAlumni(context, alumniCredentials) {
-      let data = await AuthService.loginAlumni(alumniCredentials);
-
-      context.commit("LOGIN_USER", data);
 
       if (data !== null) {
+        context.commit("LOGIN", data);
         localStorage.setItem(
           "loggedUser",
           JSON.stringify(context.state.loggedUser)
         );
-        localStorage.removeItem("loggedProfessor");
-        context.dispatch("RetrieveLoggedAlumniInformation");
-      }
-    },
-    async loginProfessor(context, professorCredentials) {
-      let data = await AuthService.loginProfessor(professorCredentials);
-
-      context.commit("LOGIN_PROFESSOR", data);
-
-      if (data !== null) {
-        localStorage.setItem(
-          "loggedProfessor",
-          JSON.stringify(context.state.loggedProfessor)
-        );
-        localStorage.removeItem("loggedUser");
-        context.dispatch("RetrieveLoggedProfessorInformation");
+        context.dispatch("RetrieveLoggedUserInformation");
       }
     },
     async logout(context) {
       context.commit("LOGOUT");
-      localStorage.removeItem("loggedProfessor");
       localStorage.removeItem("loggedUser");
     },
     async register(context, payload) {
       await AuthService.register(payload);
     },
     async EditarLoggedAlumni(context, alumni) {
-      await UserService.updateAlumniById(GetLoggedUser(context.state), alumni);
+      await UserService.updateAlumniById(context.state.loggedUser, alumni);
+    },
+    async RetrieveAllBolsaInformation(context, filtros) {
+      let data = await BolsaService.fetchAllBolsas(
+        context.state.loggedUser,
+        filtros
+      );
+      context.commit("ALL_BOLSA_INFORMATION", JSON.parse(data));
+    },
+
+    async RetrieveBolsaById(context, id_bolsas) {
+      let data = await BolsaService.fetchBolsaById(
+        context.state.loggedUser,
+        id_bolsas
+      );
+      context.commit("BOLSA_INFORMATION", JSON.parse(data));
+    },
+
+    async EditBolsa(context, bolsa) {
+      console.log(context.state.activeBolsa.id_bolsas);
+      await BolsaService.editBolsa(
+        context.state.loggedUser,
+        context.state.activeBolsa.id_bolsas,
+        bolsa
+      );
+    },
+
+    async createBolsa(context, bolsa) {
+      await BolsaService.createBolsa(context.state.loggedUser, bolsa);
     },
 
     async fetchAllTestimonies(context) {
@@ -656,12 +632,12 @@ export default new Vuex.Store({
     },
     setActiveBolsa(context, bolsa) {
       context.commit("SET_ACTIVE_BOLSA", bolsa);
-    },
+    } /*
     editBolsa(context, bolsa) {
       context.commit("EDIT_BOLSA", bolsa);
-    },
-    deleteBolsa(context, id) {
-      context.commit("REMOVE_BOLSA", id);
+    },*/,
+    async deleteBolsa(context, id_bolsas) {
+      await BolsaService.deleteBolsa(context.state.loggedUser, id_bolsas);
     },
     createCompany(context, company) {
       context.commit("CREATE_COMPANY", company);
@@ -731,17 +707,17 @@ export default new Vuex.Store({
     LOGGED_PROFESSOR_INFORMATION(state, data) {
       state.loggedProfessorInformation = data;
     },
-    LOGIN_PROFESSOR(state, professor) {
-      state.loggedProfessor = JSON.parse(professor);
-      state.loggedUser = null;
-    },
-    LOGIN_USER(state, alumni) {
-      state.loggedUser = JSON.parse(alumni);
-      state.loggedProfessor = null;
+    LOGIN(state, data) {
+      state.loggedUser = JSON.parse(data);
     },
     LOGOUT(state) {
       state.loggedUser = null;
-      state.loggedProfessor = null;
+    },
+    ALL_BOLSA_INFORMATION(state, data) {
+      state.bolsas = data;
+    },
+    BOLSA_INFORMATION(state, data) {
+      state.activeBolsa = data;
     },
     SAVE_BOLSA(state, bolsa) {
       state.bolsas.push(bolsa);

@@ -44,7 +44,7 @@ export default {
   methods: {
     getLoggedUserType() {
       //Return true if logged user is an admin,
-      return this.$store.getters.getLoggedProfessor ? true : false;
+      return this.$store.getters.isLoggedProfessor;
     },
 
     setActiveEvent(event) {

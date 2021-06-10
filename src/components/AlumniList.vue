@@ -34,8 +34,8 @@
                 name: 'Perfil',
                 params: { numeroEstudante: alumni.id_nroEstudante }
               }"
-              class="btn btn-primary float-right"
-              variant="primary"
+              class="btn btn-warning float-right"
+              variant="warning"
             >
               Visualizar
             </b-button>

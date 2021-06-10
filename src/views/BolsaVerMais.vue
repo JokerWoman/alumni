@@ -13,7 +13,7 @@
               "
             >
               <img
-                :src="getBolsa.img"
+                :src="activeBolsa.fotoLink"
                 alt="foto da bolsa"
                 width="250"
                 height="250"
@@ -34,7 +34,7 @@
               <br />
 
               <div style="height: 200px">
-                <p style="width: 90%">{{ getBolsa.description }}</p>
+                <p style="width: 90%">{{ activeBolsa.descricao }}</p>
 
                 <br />
                 <p>CTT: {{ getCompany().phone }}</p>
@@ -60,20 +60,38 @@
 <script>
 export default {
   name: "BolsaVerMais",
+
+  created: function() {
+    this.PrepareAsyncData();
+  },
+
   methods: {
-    openOferta() {
-      window.open(this.getBolsa.linkBolsa);
+    async PrepareAsyncData() {
+      await this.$store.dispatch(
+        "RetrieveBolsaById",
+        this.$route.params.bolsaId
+      );
     },
+
+    openOferta() {
+      window.open(this.activeBolsa.id_empresa);
+    },
+
     getCompany() {
-      return this.$store.getters.getCompanyById(this.getBolsa.id_company);
+      return this.$store.getters.getCompanyById(this.activeBolsa.id_empresa);
     },
     getCategory() {
-      return this.$store.getters.getCategoryById(this.getBolsa.category);
+      return this.$store.getters.getCategoryById(
+        this.activeBolsa.id_tipoEmprego
+      );
     }
   },
   computed: {
     getBolsa() {
       return this.$store.getters.getBolsaById(this.$route.params.bolsaId);
+    },
+    activeBolsa() {
+      return this.$store.getters.getActiveBolsa;
     }
   }
 };

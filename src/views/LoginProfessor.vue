@@ -34,7 +34,11 @@
               </div>
 
               <div class="row mb-3 px-3">
-                <button type="submit" class="btn btn-blue text-center">
+                <button
+                  type="submit"
+                  class="btn btn-warning text-center"
+                  variant="warning"
+                >
                   LOGIN
                 </button>
               </div>
@@ -64,11 +68,17 @@ export default {
         this.formErros = "";
 
         /* Chamar a ação disponivel no store */
-        const professorCredentials = {
+        const credentials = {
           id_nroProfessor: this.loginData.username,
           password: this.loginData.password
         };
-        await this.$store.dispatch("loginProfessor", professorCredentials);
+
+        const loginData = {
+          userType: "professor",
+          credentials: credentials
+        };
+
+        await this.$store.dispatch("login", loginData);
 
         /* Se o login falhar por alguma razão um trow vai ser lançado e o redirect
            da route para o home não vai ser executado */

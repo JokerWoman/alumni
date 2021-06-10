@@ -25,6 +25,11 @@ describe("AlumniList.vue", () => {
     });
 
     expect(wrapper.text()).toContain("Andrea");
+    expect(wrapper.text()).toContain("19184845");
+    expect(wrapper.text()).toContain("andrea@gmail.com");
+
     expect(wrapper.text()).toContain("Estela");
+    expect(wrapper.text()).toContain("555555");
+    expect(wrapper.text()).toContain("estela@gmail.com");
   });
 });

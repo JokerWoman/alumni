@@ -194,13 +194,13 @@ router.beforeEach((to, from, next) => {
     to.meta.requiresUserAuth === true &&
     to.meta.requiresProfessorAuth === true
   ) {
-    if (store.getters.isLoggedUser || store.getters.isLoggedProfessor) {
+    if (store.getters.isLoggedAlumni || store.getters.isLoggedProfessor) {
       next();
     } else {
       next("/");
     }
   } else if (to.meta.requiresUserAuth === true) {
-    if (store.getters.isLoggedUser) {
+    if (store.getters.isLoggedAlumni) {
       next();
     } else {
       next("/");

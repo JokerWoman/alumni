@@ -2,7 +2,7 @@
   <div class="container">
     <div class="main-body">
       <div class="row gutters-sm">
-        <template v-if="isLoggedUser === true">
+        <template v-if="isLoggedAlumni === true">
           <div class="col-lg-4 mb-3">
             <div class="card">
               <div class="card-body">
@@ -46,7 +46,7 @@
                     <button
                       v-if="userAvailableLinksByNumeroEstudante.length > 0"
                       @click="modal.usersLinksModal = true"
-                      class="btn btn-outline-primary btn-sm"
+                      class="btn btn-outline-warning btn-sm"
                       id="addPortfolio"
                     >
                       Adicionar
@@ -55,7 +55,7 @@
                     <button
                       style="margin-left:5px;"
                       v-on:click="editar"
-                      class="btn btn-outline-primary btn-sm"
+                      class="btn btn-outline-warning btn-sm"
                     >
                       Sair
                     </button>
@@ -263,7 +263,7 @@ export default {
       userCursosByNumeroEstudante: "getUserCursosByNumeroEstudante",
       userAvailableLinksByNumeroEstudante:
         "getUserAvailableLinksByNumeroEstudante",
-      isLoggedUser: "isLoggedUser"
+      isLoggedAlumni: "isLoggedAlumni"
     })
   },
   methods: {
@@ -272,7 +272,7 @@ export default {
         "RetrieveUserInformationByNumeroEstudante",
         parseInt(this.$store.getters.getLoggedUser.id)
       );
-      await this.$store.dispatch("RetrieveLoggedAlumniInformation");
+      await this.$store.dispatch("RetrieveLoggedUserInformation");
       await this.$store.dispatch(
         "RetrieveUserSkillsByNumeroEstudante",
         parseInt(this.$store.getters.getLoggedUser.id)

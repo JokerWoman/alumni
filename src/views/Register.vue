@@ -193,7 +193,8 @@
                 <button
                   type="submit"
                   id="registar"
-                  class="btn btn-blue text-center"
+                  class="btn btn-warning text-center"
+                  variant="warning"
                 >
                   REGISTAR
                 </button>

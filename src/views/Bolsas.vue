@@ -9,7 +9,7 @@
         <b-col cols="2">
           <b-form-select v-model="categorySelected" :options="getCategories">
             <template #first>
-              <b-form-select-option value="all">TODAS</b-form-select-option>
+              <b-form-select-option value="">TODAS</b-form-select-option>
             </template>
           </b-form-select>
         </b-col>
@@ -22,14 +22,14 @@
         </b-col>
 
         <b-col cols="2" style="margin-top: 40px" v-if="getLoggedUserType()">
-          <b-button variant="primary" v-b-modal.createBolsaModal
+          <b-button variant="warning" v-b-modal.createBolsaModal
             >Criar Bolsa</b-button
           >
         </b-col>
       </b-row>
 
       <b-modal id="createBolsaModal" @show="clearForm" hide-footer>
-        <b-form @submit.prevent="onSubmit()">
+        <b-form @submit.prevent="create()">
           <b-row>
             <b-col sm="12">
               <b-form-textarea
@@ -247,6 +247,8 @@
 
 <script>
 import BolsasCard from "../components/BolsasCard";
+import { mapGetters } from "vuex";
+
 export default {
   name: "Bolsas",
   components: {
@@ -265,14 +267,15 @@ export default {
         date_start: "",
         estado: "",
         id_professor: "",
-        date_pub: ""
+        date_pub: "",
+        ofertaLink: ""
       },
       estado: [
         { value: null, text: "Escolhe uma opção" },
         { value: "ativo", text: "Ativo" },
         { value: "terminado", text: "Terminado" }
       ],
-      categorySelected: "all",
+      categorySelected: "",
       locality: "",
       optionSortSelected: 1,
       optionsSort: [
@@ -289,14 +292,33 @@ export default {
       filterCategorySelected: "all"
     };
   },
+  created: function() {
+    this.PrepareAsyncData();
+  },
+  watch: {
+    categorySelected: function(val) {
+      this.categorySelected = val;
+      this.PrepareAsyncData();
+    },
+    allBolsaInformation: function(newVal, oldVal) {
+      console.log(
+        "Prop mudou allBolsaInformation: ",
+        newVal,
+        " | era: ",
+        oldVal
+      );
+    }
+  },
+
   methods: {
-    getLoggedUserType() {
-      return this.$store.getters.getLoggedProfessor ? true : false;
+    async PrepareAsyncData() {
+      const filtros = {
+        id_tipoEmprego: this.categorySelected
+      };
+
+      await this.$store.dispatch("RetrieveAllBolsaInformation", filtros);
     },
-    getLoggedProfessorId() {
-      return this.$store.getters.getLoggedProfessor.id_professor;
-    },
-    onSubmit() {
+    async create() {
       var today = new Date();
       var date =
         today.getFullYear() +
@@ -306,19 +328,26 @@ export default {
         today.getDate();
 
       const bolsa = {
-        id: this.$store.getters.getNextBolsaId,
-        category: this.frm.category,
-        description: this.frm.description,
-        img: this.frm.img,
-        date_pub: date,
-        date_start: this.frm.date_start,
-        linkBolsa: this.frm.link,
+        id_tipoEmprego: this.frm.category,
+        descricao: this.frm.description,
+        fotoLink: this.frm.img,
+        data_publicacao: date,
+        data_inicio: this.frm.date_start,
+        ofertaLink: this.frm.link,
         estado: "ativo",
-        id_company: this.frm.company,
-        id_professor: this.getLoggedProfessorId()
+        id_empresa: this.frm.company,
+        id_nroProfessor: this.getLoggedProfessorInformation.id_nroProfessor
       };
-      this.$store.dispatch("saveBolsa", bolsa);
+      this.$store.dispatch("createBolsa", bolsa);
     },
+
+    getLoggedUserType() {
+      return this.$store.getters.isLoggedProfessor;
+    },
+    getLoggedProfessorId() {
+      return this.$store.getters.getLoggedUser.id;
+    },
+
     clearForm() {
       this.frm.img = "";
       this.frm.description = "";
@@ -334,18 +363,18 @@ export default {
 
     editBolsa() {
       let bolsa = {
-        id: this.frm.id,
-        img: this.frm.img,
-        description: this.frm.description,
-        linkBolsa: this.frm.link,
-        category: this.frm.category,
-        id_company: this.frm.company,
-        date_start: this.frm.date_start,
+        id_bolsas: this.frm.id,
+        fotoLink: this.frm.img,
+        descricao: this.frm.description,
+        ofertaLink: this.frm.link,
+        id_tipoEmprego: this.frm.category,
+        id_empresa: this.frm.company,
+        data_inicio: this.frm.date_start,
         estado: this.frm.estado,
-        id_professor: this.frm.date_pub,
-        date_pub: this.frm.date_pub
+        id_nroProfessor: this.frm.id_professor,
+        data_publicacao: this.frm.date_pub
       };
-      this.$store.dispatch("editBolsa", bolsa);
+      this.$store.dispatch("EditBolsa", bolsa);
       this.$bvModal.hide("editBolsaModal");
       this.clearForm();
     },
@@ -359,19 +388,28 @@ export default {
 
     getActiveBolsa() {
       let bolsa = this.$store.getters.getActiveBolsa;
-      this.frm.id = bolsa.id;
-      this.frm.img = bolsa.img;
-      this.frm.description = bolsa.description;
-      this.frm.link = bolsa.linkBolsa;
-      this.frm.category = bolsa.category;
-      this.frm.company = bolsa.id_company;
-      this.frm.date_start = bolsa.date_start;
+      this.frm.id = bolsa.id_bolsas;
+      this.frm.img = bolsa.fotoLink;
+      this.frm.description = bolsa.descricao;
+      this.frm.category = bolsa.id_tipoEmprego;
+      this.frm.company = bolsa.id_empresa;
+      this.frm.date_start = bolsa.data_inicio;
       this.frm.estado = bolsa.estado;
-      this.frm.id_nroProfessor = bolsa.id_professor;
-      this.frm.date_pub = bolsa.date_pub;
+      this.frm.id_professor = bolsa.id_nroProfessor;
+      this.frm.date_pub = bolsa.data_publicacao;
+      this.frm.link = bolsa.ofertaLink;
     }
   },
+
   computed: {
+    ...mapGetters({
+      allBolsaInformation: "getAllBolsaInformation",
+      isLoggedUser: "isLoggedUser",
+      isLoggedProfessor: "isLoggedProfessor",
+      getLoggedProfessorInformation: "getLoggedProfessorInformation",
+      getLoggedUser: "getLoggedUser"
+    }),
+
     getBolsas() {
       return this.$store.getters.getBolsasFiltered(
         this.categorySelected,
