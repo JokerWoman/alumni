@@ -655,21 +655,43 @@ export default new Vuex.Store({
     saveTestimony(context, testimony) {
       context.commit("SAVE_TESTIMONY", testimony);
     },
-    createEvent(context, event) {
-      context.commit("SAVE_EVENT", event);
+    async createEvento(context, evento) {
+      await EventoService.createEvento(context.state.loggedUser, evento);
     },
+    
     setActiveEvent(context, event) {
       context.commit("SET_ACTIVE_EVENT", event);
     },
-    deleteEvent(context, event) {
-      context.commit("DELETE_EVENT", event);
+    async deleteEvento(context, id_evento) {
+      await EventoService.deleteEvento(context.state.loggedUser, id_evento);
     },
-    editEvent(context, event) {
-      context.commit("EDIT_EVENT", event);
+    async EditEvento(context, evento) {
+      console.log(context.state.activeEvent.id_evento);
+      await EventoService.EditEvento(
+        context.state.loggedUser,
+        context.state.activeEvent.id_evento,
+        evento
+      );
+    
     },
     async subscribeEvent(context, event_id) {
       context.commit("SUBSCRIBE_EVENT", event_id, context.state.loggedUser);
-    }
+    },
+    async RetrieveAllEventos(context, filtros) {
+      let data = await BolsaService.getAllEventos(
+        context.state.loggedUser,
+        filtros
+      );
+      context.commit("ALL_EVENTO_INFORMATION", JSON.parse(data));
+    },
+    async RetrieveEventoById(context, id_evento) {
+      let data = await BolsaService.fetchEventoById(
+        context.state.loggedUser,
+        id_evento
+      );
+      context.commit("EVENTO_INFORMATION", JSON.parse(data));
+    },
+
   },
   mutations: {
     ALL_ALUMNI_INFORMATION(state, data) {
@@ -771,6 +793,13 @@ export default new Vuex.Store({
     SET_ACTIVE_EVENT(state, event) {
       state.activeEvent = event;
     },
+    EVENT_INFORMATION(state, data) {
+      state.activeEvent = data;
+    },
+    ALL_EVENT_INFORMATION(state, data) {
+      state.evento = data;
+    },
+ 
     DELETE_EVENT(state, event) {
       state.events = state.events.filter(object => object != event);
       localStorage.setItem("events", JSON.stringify(state.events));
