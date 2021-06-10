@@ -10,6 +10,7 @@ import { SkillService } from "@/services/skill.service";
 import { ToolService } from "@/services/tool.service";
 import { TestimonyService } from "@/services/testemunha.service.js";
 import { BolsaService } from "@/services/bolsas.service";
+import { EventoService } from "@/services/evento.service";
 
 Vue.use(Vuex);
 
@@ -634,9 +635,9 @@ export default new Vuex.Store({
       context.commit("SET_ACTIVE_BOLSA", bolsa);
     },
     /*
-           editBolsa(context, bolsa) {
-             context.commit("EDIT_BOLSA", bolsa);
-           },*/
+               editBolsa(context, bolsa) {
+                 context.commit("EDIT_BOLSA", bolsa);
+               },*/
     async deleteBolsa(context, id_bolsas) {
       await BolsaService.deleteBolsa(context.state.loggedUser, id_bolsas);
     },
@@ -658,7 +659,7 @@ export default new Vuex.Store({
     async createEvento(context, evento) {
       await EventoService.createEvento(context.state.loggedUser, evento);
     },
-    
+
     setActiveEvent(context, event) {
       context.commit("SET_ACTIVE_EVENT", event);
     },
@@ -672,7 +673,6 @@ export default new Vuex.Store({
         context.state.activeEvent.id_evento,
         evento
       );
-    
     },
     async subscribeEvent(context, event_id) {
       context.commit("SUBSCRIBE_EVENT", event_id, context.state.loggedUser);
@@ -690,8 +690,7 @@ export default new Vuex.Store({
         id_evento
       );
       context.commit("EVENTO_INFORMATION", JSON.parse(data));
-    },
-
+    }
   },
   mutations: {
     ALL_ALUMNI_INFORMATION(state, data) {
@@ -799,7 +798,7 @@ export default new Vuex.Store({
     ALL_EVENT_INFORMATION(state, data) {
       state.evento = data;
     },
- 
+
     DELETE_EVENT(state, event) {
       state.events = state.events.filter(object => object != event);
       localStorage.setItem("events", JSON.stringify(state.events));
