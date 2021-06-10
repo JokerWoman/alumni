@@ -462,12 +462,16 @@ export default new Vuex.Store({
       context.commit("ALL_ALUMNI_INFORMATION", JSON.parse(data));
     },
     async RetrieveUserInformationByNumeroEstudante(context, numeroEstudante) {
-      let data = await UserService.fetchAlumniById(
-        context.state.loggedUser,
-        numeroEstudante
-      );
+      if (context.state.loggedUser !== null) {
+        if (context.state.loggedUser.userType === "alumni") {
+          let data = await UserService.fetchAlumniById(
+            context.state.loggedUser,
+            numeroEstudante
+          );
 
-      context.commit("USER_INFORMATION_BY_ID", JSON.parse(data));
+          context.commit("USER_INFORMATION_BY_ID", JSON.parse(data));
+        }
+      }
     },
     async RetrieveLoggedUserInformation(context) {
       if (context.state.loggedUser !== null) {
