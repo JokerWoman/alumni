@@ -1,18 +1,6 @@
 import API_URL from "./config.js";
 
-function authHeader(user) {
-  // if there is a logged in user with accessToken (JWT)
-  if (user.accessToken && user.userType) {
-    // return HTTP authorization header for Node.js Express back-end
-    return {
-      "Content-Type": "application/json",
-      "x-access-token": user.accessToken,
-      "user-type": user.userType
-    };
-  } else {
-    return { "Content-Type": "application/json" }; //otherwise, return an empty object
-  }
-}
+import { authHeader } from "./auth.service.js";
 
 export const UserService = {
   async fetchAllAlumni(user, filtros) {
@@ -38,6 +26,186 @@ export const UserService = {
         method: "GET",
         headers: authHeader(user)
       });
+
+      if (response.ok) {
+        let data = await response.json();
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async fetchAlumniSkillsById(user, numeroEstudante) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${numeroEstudante}/skills`,
+        {
+          method: "GET",
+          headers: authHeader(user)
+        }
+      );
+
+      if (response.ok) {
+        let data = await response.json();
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async fetchAlumniLinksById(user, numeroEstudante) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${numeroEstudante}/links`,
+        {
+          method: "GET",
+          headers: authHeader(user)
+        }
+      );
+
+      if (response.ok) {
+        let data = await response.json();
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async addAlumniLinkById(user, linkId, linkUrl) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/links/${linkId}`,
+        {
+          method: "POST",
+          headers: authHeader(user),
+          body: JSON.stringify({ link: linkUrl })
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async removeAlumniLinkById(user, linkId) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/links/${linkId}`,
+        {
+          method: "DELETE",
+          headers: authHeader(user)
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async addAlumniCursoById(user, cursoId, cursoAno) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/cursos/${cursoId}`,
+        {
+          method: "POST",
+          headers: authHeader(user),
+          body: JSON.stringify({ anoCurso: cursoAno })
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async removeAlumniCursoById(user, cursoId) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${user.id}/cursos/${cursoId}`,
+        {
+          method: "DELETE",
+          headers: authHeader(user)
+        }
+      );
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async updateAlumniById(user, alumni) {
+    if (user !== null) {
+      const response = await fetch(`${API_URL}/alumni/${user.id}/`, {
+        method: "PUT",
+        body: JSON.stringify(alumni),
+        headers: authHeader(user)
+      });
+      if (response.ok) {
+        let data = await response.json();
+
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async fetchAlumniCursosById(user, numeroEstudante) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${numeroEstudante}/cursos`,
+        {
+          method: "GET",
+          headers: authHeader(user)
+        }
+      );
+
+      if (response.ok) {
+        let data = await response.json();
+        return data.message;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  },
+  async fetchAlumniToolsById(user, numeroEstudante) {
+    if (user !== null) {
+      const response = await fetch(
+        `${API_URL}/alumni/${numeroEstudante}/tools`,
+        {
+          method: "GET",
+          headers: authHeader(user)
+        }
+      );
 
       if (response.ok) {
         let data = await response.json();

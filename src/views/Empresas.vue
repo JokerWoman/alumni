@@ -149,11 +149,9 @@
           />
         </div>
         <div class="col-md-4 footer-nav">
-          <h4>Outros Links —</h4>
+          <h1 style="font-size: 25px">Outros Links</h1>
           <div class="col-md-6">
             <ul>
-              <li><a href="">Cartão Alumni</a></li>
-              <li><a href="">FAQ's</a></li>
               <li>
                 <router-link
                   :to="{ name: 'Empresas' }"
@@ -165,7 +163,7 @@
           </div>
         </div>
         <div class="col-md-5 footer-nav">
-          <h4>Localização —</h4>
+          <h1 style="font-size: 25px">Localização —</h1>
 
           <div class="col-md-6">
             <ul>

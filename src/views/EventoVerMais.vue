@@ -25,19 +25,26 @@
           <div class="container">
             <div>
               <div class="row">
-                <div class="col-sm-3">
-                  <h2 class="mb-0" style="margin-left: 220px">
-                    {{ this.getEvent.title }}
-                  </h2>
-                </div>
+                <h2 class="mb-0" style="margin-left: 220px">
+                  {{ getEvent.name }}
+                </h2>
               </div>
               <br />
+            
 
               <div style="height: 200px">
-                <p style="width: 90%">{{ this.getEvent.description }}</p>
+                <p style="width: 90%">{{ getEvent.description }}</p>
               </div>
               <br />
               <br />
+          
+              <button
+                @click="InscreverEvento()"
+                class="btn btn-warning"
+                style="margin-left: 200px"
+              >
+                Inscrever no evento
+              </button>
             </div>
           </div>
         </div>
@@ -49,19 +56,20 @@
 <script>
 export default {
   name: "EventoVerMais",
-  data() {
-    return {
-      getEvent: ""
-    };
-  },
 
-  methods: {},
-  created() {
-    this.getEvent = this.$store.state.events.filter(
-      event => event.id == this.$route.params.eventId
-    );
+  methods: {
+    InscreverEvento() {
+     this.$store.dispatch("subcribeEvent", this.$route.params.eventId)
+    },
   },
-  computed: {}
+  computed: {
+    getEvent() {
+      const event = this.$store.getters.getEventById(
+        this.$route.params.eventId
+      );
+      return event;
+    }
+  }
 };
 </script>
 
