@@ -1,7 +1,7 @@
 <template>
   <b-card
     align="center"
-    :img-src="testimony.img"
+    :img-src="`${testimony.fotoLink}`"
     img-top
     :id="`cardTestimony${testimony.id}`"
     img-height="200px"
@@ -9,9 +9,9 @@
     img-alt="Imagem do testimunha"
   >
     <b-card-text style="color:#FFCA1C; margin-bottom: 5px; font-size: 20px "
-      >{{ testimony.name }}
+      >{{ testimony.nome }}
     </b-card-text>
-    <b-card-text>{{ testimony.description }}</b-card-text>
+    <b-card-text>{{ testimony.descricao }}</b-card-text>
   </b-card>
 </template>
 
@@ -26,6 +26,7 @@ export default {
   name: "TestimonyCard",
   props: {
     testimony: Object
-  }
+  },
+  methods: {}
 };
 </script>

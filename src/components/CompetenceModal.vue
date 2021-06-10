@@ -14,14 +14,25 @@
       </button>
     </template>
 
-    <select v-model="competenceSelected">
-      <option
-        v-for="(competence, index) in competences"
-        v-bind:value="competence.title"
-        v-bind:key="index"
-      >
-        {{ competence.title }}
-      </option>
+    <select v-model="competenceIdSelected">
+      <template v-if="type === 'skill'">
+        <option
+          v-for="competence in competences"
+          v-bind:value="competence.id_skills"
+          v-bind:key="competence.id_skills"
+        >
+          {{ competence.tipoSkill }}
+        </option>
+      </template>
+      <template v-else-if="type === 'tool'">
+        <option
+          v-for="competence in competences"
+          v-bind:value="competence.id_tools"
+          v-bind:key="competence.id_tools"
+        >
+          {{ competence.tipoTool }}
+        </option>
+      </template>
     </select>
     <input
       type="number"
@@ -55,15 +66,15 @@ export default {
   data: function() {
     return {
       percentagem: 20,
-      competenceSelected: null
+      competenceIdSelected: null
     };
   },
   created: function() {},
   methods: {
     save() {
-      if (this.competenceSelected !== null) {
+      if (this.competenceIdSelected !== null) {
         this.$parent.competenceNew(
-          this.competenceSelected,
+          this.competenceIdSelected,
           this.type,
           parseInt(this.percentagem)
         );
@@ -72,7 +83,7 @@ export default {
     },
     close() {
       this.percentagem = 20;
-      this.competenceSelected = null;
+      this.competenceIdSelected = null;
       this.$emit("close");
     }
   }
