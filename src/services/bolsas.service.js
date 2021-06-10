@@ -26,7 +26,7 @@ export const BolsaService = {
       if (response.ok) {
         let data = await response.json();
         console.log(user);
-        return data;
+        return data.message;
       } else {
         return null;
       }
