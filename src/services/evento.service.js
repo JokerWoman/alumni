@@ -1,35 +1,35 @@
 import API_URL from "./config.js";
 
 export const EventoService = {
-    async getAllEventos() {
-      var url = new URL(`${API_URL}/evento/`);
-  
-      const response = await fetch(url, {
-        method: "GET"
-      });
-  
-      if (response.ok) {
-        let data = await response.json();
-        console.log(data.message);
-        return data.message;
-      } else {
-        return null;
-      }
-    },
+  async getAllEventos() {
+    var url = new URL(`${API_URL}/evento/`);
 
-    async GetEventoByID(id)  {
-        var url = new URL(`${API_URL}/evento/${id}`);
-  
-        const response = await fetch(url, {
-          method: "GET"
-        });
-        if (response.ok) {
-            let data = await response.json();
-            console.log(data.message);
-            return data.message;
-          } else {
-            return null;
-          }
+    const response = await fetch(url, {
+      method: "GET"
+    });
+
+    if (response.ok) {
+      let data = await response.json();
+      console.log(data.message);
+      return data.message;
+    } else {
+      return null;
+    }
+  },
+
+  async GetEventoByID(id) {
+    var url = new URL(`${API_URL}/evento/${id}`);
+
+    const response = await fetch(url, {
+      method: "GET"
+    });
+    if (response.ok) {
+      let data = await response.json();
+      console.log(data.message);
+      return data.message;
+    } else {
+      return null;
+    }
   },
   async createEvento() {
     var url = new URL(`${API_URL}/evento/`);
@@ -63,7 +63,7 @@ export const EventoService = {
     }
   },
 
-  async updateEventoById() {
+  async updateEventoById(id) {
     var url = new URL(`${API_URL}/evento/${id}`);
 
     const response = await fetch(url, {
@@ -77,13 +77,7 @@ export const EventoService = {
     } else {
       return null;
     }
-  },
+  }
+};
 
-
-
-
-
-}
-  
-  export default EventoService;
-  
+export default EventoService;

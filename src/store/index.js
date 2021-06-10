@@ -632,10 +632,11 @@ export default new Vuex.Store({
     },
     setActiveBolsa(context, bolsa) {
       context.commit("SET_ACTIVE_BOLSA", bolsa);
-    } /*
-    editBolsa(context, bolsa) {
-      context.commit("EDIT_BOLSA", bolsa);
-    },*/,
+    },
+    /*
+           editBolsa(context, bolsa) {
+             context.commit("EDIT_BOLSA", bolsa);
+           },*/
     async deleteBolsa(context, id_bolsas) {
       await BolsaService.deleteBolsa(context.state.loggedUser, id_bolsas);
     },
@@ -666,8 +667,8 @@ export default new Vuex.Store({
     editEvent(context, event) {
       context.commit("EDIT_EVENT", event);
     },
-    async subscribeEvent(context , event_id){
-      context.commit("SUBSCRIBE_EVENT", event_id, state.loggedUser)
+    async subscribeEvent(context, event_id) {
+      context.commit("SUBSCRIBE_EVENT", event_id, context.state.loggedUser);
     }
   },
   mutations: {
@@ -779,8 +780,8 @@ export default new Vuex.Store({
       state.events.push(event);
       localStorage.setItem("events", JSON.stringify(state.events));
     },
-    SUBSCRIBE_EVENT(state, event){
-     
+    SUBSCRIBE_EVENT(state, event) {
+      console.log(state + " " + event); // temporario para nao dar erro por nao ser utilizado os parametros
     }
   }
 });

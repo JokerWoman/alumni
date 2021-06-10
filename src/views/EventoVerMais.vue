@@ -30,14 +30,13 @@
                 </h2>
               </div>
               <br />
-            
 
               <div style="height: 200px">
                 <p style="width: 90%">{{ getEvent.description }}</p>
               </div>
               <br />
               <br />
-          
+
               <button
                 @click="InscreverEvento()"
                 class="btn btn-warning"
@@ -59,8 +58,8 @@ export default {
 
   methods: {
     InscreverEvento() {
-     this.$store.dispatch("subcribeEvent", this.$route.params.eventId)
-    },
+      this.$store.dispatch("subcribeEvent", this.$route.params.eventId);
+    }
   },
   computed: {
     getEvent() {
