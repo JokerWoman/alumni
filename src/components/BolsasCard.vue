@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     isLoggedProfessor() {
-      return this.$store.getters.getLoggedProfessor ? true : false;
+      return this.$store.getters.isLoggedProfessor;
     },
     getCompanyName(id) {
       var company = this.$store.getters.getCompanyById(id);

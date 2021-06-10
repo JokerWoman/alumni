@@ -2,7 +2,7 @@
   <div id="app">
     <NavBar
       :isLoggedProfessor="isLoggedProfessor"
-      :isLoggedUser="isLoggedUser"
+      :isLoggedAlumni="isLoggedAlumni"
       :loggedProfessorInformation="loggedProfessorInformation"
       :loggedAlumniInformation="loggedAlumniInformation"
     ></NavBar>
@@ -25,15 +25,14 @@ export default {
   computed: {
     ...mapGetters({
       isLoggedProfessor: "isLoggedProfessor",
-      isLoggedUser: "isLoggedUser",
+      isLoggedAlumni: "isLoggedAlumni",
       loggedProfessorInformation: "getLoggedProfessorInformation",
       loggedAlumniInformation: "getLoggedAlumniInformation"
     })
   },
   methods: {
     async PrepareAsyncData() {
-      await this.$store.dispatch("RetrieveLoggedAlumniInformation");
-      await this.$store.dispatch("RetrieveLoggedProfessorInformation");
+      await this.$store.dispatch("RetrieveLoggedUserInformation");
     }
   },
   metaInfo: {

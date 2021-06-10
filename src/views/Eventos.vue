@@ -21,7 +21,7 @@
         </b-col>
 
         <b-col cols="2" v-if="getLoggedUserType()">
-          <b-button variant="primary" v-b-modal.createEventModal
+          <b-button variant="warning" v-b-modal.createEventModal
             >Create Event</b-button
           >
         </b-col>
@@ -264,7 +264,7 @@ export default {
 
   methods: {
     getLoggedUserType() {
-      return this.$store.getters.getLoggedProfessor ? true : false;
+      return this.$store.getters.isLoggedProfessor;
     },
 
     eventLocations() {

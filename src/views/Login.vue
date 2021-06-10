@@ -49,7 +49,8 @@
                 <button
                   type="submit"
                   id="login"
-                  class="btn btn-blue text-center"
+                  class="btn btn-warning text-center"
+                  variant="warning"
                 >
                   LOGIN
                 </button>
@@ -100,12 +101,17 @@ export default {
 
         /* Remover o cartão de cidadão */
 
-        const alumniCredentials = {
+        const credentials = {
           id_nroEstudante: this.loginData.numeroEstudante,
           password: this.loginData.password
         };
 
-        await this.$store.dispatch("loginAlumni", alumniCredentials);
+        const loginData = {
+          userType: "alumni",
+          credentials: credentials
+        };
+
+        await this.$store.dispatch("login", loginData);
 
         /* Se o login falhar por alguma razão um trow vai ser lançado e o redirect
            da route para o home não vai ser executado */

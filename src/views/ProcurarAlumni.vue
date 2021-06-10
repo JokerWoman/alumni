@@ -64,7 +64,7 @@ export default {
   computed: {
     ...mapGetters({
       allAlumniInformations: "getAllAlumniInformation",
-      isLoggedUser: "isLoggedUser",
+      isLoggedAlumni: "isLoggedAlumni",
       isLoggedProfessor: "isLoggedProfessor",
       getLoggedUser: "getLoggedUser"
     })

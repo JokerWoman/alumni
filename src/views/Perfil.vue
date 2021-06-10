@@ -3,7 +3,7 @@
     <div class="main-body">
       <div class="row gutters-sm">
         <template
-          v-if="isLoggedUser === true && loggedAlumniInformation !== null"
+          v-if="isLoggedAlumni === true && loggedAlumniInformation !== null"
         >
           <div class="col-lg-4 mb-3">
             <div class="card">
@@ -62,7 +62,7 @@
                           userInformationByNumeroEstudante.id_nroEstudante
                       "
                       id="editarPortefolio"
-                      class="btn btn-outline-primary btn-sm"
+                      class="btn btn-outline-warning btn-sm"
                       style="margin-left:10px;"
                       :to="{ name: 'EditarPortefolio' }"
                       >Editar</router-link
@@ -157,7 +157,7 @@
                         loggedAlumniInformation.id_nroEstudante ===
                           userInformationByNumeroEstudante.id_nroEstudante
                       "
-                      class="btn btn-outline-primary btn-sm"
+                      class="btn btn-outline-warning btn-sm"
                       style="margin-left:10px;"
                       :to="{ name: 'EditarCursos' }"
                       >Editar</router-link
@@ -202,7 +202,7 @@
                             loggedAlumniInformation.id_nroEstudante ===
                               userInformationByNumeroEstudante.id_nroEstudante
                           "
-                          class="btn btn-outline-primary btn-sm"
+                          class="btn btn-outline-warning btn-sm"
                           style="margin-left:10px;"
                           id="editarSkill"
                           :to="{ name: 'EditarSkills' }"
@@ -244,7 +244,7 @@
                             loggedAlumniInformation.id_nroEstudante ===
                               userInformationByNumeroEstudante.id_nroEstudante
                           "
-                          class="btn btn-outline-primary btn-sm"
+                          class="btn btn-outline-warning btn-sm"
                           style="margin-left:10px;"
                           :to="{ name: 'EditarTools' }"
                           >Editar</router-link
@@ -301,7 +301,7 @@ export default {
       userToolsByNumeroEstudante: "getUserToolsByNumeroEstudante",
       userLinksByNumeroEstudante: "getUserLinksByNumeroEstudante",
       userCursosByNumeroEstudante: "getUserCursosByNumeroEstudante",
-      isLoggedUser: "isLoggedUser"
+      isLoggedAlumni: "isLoggedAlumni"
     })
   },
   methods: {
@@ -310,7 +310,7 @@ export default {
         "RetrieveUserInformationByNumeroEstudante",
         parseInt(numeroEstudante)
       );
-      await this.$store.dispatch("RetrieveLoggedAlumniInformation");
+      await this.$store.dispatch("RetrieveLoggedUserInformation");
       await this.$store.dispatch(
         "RetrieveUserSkillsByNumeroEstudante",
         parseInt(numeroEstudante)

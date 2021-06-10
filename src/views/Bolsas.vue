@@ -22,7 +22,7 @@
         </b-col>
 
         <b-col cols="2" style="margin-top: 40px" v-if="getLoggedUserType()">
-          <b-button variant="primary" v-b-modal.createBolsaModal
+          <b-button variant="warning" v-b-modal.createBolsaModal
             >Criar Bolsa</b-button
           >
         </b-col>
@@ -291,10 +291,10 @@ export default {
   },
   methods: {
     getLoggedUserType() {
-      return this.$store.getters.getLoggedProfessor ? true : false;
+      return this.$store.getters.isLoggedProfessor;
     },
     getLoggedProfessorId() {
-      return this.$store.getters.getLoggedProfessor.id_professor;
+      return this.$store.getters.getLoggedUser.id;
     },
     onSubmit() {
       var today = new Date();

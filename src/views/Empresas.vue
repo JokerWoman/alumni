@@ -3,7 +3,7 @@
     <b-container>
       <b-row class="justify-content-md-left">
         <b-col cols="2" style="margin-top: 40px" v-if="getLoggedUserType()">
-          <b-button variant="primary" v-b-modal.createCompanyModal
+          <b-button variant="warning" v-b-modal.createCompanyModal
             >Adicionar Empresa</b-button
           >
         </b-col>
@@ -209,7 +209,7 @@ export default {
 
   methods: {
     getLoggedUserType() {
-      return this.$store.getters.getLoggedProfessor ? true : false;
+      return this.$store.getters.isLoggedProfessor;
     },
     createCompany() {
       const company = {

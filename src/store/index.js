@@ -12,16 +12,6 @@ import { TestimonyService } from "@/services/testemunha.service.js";
 
 Vue.use(Vuex);
 
-function GetLoggedUser(state) {
-  if (state.loggedUser !== null) {
-    return state.loggedUser;
-  } else if (state.loggedProfessor !== null) {
-    return state.loggedProfessor;
-  } else {
-    return null;
-  }
-}
-
 export default new Vuex.Store({
   state: {
     alumnis: [],
@@ -38,9 +28,6 @@ export default new Vuex.Store({
     userInformationByNumeroEstudante: "",
     loggedUser: localStorage.getItem("loggedUser")
       ? JSON.parse(localStorage.getItem("loggedUser"))
-      : null,
-    loggedProfessor: localStorage.getItem("loggedProfessor")
-      ? JSON.parse(localStorage.getItem("loggedProfessor"))
       : null,
     bolsas: localStorage.getItem("bolsas")
       ? JSON.parse(localStorage.getItem("bolsas"))
@@ -179,22 +166,34 @@ export default new Vuex.Store({
   },
   getters: {
     getLoggedUser: state => state.loggedUser,
-    isLoggedUser: state => (state.loggedUser === null ? false : true),
+    isLoggedAlumni: state =>
+      state.loggedUser === null
+        ? false
+        : state.loggedUser.userType === "alumni"
+        ? true
+        : false,
+    isLoggedProfessor: state =>
+      state.loggedUser === null
+        ? false
+        : state.loggedUser.userType === "professor"
+        ? true
+        : false,
     getLoggedAlumniInformation: state => state.loggedAlumniInformation,
     getLoggedProfessorInformation: state => state.loggedProfessorInformation,
-    getLoggedProfessor: state => state.loggedProfessor,
-    isLoggedProfessor: state => (state.loggedProfessor == null ? false : true),
     getAllAlumniInformation: state => {
-      /* Quando for o professor dar todos, quando alumni filtrar o seu */
       if (state.alumnis !== null) {
         return state.alumnis.filter(alumni => {
           if (state.loggedUser !== null) {
-            /* Quando é o alumnoi então remover o próprio*/ return (
-              parseInt(alumni.id_nroEstudante) !== parseInt(state.loggedUser.id)
-            );
-          } else {
-            return true;
+            if (state.loggedUser.userType === "alumni") {
+              /* Quando é o alumni não retornar o própio */
+              return (
+                parseInt(alumni.id_nroEstudante) !==
+                parseInt(state.loggedUser.id)
+              );
+            }
           }
+          /* Quando não há user logged in ou é professor não há filtro. */
+          return true;
         });
       } else {
         return [];
@@ -496,7 +495,7 @@ export default new Vuex.Store({
     },
     async RetrieveAllAlumniInformation(context, filtros) {
       let data = await UserService.fetchAllAlumni(
-        GetLoggedUser(context.state),
+        context.state.loggedUser,
         filtros
       );
 
@@ -510,14 +509,23 @@ export default new Vuex.Store({
 
       context.commit("USER_INFORMATION_BY_ID", JSON.parse(data));
     },
-    async RetrieveLoggedAlumniInformation(context) {
+    async RetrieveLoggedUserInformation(context) {
       if (context.state.loggedUser !== null) {
-        let data = await UserService.fetchAlumniById(
-          context.state.loggedUser,
-          context.state.loggedUser.id
-        );
+        if (context.state.loggedUser.userType === "alumni") {
+          let data = await UserService.fetchAlumniById(
+            context.state.loggedUser,
+            context.state.loggedUser.id
+          );
 
-        context.commit("LOGGED_ALUMNI_INFORMATION", JSON.parse(data));
+          context.commit("LOGGED_ALUMNI_INFORMATION", JSON.parse(data));
+        } else if (context.state.loggedUser.userType === "professor") {
+          let data = await UserService.fetchProfessorById(
+            context.state.loggedUser,
+            context.state.loggedUser.id
+          );
+
+          context.commit("LOGGED_PROFESSOR_INFORMATION", JSON.parse(data));
+        }
       }
     },
     async RetrieveUserAvailableSkillsByNumeroEstudante(
@@ -596,54 +604,33 @@ export default new Vuex.Store({
 
       context.commit("USER_TOOLS_BY_ID", JSON.parse(data));
     },
-    async RetrieveLoggedProfessorInformation(context) {
-      if (context.state.loggedProfessor !== null) {
-        let data = await UserService.fetchProfessorById(
-          context.state.loggedProfessor,
-          context.state.loggedProfessor.id
-        );
+    async login(context, loginData) {
+      let data = null;
 
-        context.commit("LOGGED_PROFESSOR_INFORMATION", JSON.parse(data));
+      if (loginData.userType === "alumni") {
+        data = await AuthService.loginAlumni(loginData.credentials);
+      } else if (loginData.userType === "professor") {
+        data = await AuthService.loginProfessor(loginData.credentials);
       }
-    },
-    async loginAlumni(context, alumniCredentials) {
-      let data = await AuthService.loginAlumni(alumniCredentials);
-
-      context.commit("LOGIN_USER", data);
 
       if (data !== null) {
+        context.commit("LOGIN", data);
         localStorage.setItem(
           "loggedUser",
           JSON.stringify(context.state.loggedUser)
         );
-        localStorage.removeItem("loggedProfessor");
-        context.dispatch("RetrieveLoggedAlumniInformation");
-      }
-    },
-    async loginProfessor(context, professorCredentials) {
-      let data = await AuthService.loginProfessor(professorCredentials);
-
-      context.commit("LOGIN_PROFESSOR", data);
-
-      if (data !== null) {
-        localStorage.setItem(
-          "loggedProfessor",
-          JSON.stringify(context.state.loggedProfessor)
-        );
-        localStorage.removeItem("loggedUser");
-        context.dispatch("RetrieveLoggedProfessorInformation");
+        context.dispatch("RetrieveLoggedUserInformation");
       }
     },
     async logout(context) {
       context.commit("LOGOUT");
-      localStorage.removeItem("loggedProfessor");
       localStorage.removeItem("loggedUser");
     },
     async register(context, payload) {
       await AuthService.register(payload);
     },
     async EditarLoggedAlumni(context, alumni) {
-      await UserService.updateAlumniById(GetLoggedUser(context.state), alumni);
+      await UserService.updateAlumniById(context.state.loggedUser, alumni);
     },
 
     async fetchAllTestimonies(context) {
@@ -728,17 +715,11 @@ export default new Vuex.Store({
     LOGGED_PROFESSOR_INFORMATION(state, data) {
       state.loggedProfessorInformation = data;
     },
-    LOGIN_PROFESSOR(state, professor) {
-      state.loggedProfessor = JSON.parse(professor);
-      state.loggedUser = null;
-    },
-    LOGIN_USER(state, alumni) {
-      state.loggedUser = JSON.parse(alumni);
-      state.loggedProfessor = null;
+    LOGIN(state, data) {
+      state.loggedUser = JSON.parse(data);
     },
     LOGOUT(state) {
       state.loggedUser = null;
-      state.loggedProfessor = null;
     },
     SAVE_BOLSA(state, bolsa) {
       state.bolsas.push(bolsa);

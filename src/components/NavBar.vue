@@ -21,7 +21,7 @@
           >Alumni</b-nav-item
         >
 
-        <template v-if="isLoggedProfessor === true || isLoggedUser === true">
+        <template v-if="isLoggedProfessor === true || isLoggedAlumni === true">
           <b-nav-item
             :to="{ name: 'Eventos' }"
             :class="{ active: $route.name === 'Eventos' }"
@@ -37,7 +37,7 @@
       </b-navbar-nav>
       <template
         v-if="
-          isLoggedUser === true &&
+          isLoggedAlumni === true &&
             loggedAlumniInformation !== null &&
             loggedAlumniInformation.id_nroEstudante != null
         "
@@ -103,7 +103,7 @@ export default {
   name: "NavBar",
   props: {
     isLoggedProfessor: Boolean,
-    isLoggedUser: Boolean,
+    isLoggedAlumni: Boolean,
     loggedProfessorInformation: Object,
     loggedAlumniInformation: Object
   },
@@ -111,8 +111,8 @@ export default {
     isLoggedProfessor: function(newVal, oldVal) {
       console.log("Prop mudou isLoggedProfessor: ", newVal, " | era: ", oldVal);
     },
-    isLoggedUser: function(newVal, oldVal) {
-      console.log("Prop mudou isLoggedUser: ", newVal, " | era: ", oldVal);
+    isLoggedAlumni: function(newVal, oldVal) {
+      console.log("Prop mudou isLoggedAlumni: ", newVal, " | era: ", oldVal);
     },
     loggedAlumniInformation: function(newVal, oldVal) {
       console.log(
