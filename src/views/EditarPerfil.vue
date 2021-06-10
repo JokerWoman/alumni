@@ -8,7 +8,7 @@
               <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
                   <img
-                    v-if="userInformationByNumeroEstudante.id_genero === '1'"
+                    v-if="userInformationByNumeroEstudante.id_genero === 1"
                     src="@/assets/img/usersFoto/homem.jpg"
                     alt="foto de um homem"
                     class="rounded-circle"
