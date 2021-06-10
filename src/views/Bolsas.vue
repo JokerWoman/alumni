@@ -183,10 +183,7 @@
     <b-container style="background-color: #6d6cba" fluid>
       <h1 v-if="!getBolsas.length">Não Foram Encontrados Bolsas!</h1>
       <b-row style="margin-right: 10%; margin-left: 10%">
-        <b-card-group
-          style="margin: 20px"
-          v-if="getBolsas.length > 0"
-        >
+        <b-card-group style="margin: 20px" v-if="getBolsas.length > 0">
           <BolsasCard
             v-for="myBolsa in getBolsas"
             :key="myBolsa.id"
@@ -255,7 +252,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "Bolsas",
   components: {
-    BolsasCard,
+    BolsasCard
   },
 
   data() {
@@ -271,12 +268,12 @@ export default {
         estado: "",
         id_professor: "",
         date_pub: "",
-        ofertaLink:"",
+        ofertaLink: ""
       },
       estado: [
         { value: null, text: "Escolhe uma opção" },
         { value: "ativo", text: "Ativo" },
-        { value: "terminado", text: "Terminado" },
+        { value: "terminado", text: "Terminado" }
       ],
       categorySelected: "",
       locality: "",
@@ -284,53 +281,53 @@ export default {
       optionsSort: [
         {
           value: 1,
-          text: "Mais Recentes",
+          text: "Mais Recentes"
         },
         {
           value: -1,
-          text: "Mais Antigos",
-        },
+          text: "Mais Antigos"
+        }
       ],
 
-      filterCategorySelected: "all",
+      filterCategorySelected: "all"
     };
   },
-  created: function () {
+  created: function() {
     this.PrepareAsyncData();
   },
-   watch: {
+  watch: {
     categorySelected: function(val) {
       this.categorySelected = val;
       this.PrepareAsyncData();
     },
-    allBolsaInformation: function(newVal, oldVal){
-       console.log(
+    allBolsaInformation: function(newVal, oldVal) {
+      console.log(
         "Prop mudou allBolsaInformation: ",
         newVal,
         " | era: ",
         oldVal
       );
     }
-    
-
-    
   },
 
   methods: {
     async PrepareAsyncData() {
       const filtros = {
-        id_tipoEmprego: this.categorySelected,
+        id_tipoEmprego: this.categorySelected
       };
-
-   
 
       await this.$store.dispatch("RetrieveAllBolsaInformation", filtros);
     },
     async create() {
       var today = new Date();
-      var date = today.getFullYear() + "-" + (today.getMonth() +1) + "-"+today.getDate();
+      var date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
 
-      const bolsa ={
+      const bolsa = {
         id_tipoEmprego: this.frm.category,
         descricao: this.frm.description,
         fotoLink: this.frm.img,
@@ -339,8 +336,8 @@ export default {
         ofertaLink: this.frm.link,
         estado: "ativo",
         id_empresa: this.frm.company,
-        id_nroProfessor: this.getLoggedProfessorInformation.id_nroProfessor,
-      }
+        id_nroProfessor: this.getLoggedProfessorInformation.id_nroProfessor
+      };
       this.$store.dispatch("createBolsa", bolsa);
     },
 
@@ -348,10 +345,9 @@ export default {
       return this.$store.getters.isLoggedProfessor;
     },
     getLoggedProfessorId() {
-     return this.$store.getters.getLoggedUser.id;
+      return this.$store.getters.getLoggedUser.id;
     },
-    
-    
+
     clearForm() {
       this.frm.img = "";
       this.frm.description = "";
@@ -363,7 +359,6 @@ export default {
       this.frm.id_professor = "";
       this.frm.estado = "";
       this.frm.id = "";
-      
     },
 
     editBolsa() {
@@ -377,7 +372,7 @@ export default {
         data_inicio: this.frm.date_start,
         estado: this.frm.estado,
         id_nroProfessor: this.frm.id_professor,
-        data_publicacao: this.frm.date_pub,
+        data_publicacao: this.frm.date_pub
       };
       this.$store.dispatch("EditBolsa", bolsa);
       this.$bvModal.hide("editBolsaModal");
@@ -403,7 +398,7 @@ export default {
       this.frm.id_professor = bolsa.id_nroProfessor;
       this.frm.date_pub = bolsa.data_publicacao;
       this.frm.link = bolsa.ofertaLink;
-    },
+    }
   },
 
   computed: {
@@ -411,11 +406,10 @@ export default {
       allBolsaInformation: "getAllBolsaInformation",
       isLoggedUser: "isLoggedUser",
       isLoggedProfessor: "isLoggedProfessor",
-      getLoggedProfessorInformation :"getLoggedProfessorInformation",
-      getLoggedUser: "getLoggedUser",
-      
+      getLoggedProfessorInformation: "getLoggedProfessorInformation",
+      getLoggedUser: "getLoggedUser"
     }),
-    
+
     getBolsas() {
       return this.$store.getters.getBolsasFiltered(
         this.categorySelected,
@@ -425,7 +419,7 @@ export default {
     },
     getCategories() {
       return this.$store.getters.getCategoriesForSelect;
-    },
-  },
+    }
+  }
 };
 </script>

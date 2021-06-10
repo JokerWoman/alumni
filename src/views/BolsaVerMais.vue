@@ -46,7 +46,6 @@
                 @click="openOferta()"
                 class="btn btn-warning"
                 style="margin-left: 200px"
-                
               >
                 Responder à Oferta
               </button>
@@ -62,36 +61,36 @@
 export default {
   name: "BolsaVerMais",
 
-  created: function () {
+  created: function() {
     this.PrepareAsyncData();
   },
 
-
   methods: {
-     async PrepareAsyncData() {
-
-      await this.$store.dispatch("RetrieveBolsaById",this.$route.params.bolsaId);
+    async PrepareAsyncData() {
+      await this.$store.dispatch(
+        "RetrieveBolsaById",
+        this.$route.params.bolsaId
+      );
     },
-
 
     openOferta() {
       window.open(this.activeBolsa.id_empresa);
-      
     },
-    
+
     getCompany() {
       return this.$store.getters.getCompanyById(this.activeBolsa.id_empresa);
     },
     getCategory() {
-      return this.$store.getters.getCategoryById(this.activeBolsa.id_tipoEmprego);
-    },
-    
+      return this.$store.getters.getCategoryById(
+        this.activeBolsa.id_tipoEmprego
+      );
+    }
   },
   computed: {
     getBolsa() {
       return this.$store.getters.getBolsaById(this.$route.params.bolsaId);
     },
-    activeBolsa(){
+    activeBolsa() {
       return this.$store.getters.getActiveBolsa;
     }
   }

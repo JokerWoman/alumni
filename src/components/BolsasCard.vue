@@ -10,18 +10,18 @@
     img-alt="Imagem da bolsa"
   >
     <b-card-text> {{ getDescription(bolsa.descricao) }}</b-card-text>
-    
+
     <router-link
       v-if="bolsa.estado == 'ativo'"
       :to="{ name: 'BolsaVerMais', params: { bolsaId: bolsa.id_bolsas } }"
       class="btn btn-warning"
       variant="success"
-      
-    ><b-button 
-     class="btn btn-warning"
-      variant="success"
-    @click="setActiveBolsa(bolsa)">
-      VER MAIS
+      ><b-button
+        class="btn btn-warning"
+        variant="success"
+        @click="setActiveBolsa(bolsa)"
+      >
+        VER MAIS
       </b-button>
     </router-link>
 
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     isLoggedProfessor() {
-      return this.$store.getters.isLoggedProfessor
+      return this.$store.getters.isLoggedProfessor;
     },
     getCompanyName(id) {
       var company = this.$store.getters.getCompanyById(id);

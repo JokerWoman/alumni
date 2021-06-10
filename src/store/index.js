@@ -185,8 +185,6 @@ export default new Vuex.Store({
         text: company.name
       })),
 
-    
-
     getNextCompanyId: state => {
       return state.companies.length > 0
         ? state.companies[state.companies.length - 1].id_company + 1
@@ -194,9 +192,8 @@ export default new Vuex.Store({
     },
 
     getAllBolsaInformation: state => {
-      return state.bolsas
+      return state.bolsas;
     },
-
 
     getCategories(state) {
       return state.categories;
@@ -274,7 +271,7 @@ export default new Vuex.Store({
       for (var bolsa in cards_filtered) {
         for (var company in companies) {
           if (
-            cards_filtered[bolsa].id_empresa== companies[company].id_company &&
+            cards_filtered[bolsa].id_empresa == companies[company].id_company &&
             companies[company].locality.toUpperCase().includes(locality)
           ) {
             cards_filtered1.push(cards_filtered[bolsa]);
@@ -597,25 +594,32 @@ export default new Vuex.Store({
       await UserService.updateAlumniById(context.state.loggedUser, alumni);
     },
     async RetrieveAllBolsaInformation(context, filtros) {
-      let data = await BolsaService.fetchAllBolsas(context.state.loggedUser,filtros);
-          context.commit("ALL_BOLSA_INFORMATION", JSON.parse(data));
-      
+      let data = await BolsaService.fetchAllBolsas(
+        context.state.loggedUser,
+        filtros
+      );
+      context.commit("ALL_BOLSA_INFORMATION", JSON.parse(data));
     },
 
     async RetrieveBolsaById(context, id_bolsas) {
-      let data = await BolsaService.fetchBolsaById(context.state.loggedUser,id_bolsas);
-          context.commit("BOLSA_INFORMATION", JSON.parse(data));
-      
+      let data = await BolsaService.fetchBolsaById(
+        context.state.loggedUser,
+        id_bolsas
+      );
+      context.commit("BOLSA_INFORMATION", JSON.parse(data));
     },
 
-    async EditBolsa(context, bolsa){
-      console.log(context.state.activeBolsa.id_bolsas)
-       await BolsaService.editBolsa(context.state.loggedUser,context.state.activeBolsa.id_bolsas,bolsa)
-      
+    async EditBolsa(context, bolsa) {
+      console.log(context.state.activeBolsa.id_bolsas);
+      await BolsaService.editBolsa(
+        context.state.loggedUser,
+        context.state.activeBolsa.id_bolsas,
+        bolsa
+      );
     },
-    
+
     async createBolsa(context, bolsa) {
-      await BolsaService.createBolsa(context.state.loggedUser,bolsa);
+      await BolsaService.createBolsa(context.state.loggedUser, bolsa);
     },
 
     async fetchAllTestimonies(context) {
@@ -628,12 +632,12 @@ export default new Vuex.Store({
     },
     setActiveBolsa(context, bolsa) {
       context.commit("SET_ACTIVE_BOLSA", bolsa);
-    },/*
+    } /*
     editBolsa(context, bolsa) {
       context.commit("EDIT_BOLSA", bolsa);
-    },*/
+    },*/,
     async deleteBolsa(context, id_bolsas) {
-      await BolsaService.deleteBolsa(context.state.loggedUser,id_bolsas)
+      await BolsaService.deleteBolsa(context.state.loggedUser, id_bolsas);
     },
     createCompany(context, company) {
       context.commit("CREATE_COMPANY", company);
@@ -709,7 +713,7 @@ export default new Vuex.Store({
     ALL_BOLSA_INFORMATION(state, data) {
       state.bolsas = data;
     },
-    BOLSA_INFORMATION(state,data){
+    BOLSA_INFORMATION(state, data) {
       state.activeBolsa = data;
     },
     SAVE_BOLSA(state, bolsa) {
